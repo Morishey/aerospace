@@ -7,28 +7,53 @@ import {
   Button,
   Link as MuiLink,
   keyframes,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import { Link, useNavigate } from "react-router-dom";
 
+// ✨ Floating animation
 const float = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 `;
 
 export default function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    if (form.name && form.email && form.password) {
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/dashboard");
-    } else {
-      alert("Please fill all fields");
+
+    if (!email || !password || !confirmPassword) {
+      setError("All fields are required.");
+      return;
     }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    // Save user data locally for now (you can replace this with backend call later)
+    localStorage.setItem("user", JSON.stringify({ email, password }));
+    navigate("/login");
   };
+
+  const handleInputChange = (setter) => (e) => {
+    setter(e.target.value);
+    if (error) setError("");
+  };
+
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  const toggleShowConfirmPassword = () =>
+    setShowConfirmPassword((prev) => !prev);
 
   return (
     <Box
@@ -83,36 +108,79 @@ export default function Register() {
         </Box>
 
         <Typography sx={{ color: "text.secondary", mb: 3 }}>
-          Create your account to start booking flights!
+          Create your account to get started.
         </Typography>
 
         <form onSubmit={handleRegister}>
-          <TextField
-            label="Full Name"
-            variant="outlined"
-            fullWidth
-            sx={{ mb: 2 }}
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          />
+          {/* Email Field */}
           <TextField
             label="Email Address"
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            sx={{ mb: 3 }}
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            value={email}
+            onChange={handleInputChange(setEmail)}
           />
 
+          {/* Password Field */}
+          <TextField
+            label="Password"
+            variant="outlined"
+            fullWidth
+            type={showPassword ? "text" : "password"}
+            sx={{ mb: 2 }}
+            value={password}
+            onChange={handleInputChange(setPassword)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={toggleShowPassword} edge="end">
+                    <span style={{ fontSize: "1.5rem" }}>
+                      {showPassword ? "🙈" : "👁️"}
+                    </span>
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          {/* Confirm Password Field */}
+          <TextField
+            label="Confirm Password"
+            variant="outlined"
+            fullWidth
+            type={showConfirmPassword ? "text" : "password"}
+            sx={{ mb: 2 }}
+            value={confirmPassword}
+            onChange={handleInputChange(setConfirmPassword)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={toggleShowConfirmPassword} edge="end">
+                    <span style={{ fontSize: "1.5rem" }}>
+                      {showConfirmPassword ? "🙈" : "👁️"}
+                    </span>
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          {/* Error Message */}
+          {error && (
+            <Typography
+              sx={{
+                color: "error.main",
+                fontSize: "0.875rem",
+                mb: 2,
+                transition: "opacity 0.3s ease",
+              }}
+            >
+              {error}
+            </Typography>
+          )}
+
+          {/* Register Button */}
           <Button
             type="submit"
             variant="contained"

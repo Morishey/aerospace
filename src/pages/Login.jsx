@@ -7,11 +7,13 @@ import {
   Button,
   Link as MuiLink,
   keyframes,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import { Link, useNavigate } from "react-router-dom";
 
-// ✨ Floating animation (auto-running)
+// ✨ Floating animation
 const float = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -20,14 +22,16 @@ const float = keyframes`
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // <-- new error state
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    // Check against your specific credentials
-    if (email === "alexander100234perisic@gmail.com" && password === "MountainCloud2000") {
+    if (
+      email === "alexander100234perisic@gmail.com" &&
+      password === "MountainCloud2000"
+    ) {
       localStorage.setItem("isLoggedIn", "true");
       navigate("/dashboard");
     } else {
@@ -35,7 +39,6 @@ export default function Login() {
     }
   };
 
-  // Clear error as soon as user starts typing
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     if (error) setError("");
@@ -45,6 +48,8 @@ export default function Login() {
     setPassword(e.target.value);
     if (error) setError("");
   };
+
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   return (
     <Box
@@ -103,31 +108,53 @@ export default function Login() {
         </Typography>
 
         <form onSubmit={handleLogin}>
+          {/* Email Field */}
           <TextField
             label="Email Address"
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}
             value={email}
-            onChange={handleEmailChange} // <-- use new handler
-          />
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            sx={{ mb: 1 }}
-            value={password}
-            onChange={handlePasswordChange} // <-- use new handler
+            onChange={handleEmailChange}
           />
 
-          {/* Error message */}
+          {/* Password Field with Emoji Toggle */}
+          <TextField
+            label="Password"
+            variant="outlined"
+            fullWidth
+            type={showPassword ? "text" : "password"}
+            sx={{ mb: 2 }}
+            value={password}
+            onChange={handlePasswordChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={toggleShowPassword} edge="end">
+                    <span style={{ fontSize: "1.5rem" }}>
+                      {showPassword ? "🙈" : "👁️"}
+                    </span>
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          {/* Error Message */}
           {error && (
-            <Typography sx={{ color: "error.main", fontSize: "0.875rem", mb: 2 }}>
+            <Typography
+              sx={{
+                color: "error.main",
+                fontSize: "0.875rem",
+                mb: 2,
+                transition: "opacity 0.3s ease",
+              }}
+            >
               {error}
             </Typography>
           )}
 
+          {/* Login Button */}
           <Button
             type="submit"
             variant="contained"
