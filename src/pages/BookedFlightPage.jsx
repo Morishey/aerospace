@@ -113,10 +113,10 @@ const BoardingPass = () => {
 
           <Box sx={{ textAlign: "right" }}>
             <Typography variant="body2" color="text.secondary">
-              Date: <strong>Nov 08 2025</strong>
+              Date: <strong>Nov 09 2025</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Boarding: <strong>07:30 AM</strong>
+              Boarding: <strong>09:30 AM</strong>
             </Typography>
           </Box>
         </Box>
@@ -186,7 +186,7 @@ const BoardingPass = () => {
               Departure
             </Typography>
             <Typography variant="body1" fontWeight={600}>
-              08:00 AM
+              10:00 AM
             </Typography>
           </Grid>
           <Grid item xs={6}>
@@ -194,7 +194,7 @@ const BoardingPass = () => {
               Arrival
             </Typography>
             <Typography variant="body1" fontWeight={600}>
-              02:30 AM
+              01:30 PM
             </Typography>
           </Grid>
         </Grid>
@@ -260,7 +260,7 @@ const BoardingPass = () => {
             color="text.secondary"
             sx={{ mt: 1, display: "block" }}
           >
-            GA • JKIA → ITIA • Nov 11 2025
+            GA • JKIA → ITIA • Nov 09 2025
           </Typography>
         </Box>
       </Paper>
