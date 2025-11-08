@@ -1,0 +1,163 @@
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Box,
+  Button,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
+const navLinks = [
+  { title: "Home", path: "/" },
+  { title: "Book Flight", path: "/#book-flight" }, // Updated path for scrolling
+  { title: "Track Flight", path: "/track" },
+];
+
+const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const scrollToBookFlight = () => {
+    // If we are not on homepage, navigate there first
+    if (location.pathname !== "/") {
+      navigate("/", { replace: false });
+      setTimeout(() => {
+        const section = document.getElementById("book-flight");
+        if (section) section.scrollIntoView({ behavior: "smooth" });
+      }, 100); // small delay to ensure homepage renders
+    } else {
+      const section = document.getElementById("book-flight");
+      if (section) section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Typography
+        variant="h6"
+        sx={{
+          my: 2,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 1,
+        }}
+      >
+        <FlightTakeoffIcon />
+        AeroSpace
+      </Typography>
+      <List>
+        {navLinks.map((item) => (
+          <ListItem key={item.title} disablePadding>
+            {item.title === "Book Flight" ? (
+              <ListItemButton onClick={scrollToBookFlight} sx={{ textAlign: "center" }}>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            ) : (
+              <ListItemButton component={Link} to={item.path} sx={{ textAlign: "center" }}>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            )}
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          bgcolor: "primary.main",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+        }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box
+            component={Link}
+            to="/"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              color: "#fff",
+              fontWeight: 700,
+              gap: 1,
+            }}
+          >
+            <FlightTakeoffIcon />
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              AeroSpace
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+            {navLinks.map((item) =>
+              item.title === "Book Flight" ? (
+                <Button
+                  key={item.title}
+                  onClick={scrollToBookFlight}
+                  sx={{ color: "#fff", fontWeight: 600 }}
+                >
+                  {item.title}
+                </Button>
+              ) : (
+                <Button
+                  key={item.title}
+                  component={Link}
+                  to={item.path}
+                  sx={{ color: "#fff", fontWeight: 600 }}
+                >
+                  {item.title}
+                </Button>
+              )
+            )}
+          </Box>
+
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={handleDrawerToggle}
+            sx={{ display: { md: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: 240,
+            bgcolor: "primary.main",
+            color: "#fff",
+          },
+        }}
+      >
+        {drawer}
+      </Drawer>
+
+      <Toolbar />
+    </>
+  );
+};
+
+export default Navbar;
