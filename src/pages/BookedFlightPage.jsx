@@ -151,7 +151,7 @@ const BoardingPass = () => {
               fontWeight={600}
               sx={{ mb: 0.5 }}
             >
-              16h 45m
+              16h 30m
             </Typography>
             <Typography variant="h5" component="div">
               ✈️
@@ -194,7 +194,7 @@ const BoardingPass = () => {
               Arrival
             </Typography>
             <Typography variant="body1" fontWeight={600}>
-              01:30 PM
+              05:30 PM
             </Typography>
           </Grid>
         </Grid>
