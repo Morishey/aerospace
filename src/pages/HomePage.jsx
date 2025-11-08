@@ -3,6 +3,9 @@ import { Box, Container, Typography, Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FlightCard, flights } from "../components/FlightCard";
 
+// ✅ Import your local image
+import womanImage from "../assets/images/lady.png";
+
 const carouselImages = [
   "https://images.unsplash.com/photo-1503424886307-b090341d25d1?auto=format&fit=crop&w=1000&q=80",
   "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&w=1000&q=80",
@@ -13,7 +16,6 @@ const HomePage = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Auto-change carousel image
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % carouselImages.length);
@@ -21,7 +23,6 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll effect for hero fade/shrink starting at 50%
   useEffect(() => {
     const handleScroll = () => {
       const hero = document.getElementById("hero-section");
@@ -42,7 +43,6 @@ const HomePage = () => {
   const heroOpacity = 1 - scrollProgress;
   const heroScale = 1 - scrollProgress * 0.2;
 
-  // Scroll to booking form
   const scrollToBooking = () => {
     const bookingSection = document.getElementById("booking-form");
     if (bookingSection) {
@@ -89,7 +89,26 @@ const HomePage = () => {
           transition: "transform 0.25s ease-out, opacity 0.25s ease-out",
         }}
       >
-        <Container>
+        {/* ✅ Corporate Woman Image (now on the LEFT) */}
+        <Box
+          component="img"
+          src={womanImage}
+          alt="Corporate Woman"
+          sx={{
+            position: "absolute",
+            left: { xs: "2%", md: "15%" },
+            bottom: 0,
+            height: { xs: "85%", md: "80%" },
+            opacity: 0.9,
+            zIndex: 1,
+            objectFit: "contain",
+            pointerEvents: "none",
+            transform: { xs: "none", md: "scaleX(1)" }, // optional flip for side posture
+          }}
+        />
+
+        {/* Hero Text */}
+        <Container sx={{ position: "relative", zIndex: 2 }}>
           <Typography
             variant="h2"
             sx={{
