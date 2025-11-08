@@ -1,6 +1,20 @@
 import React from "react";
-import { Card, CardContent, Typography, Box, Avatar, Button } from "@mui/material";
+import { Card, CardContent, Typography, Box, Button } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+
+// Updated flight data with realistic airlines
+const flights = [
+  { airline: "Delta Air Lines", from: "DPS", to: "CGK", time: "1h 45m", price: "100" },
+  { airline: "British Airways", from: "DPS", to: "CGK", time: "1h 50m", price: "120" },
+  { airline: "Qatar Airways", from: "DPS", to: "CGK", time: "2h 30m", price: "140" },
+  { airline: "Emirates", from: "DPS", to: "CGK", time: "2h 15m", price: "160" },
+  { airline: "Ethiopian Airlines", from: "DPS", to: "CGK", time: "3h 10m", price: "180" },
+  { airline: "Aeroflot Russian Airlines", from: "DPS", to: "CGK", time: "3h 25m", price: "200" },
+  { airline: "Air Canada", from: "DPS", to: "CGK", time: "4h 00m", price: "220" },
+  { airline: "Singapore Airlines", from: "DPS", to: "CGK", time: "4h 30m", price: "240" },
+  { airline: "Qantas Airways", from: "DPS", to: "CGK", time: "5h 15m", price: "260" },
+  { airline: "Turkish Airlines", from: "DPS", to: "CGK", time: "5h 45m", price: "280" },
+];
 
 const FlightCard = ({ flight }) => {
   return (
@@ -15,12 +29,8 @@ const FlightCard = ({ flight }) => {
       }}
     >
       <CardContent sx={{ display: "flex", alignItems: "center", p: 2 }}>
-        {/* Airline Logo */}
-        <Avatar
-          src={flight.logo}
-          alt={flight.airline}
-          sx={{ width: 50, height: 50, mr: 2 }}
-        />
+        {/* Flight Icon */}
+        <FlightTakeoffIcon sx={{ fontSize: 50, color: "primary.main", mr: 2 }} />
 
         {/* Flight Info */}
         <Box sx={{ flexGrow: 1 }}>
@@ -57,4 +67,4 @@ const FlightCard = ({ flight }) => {
   );
 };
 
-export default FlightCard;
+export { FlightCard, flights };
