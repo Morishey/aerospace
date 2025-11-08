@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FlightCard, flights } from "../components/FlightCard";
 
 // ✅ Import your local image
-import womanImage from "../assets/images/lady.png";
+import womanImage from "../assets/images/lady.PNG";
 
 const carouselImages = [
   "https://images.unsplash.com/photo-1503424886307-b090341d25d1?auto=format&fit=crop&w=1000&q=80",
