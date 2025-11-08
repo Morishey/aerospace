@@ -4,16 +4,16 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
 // Updated flight data with realistic airlines
 const flights = [
-  { airline: "Delta Air Lines", from: "DPS", to: "CGK", time: "1h 45m", price: "100" },
-  { airline: "British Airways", from: "DPS", to: "CGK", time: "1h 50m", price: "120" },
-  { airline: "Qatar Airways", from: "DPS", to: "CGK", time: "2h 30m", price: "140" },
-  { airline: "Emirates", from: "DPS", to: "CGK", time: "2h 15m", price: "160" },
-  { airline: "Ethiopian Airlines", from: "DPS", to: "CGK", time: "3h 10m", price: "180" },
-  { airline: "Aeroflot Russian Airlines", from: "DPS", to: "CGK", time: "3h 25m", price: "200" },
-  { airline: "Air Canada", from: "DPS", to: "CGK", time: "4h 00m", price: "220" },
-  { airline: "Singapore Airlines", from: "DPS", to: "CGK", time: "4h 30m", price: "240" },
-  { airline: "Qantas Airways", from: "DPS", to: "CGK", time: "5h 15m", price: "260" },
-  { airline: "Turkish Airlines", from: "DPS", to: "CGK", time: "5h 45m", price: "280" },
+  { airline: "Delta Air Lines", from: "JKIA", to: "ITIA", time: "14h 45m", price: "2100" },
+  { airline: "British Airways", from: "DPS", to: "CGK", time: "10h 50m", price: "2020" },
+  { airline: "Qatar Airways", from: "JKIA", to: "ITIA", time: "12h 30m", price: "18900" },
+  { airline: "Emirates", from: "DPS", to: "CGK", time: "12h 15m", price: "160" },
+  { airline: "Ethiopian Airlines", from: "JKIA", to: "ITIA", time: "13h 10m", price: "1800" },
+  { airline: "Aeroflot Russian Airlines", from: "DPS", to: "CGK", time: "13h 25m", price: "2800" },
+  { airline: "Air Canada", from: "JKIA", to: "CGK", time: "14h 00m", price: "2200" },
+  { airline: "Singapore Airlines", from: "DPS", to: "ITIA", time: "14h 30m", price: "2400" },
+  { airline: "Qantas Airways", from: "JKIA", to: "CGK", time: "15h 15m", price: "2600" },
+  { airline: "Turkish Airlines", from: "CGK", to: "ITIA", time: "15h 45m", price: "2800" },
 ];
 
 const FlightCard = ({ flight }) => {
