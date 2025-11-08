@@ -6,9 +6,8 @@ import {
   TextField,
   Button,
   Link as MuiLink,
+  CircularProgress,
   keyframes,
-  InputAdornment,
-  IconButton,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,18 +21,23 @@ const float = keyframes`
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (
-      email === "alexander100234perisic@gmail.com" &&
-      password === "MountainCloud2000"
-    ) {
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/dashboard");
+
+    if (email === "alexander100234perisic@gmail.com" && password === "MountainCloud2000") {
+      setLoading(true); // Start loading
+      setError("");
+
+      // Simulate network delay
+      setTimeout(() => {
+        localStorage.setItem("isLoggedIn", "true");
+        setLoading(false);
+        navigate("/dashboard"); // Redirect after "network delay"
+      }, 2000); // 2 seconds
     } else {
       setError("Invalid credentials, try again...");
     }
@@ -48,8 +52,6 @@ export default function Login() {
     setPassword(e.target.value);
     if (error) setError("");
   };
-
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   return (
     <Box
@@ -70,9 +72,10 @@ export default function Login() {
           width: "100%",
           maxWidth: 420,
           textAlign: "center",
+          position: "relative",
         }}
       >
-        {/* ✈️ Animated Logo Section */}
+        {/* ✈️ Animated Logo */}
         <Box
           sx={{
             display: "flex",
@@ -108,7 +111,6 @@ export default function Login() {
         </Typography>
 
         <form onSubmit={handleLogin}>
-          {/* Email Field */}
           <TextField
             label="Email Address"
             variant="outlined"
@@ -117,44 +119,23 @@ export default function Login() {
             value={email}
             onChange={handleEmailChange}
           />
-
-          {/* Password Field with Emoji Toggle */}
           <TextField
             label="Password"
+            type="password"
             variant="outlined"
             fullWidth
-            type={showPassword ? "text" : "password"}
-            sx={{ mb: 2 }}
+            sx={{ mb: 1 }}
             value={password}
             onChange={handlePasswordChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={toggleShowPassword} edge="end">
-                    <span style={{ fontSize: "1.5rem" }}>
-                      {showPassword ? "🙈" : "👁️"}
-                    </span>
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
           />
 
-          {/* Error Message */}
+          {/* Error message */}
           {error && (
-            <Typography
-              sx={{
-                color: "error.main",
-                fontSize: "0.875rem",
-                mb: 2,
-                transition: "opacity 0.3s ease",
-              }}
-            >
+            <Typography sx={{ color: "error.main", fontSize: "0.875rem", mb: 2 }}>
               {error}
             </Typography>
           )}
 
-          {/* Login Button */}
           <Button
             type="submit"
             variant="contained"
@@ -166,8 +147,9 @@ export default function Login() {
               bgcolor: "primary.main",
               "&:hover": { bgcolor: "#1565c0" },
             }}
+            disabled={loading} // Disable button while loading
           >
-            Login
+            {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Login"}
           </Button>
         </form>
 

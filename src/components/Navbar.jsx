@@ -12,6 +12,7 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
+  CircularProgress,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
@@ -26,6 +27,7 @@ const navLinks = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ loading state
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,10 +49,30 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Handle Logout
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    navigate("/login");
+  // ✅ Simulate network check
+  const simulateNetworkCheck = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(true), 2000); // 2s network wait
+    });
+  };
+
+  // ✅ Handle Logout with loading
+  const handleLogout = async () => {
+    setLoading(true); // show loading
+    try {
+      const networkOk = await simulateNetworkCheck();
+      if (networkOk) {
+        localStorage.removeItem("isLoggedIn");
+        navigate("/login");
+      } else {
+        alert("Network issue: cannot logout now!");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error during logout.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // ✅ Drawer content for mobile
@@ -92,6 +114,7 @@ const Navbar = () => {
         startIcon={<LogoutIcon />}
         onClick={handleLogout}
         fullWidth
+        disabled={loading} // prevent clicking while loading
         sx={{
           color: "#fff",
           border: "1px solid rgba(255,255,255,0.4)",
@@ -101,7 +124,7 @@ const Navbar = () => {
           },
         }}
       >
-        Logout
+        {loading ? <CircularProgress color="inherit" size={20} /> : "Logout"}
       </Button>
     </Box>
   );
@@ -160,8 +183,9 @@ const Navbar = () => {
 
             {/* ✅ Desktop Logout button */}
             <Button
-              startIcon={<LogoutIcon />}
+              startIcon={loading ? <CircularProgress color="inherit" size={20} /> : <LogoutIcon />}
               onClick={handleLogout}
+              disabled={loading}
               sx={{
                 color: "#fff",
                 fontWeight: 600,
@@ -169,7 +193,7 @@ const Navbar = () => {
                 "&:hover": { bgcolor: "rgba(255,255,255,0.1)" },
               }}
             >
-              Logout
+              {!loading && "Logout"}
             </Button>
           </Box>
 
