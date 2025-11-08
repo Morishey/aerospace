@@ -67,7 +67,7 @@ const Navbar = () => {
         }}
       >
         <FlightTakeoffIcon />
-        Lumina
+        Aerospace
       </Typography>
       <List>
         {navLinks.map((item) => (
@@ -131,7 +131,7 @@ const Navbar = () => {
           >
             <FlightTakeoffIcon />
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              Lumina
+              Aerospace
             </Typography>
           </Box>
 
