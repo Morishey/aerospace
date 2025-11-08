@@ -116,7 +116,7 @@ const BoardingPass = () => {
               Date: <strong>Nov 09 2025</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Boarding: <strong>09:30 AM</strong>
+              Boarding: <strong>01:30 PM</strong>
             </Typography>
           </Box>
         </Box>
@@ -160,7 +160,7 @@ const BoardingPass = () => {
 
           <Grid item xs={4}>
             <Typography variant="h5" fontWeight={700}>
-              ITIA
+              IAIA
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Austin
@@ -260,7 +260,7 @@ const BoardingPass = () => {
             color="text.secondary"
             sx={{ mt: 1, display: "block" }}
           >
-            GA • JKIA → ITIA • Nov 09 2025
+            GA • JKIA → IATA • Nov 09 2025
           </Typography>
         </Box>
       </Paper>
