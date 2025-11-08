@@ -7,12 +7,14 @@ import {
   Button,
   Link as MuiLink,
   CircularProgress,
+  IconButton,
+  InputAdornment,
   keyframes,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import { Link, useNavigate } from "react-router-dom";
 
-// ✨ Floating animation
+// ✨ Floating animation for logo
 const float = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -21,6 +23,7 @@ const float = keyframes`
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // Password visibility
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
@@ -29,15 +32,15 @@ export default function Login() {
     e.preventDefault();
 
     if (email === "alexander100234perisic@gmail.com" && password === "MountainCloud2000") {
-      setLoading(true); // Start loading
+      setLoading(true);
       setError("");
 
       // Simulate network delay
       setTimeout(() => {
         localStorage.setItem("isLoggedIn", "true");
         setLoading(false);
-        navigate("/dashboard"); // Redirect after "network delay"
-      }, 2000); // 2 seconds
+        navigate("/dashboard"); // Redirect after delay
+      }, 2000);
     } else {
       setError("Invalid credentials, try again...");
     }
@@ -121,12 +124,25 @@ export default function Login() {
           />
           <TextField
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             variant="outlined"
             fullWidth
             sx={{ mb: 1 }}
             value={password}
             onChange={handlePasswordChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                    sx={{ fontSize: 20 }} // adjust emoji size
+                  >
+                    {showPassword ? "🙈" : "👁️"}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           {/* Error message */}
