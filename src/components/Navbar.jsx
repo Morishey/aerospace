@@ -11,14 +11,16 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const navLinks = [
   { title: "Home", path: "/" },
-  { title: "Book Flight", path: "/#book-flight" }, // Updated path for scrolling
+  { title: "Book Flight", path: "/#book-flight" },
   { title: "Track Flight", path: "/track" },
 ];
 
@@ -31,20 +33,27 @@ const Navbar = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // ✅ Handle "Book Flight" scroll smoothly
   const scrollToBookFlight = () => {
-    // If we are not on homepage, navigate there first
     if (location.pathname !== "/") {
       navigate("/", { replace: false });
       setTimeout(() => {
         const section = document.getElementById("book-flight");
         if (section) section.scrollIntoView({ behavior: "smooth" });
-      }, 100); // small delay to ensure homepage renders
+      }, 100);
     } else {
       const section = document.getElementById("book-flight");
       if (section) section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  // ✅ Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    navigate("/login");
+  };
+
+  // ✅ Drawer content for mobile
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography
@@ -58,7 +67,7 @@ const Navbar = () => {
         }}
       >
         <FlightTakeoffIcon />
-        AeroSpace
+        Lumina
       </Typography>
       <List>
         {navLinks.map((item) => (
@@ -75,6 +84,25 @@ const Navbar = () => {
           </ListItem>
         ))}
       </List>
+
+      <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
+
+      {/* ✅ Logout button in Drawer */}
+      <Button
+        startIcon={<LogoutIcon />}
+        onClick={handleLogout}
+        fullWidth
+        sx={{
+          color: "#fff",
+          border: "1px solid rgba(255,255,255,0.4)",
+          mt: 1.5,
+          "&:hover": {
+            bgcolor: "rgba(255,255,255,0.1)",
+          },
+        }}
+      >
+        Logout
+      </Button>
     </Box>
   );
 
@@ -88,6 +116,7 @@ const Navbar = () => {
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/* === Logo === */}
           <Box
             component={Link}
             to="/"
@@ -102,11 +131,12 @@ const Navbar = () => {
           >
             <FlightTakeoffIcon />
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              AeroSpace
+              Lumina
             </Typography>
           </Box>
 
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+          {/* === Desktop Links === */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
             {navLinks.map((item) =>
               item.title === "Book Flight" ? (
                 <Button
@@ -127,8 +157,23 @@ const Navbar = () => {
                 </Button>
               )
             )}
+
+            {/* ✅ Desktop Logout button */}
+            <Button
+              startIcon={<LogoutIcon />}
+              onClick={handleLogout}
+              sx={{
+                color: "#fff",
+                fontWeight: 600,
+                border: "1px solid rgba(255,255,255,0.5)",
+                "&:hover": { bgcolor: "rgba(255,255,255,0.1)" },
+              }}
+            >
+              Logout
+            </Button>
           </Box>
 
+          {/* === Hamburger for mobile === */}
           <IconButton
             color="inherit"
             edge="end"
@@ -140,6 +185,7 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
 
+      {/* === Drawer for mobile === */}
       <Drawer
         anchor="right"
         open={mobileOpen}
