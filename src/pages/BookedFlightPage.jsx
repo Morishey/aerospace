@@ -160,7 +160,7 @@ const BoardingPass = () => {
 
           <Grid item xs={4}>
             <Typography variant="h5" fontWeight={700}>
-              IATA
+              IBIA
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Austin
