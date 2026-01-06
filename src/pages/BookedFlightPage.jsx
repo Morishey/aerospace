@@ -151,7 +151,7 @@ const BoardingPass = () => {
               fontWeight={600}
               sx={{ mb: 0.5 }}
             >
-              3h 32m
+              2h 21m
             </Typography>
             <Typography variant="h5" component="div">
               ✈️
