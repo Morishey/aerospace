@@ -89,7 +89,7 @@ const Navbar = () => {
         }}
       >
         <FlightTakeoffIcon />
-        Aerospace
+       Aerospace
       </Typography>
       <List>
         {navLinks.map((item) => (
@@ -154,8 +154,7 @@ const Navbar = () => {
           >
             <FlightTakeoffIcon />
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              Aerospace
-            </Typography>
+Aerospace            </Typography>
           </Box>
 
           {/* === Desktop Links === */}

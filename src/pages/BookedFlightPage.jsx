@@ -104,19 +104,19 @@ const BoardingPass = () => {
         >
           <Box>
             <Typography variant="h6" sx={{ fontWeight: 700, color: "#0a4fa3" }}>
-              Jomo Kenyatta International Airport (JKIA){" "}
+              Ontario International Airport (ONT){" "}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              GA 089 • Economy
+              WN 806 • Economy
             </Typography>
           </Box>
 
           <Box sx={{ textAlign: "right" }}>
             <Typography variant="body2" color="text.secondary">
-              Date: <strong>Nov 09 2025</strong>
+              Date: <strong>Jan 06 2026</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Boarding: <strong>01:30 PM</strong>
+              Boarding: <strong>01:12 PM</strong>
             </Typography>
           </Box>
         </Box>
@@ -137,10 +137,10 @@ const BoardingPass = () => {
         >
           <Grid item xs={4}>
             <Typography variant="h5" fontWeight={700}>
-              JKIA
+              ONT
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              Kenya
+              California
             </Typography>
           </Grid>
 
@@ -151,7 +151,7 @@ const BoardingPass = () => {
               fontWeight={600}
               sx={{ mb: 0.5 }}
             >
-              16h 30m
+              1h 21m
             </Typography>
             <Typography variant="h5" component="div">
               ✈️
@@ -160,10 +160,10 @@ const BoardingPass = () => {
 
           <Grid item xs={4}>
             <Typography variant="h5" fontWeight={700}>
-              ABIA
+              PHX
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              Austin
+              Phoenix
             </Typography>
           </Grid>
         </Grid>
@@ -186,7 +186,7 @@ const BoardingPass = () => {
               Departure
             </Typography>
             <Typography variant="body1" fontWeight={600}>
-              01:00 PM
+              4:57 PM
             </Typography>
           </Grid>
           <Grid item xs={6}>
@@ -194,7 +194,7 @@ const BoardingPass = () => {
               Arrival
             </Typography>
             <Typography variant="body1" fontWeight={600}>
-              05:30 PM
+              7:18 PM
             </Typography>
           </Grid>
         </Grid>
@@ -208,32 +208,32 @@ const BoardingPass = () => {
               <Typography variant="caption" color="text.secondary">
                 Passenger Name
               </Typography>
-              <Typography fontWeight={600}>Alexander Perisic</Typography>
+              <Typography fontWeight={600}>Christopher Gethers</Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="caption" color="text.secondary">
                 Terminal
               </Typography>
-              <Typography fontWeight={600}>1</Typography>
+              <Typography fontWeight={600}>4</Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="caption" color="text.secondary">
                 Gate
               </Typography>
-              <Typography fontWeight={600}>A1</Typography>
+              <Typography fontWeight={600}>8</Typography>
             </Grid>
 
             <Grid item xs={6}>
               <Typography variant="caption" color="text.secondary">
                 Seat
               </Typography>
-              <Typography fontWeight={600}>B24</Typography>
+              <Typography fontWeight={600}>12F</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="caption" color="text.secondary">
                 Ticket No.
               </Typography>
-              <Typography fontWeight={600}>GA1028394</Typography>
+              <Typography fontWeight={600}>GA1028004</Typography>
             </Grid>
           </Grid>
         </Box>
@@ -260,7 +260,7 @@ const BoardingPass = () => {
             color="text.secondary"
             sx={{ mt: 1, display: "block" }}
           >
-            GA • JKIA → ABIA • Nov 09 2025
+            WN • ONT → PHX • Jan 06 2026
           </Typography>
         </Box>
       </Paper>

@@ -118,7 +118,7 @@ const HomePage = () => {
               textShadow: "2px 2px 10px rgba(0,0,0,0.3)",
             }}
           >
-            Fly With Ease
+            Fly With Ease <br />Aerospace
           </Typography>
 
           <Typography

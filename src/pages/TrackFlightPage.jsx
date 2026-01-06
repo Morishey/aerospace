@@ -1,28 +1,43 @@
 import React, { useState } from "react";
-import { Container, Typography, Box, TextField, Button, Card, CardContent } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const TrackFlightPage = () => {
   const [flightNumber, setFlightNumber] = useState("");
   const [trackedFlight, setTrackedFlight] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // NEW: loading state
   const navigate = useNavigate();
 
   const handleTrack = () => {
     const input = flightNumber.trim().toLowerCase();
 
-    if (input === "ga1028394") {
-      navigate("/booked"); // navigate to Boarding Pass page
-      setError(""); // clear error
+    if (flightNumber.trim() === "") {
+      setError("Please enter a flight number.");
       return;
     }
 
-    if (flightNumber.trim() !== "") {
-      setTrackedFlight(null);
-      setError("❌ Ticket not found. Try again."); // show error
-    } else {
-      setError(""); // clear error if input is empty
-    }
+    setError("");
+    setLoading(true); // start loading animation
+
+    setTimeout(() => {
+      if (input === "ga1028004") {
+        setLoading(false);
+        navigate("/booked"); // navigate after loading
+      } else {
+        setLoading(false);
+        setError("❌ Ticket not found. Try again.");
+      }
+    }, 1500); // simulate network delay
   };
 
   return (
@@ -54,18 +69,28 @@ const TrackFlightPage = () => {
           value={flightNumber}
           onChange={(e) => {
             setFlightNumber(e.target.value);
-            if (error) setError(""); // clear error as soon as user types
+            if (error) setError("");
           }}
           sx={{ width: { xs: "100%", sm: "300px" } }}
           error={!!error}
         />
+
         <Button
           variant="contained"
           color="primary"
           onClick={handleTrack}
-          sx={{ height: "56px" }}
+          sx={{
+            height: "56px",
+            width: { xs: "100%", sm: "150px" },
+            position: "relative",
+          }}
+          disabled={loading} // disable button while loading
         >
-          Track Flight
+          {loading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Track Flight"
+          )}
         </Button>
       </Box>
 
@@ -90,8 +115,12 @@ const TrackFlightPage = () => {
             <Typography variant="body1">
               From: {trackedFlight.from} → To: {trackedFlight.to}
             </Typography>
-            <Typography variant="body1">Departure: {trackedFlight.departure}</Typography>
-            <Typography variant="body1">Arrival: {trackedFlight.arrival}</Typography>
+            <Typography variant="body1">
+              Departure: {trackedFlight.departure}
+            </Typography>
+            <Typography variant="body1">
+              Arrival: {trackedFlight.arrival}
+            </Typography>
             <Typography variant="body1" color="secondary">
               Status: {trackedFlight.status}
             </Typography>
