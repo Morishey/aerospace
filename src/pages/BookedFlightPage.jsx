@@ -116,7 +116,7 @@ const BoardingPass = () => {
               Date: <strong>Jan 06 2026</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Boarding: <strong>01:12 PM</strong>
+              Boarding: <strong>5:09 PM</strong>
             </Typography>
           </Box>
         </Box>
@@ -151,7 +151,7 @@ const BoardingPass = () => {
               fontWeight={600}
               sx={{ mb: 0.5 }}
             >
-              1h 21m
+              3h 32m
             </Typography>
             <Typography variant="h5" component="div">
               ✈️
