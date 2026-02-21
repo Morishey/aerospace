@@ -404,7 +404,7 @@ const BoardingPass = () => {
                     variant="h4"
                     sx={{ fontWeight: 700, color: "#0f2b5e" }}
                   >
-                    9:05 AM
+                    9:05 PM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
                     Gate 12 • On time
