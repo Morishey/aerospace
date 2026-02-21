@@ -436,7 +436,7 @@ const BoardingPass = () => {
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
                   <PetsIcon sx={{ color: "#9c27b0", fontSize: 18 }} />
                   <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 600 }}>
-                    Service Animal: "Max" (Cabin)
+                    Service Animal: "Coco" (Cabin)
                   </Typography>
                 </Box>
               </Grid>
@@ -491,7 +491,7 @@ const BoardingPass = () => {
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.5 }}>
                 <PetsIcon sx={{ color: "#9c27b0", fontSize: 14 }} />
                 <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 500 }}>
-                  Traveling with service animal (Golden Retriever - "Max")
+                  Traveling with service animal (Pomeranian - "Coco")
                 </Typography>
               </Box>
             </Box>
