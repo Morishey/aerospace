@@ -7,11 +7,54 @@ import {
   Grid,
   Button,
   IconButton,
+  Avatar,
+  Chip,
+  Container,
+  alpha,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import DownloadIcon from "@mui/icons-material/Download";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import EventSeatIcon from "@mui/icons-material/EventSeat";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import LuggageIcon from "@mui/icons-material/Luggage";
+import WifiIcon from "@mui/icons-material/Wifi";
+import PowerIcon from "@mui/icons-material/Power";
 import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
+import { motion } from "framer-motion";
+
+// Modern Barcode Design
+const ModernBarcode = () => (
+  <Box sx={{ display: "flex", justifyContent: "center", gap: 0.8, my: 2 }}>
+    {[42, 28, 35, 48, 22, 38, 45, 32, 40, 25, 52, 30, 44, 38, 42, 35, 48, 28, 52, 36].map((height, i) => (
+      <Box
+        key={i}
+        sx={{
+          width: i % 3 === 0 ? 4 : 2,
+          height,
+          background: `linear-gradient(180deg, #1a1a1a 0%, #333 100%)`,
+          borderRadius: "2px 2px 0 0",
+        }}
+      />
+    ))}
+  </Box>
+);
+
+// Passenger Detail Item Component
+const DetailItem = ({ icon, label, value, color = "#0a2a5a" }) => (
+  <Box sx={{ mb: 2 }}>
+    <Typography variant="caption" sx={{ color: "#94a3b8", display: "flex", alignItems: "center", gap: 0.5, mb: 0.5 }}>
+      {icon} {label}
+    </Typography>
+    <Typography variant="body1" sx={{ fontWeight: 600, color, fontSize: "1.1rem" }}>
+      {value}
+    </Typography>
+  </Box>
+);
 
 const BoardingPass = () => {
   const [loaded, setLoaded] = useState(false);
@@ -29,7 +72,8 @@ const BoardingPass = () => {
     try {
       const canvas = await html2canvas(element, {
         backgroundColor: "#fff",
-        scale: 2, // Higher resolution
+        scale: 2,
+        logging: false,
       });
       const dataURL = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -45,274 +89,339 @@ const BoardingPass = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        bgcolor: "#e9f0fb",
+        background: "radial-gradient(circle at 10% 30%, #f8fafc 0%, #e2e8f0 100%)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        p: 2,
+        p: { xs: 2, sm: 3 },
         gap: 3,
       }}
     >
-      {/* Boarding Pass */}
-      <Paper
-        ref={passRef}
-        elevation={8}
-        sx={{
-          width: "100%",
-          maxWidth: 600,
-          borderRadius: 3,
-          overflow: "hidden",
-          position: "relative",
-          bgcolor: "#fff",
-          fontFamily: "'Inter', sans-serif",
-          display: "flex",
-          flexDirection: "column",
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(40px)",
-          transition: "all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1)",
-        }}
+      {/* Modern Boarding Pass Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        style={{ width: "100%", maxWidth: 700 }}
       >
-        {/* Header */}
-        <Box
+        <Paper
+          ref={passRef}
+          elevation={0}
           sx={{
-            bgcolor: "#0a4fa3",
-            color: "white",
-            textAlign: "center",
-            py: 1.5,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 1,
+            width: "100%",
+            maxWidth: 700,
+            borderRadius: 4,
+            overflow: "hidden",
+            bgcolor: "#ffffff",
+            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
+            border: "1px solid rgba(226, 232, 240, 0.8)",
+            position: "relative",
           }}
         >
-          <FlightTakeoffIcon />
-          <Typography variant="subtitle1" fontWeight={600}>
-            BOARDING PASS
-          </Typography>
-        </Box>
-
-        {/* Airline & Route */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            px: 3,
-            py: 2,
-          }}
-        >
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 700, color: "#0a4fa3" }}>
-              Ontario International Airport (ONT){" "}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              WN 806 • Economy
-            </Typography>
-          </Box>
-
-          <Box sx={{ textAlign: "right" }}>
-            <Typography variant="body2" color="text.secondary">
-              Date: <strong>Jan 06 2026</strong>
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Boarding: <strong>5:09 PM</strong>
-            </Typography>
-          </Box>
-        </Box>
-
-        <Divider />
-
-        {/* Flight Route */}
-        <Grid
-          container
-          spacing={0}
-          sx={{
-            py: 2,
-            px: 3,
-            textAlign: "center",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Grid item xs={4}>
-            <Typography variant="h5" fontWeight={700}>
-              ONT
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              California
-            </Typography>
-          </Grid>
-
-          <Grid item xs={4}>
-            <Typography
-              variant="body2"
-              color="#0a4fa3"
-              fontWeight={600}
-              sx={{ mb: 0.5 }}
-            >
-              2h 21m
-            </Typography>
-            <Typography variant="h5" component="div">
-              ✈️
-            </Typography>
-          </Grid>
-
-          <Grid item xs={4}>
-            <Typography variant="h5" fontWeight={700}>
-              PHX
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              Phoenix
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Divider />
-
-        {/* Time Info */}
-        <Grid
-          container
-          spacing={0}
-          sx={{
-            py: 1.5,
-            px: 3,
-            textAlign: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Grid item xs={6}>
-            <Typography variant="caption" color="text.secondary">
-              Departure
-            </Typography>
-            <Typography variant="body1" fontWeight={600}>
-              4:57 PM
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="caption" color="text.secondary">
-              Arrival
-            </Typography>
-            <Typography variant="body1" fontWeight={600}>
-              7:18 PM
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Divider />
-
-        {/* Passenger Info */}
-        <Box sx={{ px: 3, py: 2 }}>
-          <Grid container spacing={1.5}>
-            <Grid item xs={6}>
-              <Typography variant="caption" color="text.secondary">
-                Passenger Name
-              </Typography>
-              <Typography fontWeight={600}>Christopher Gethers</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="caption" color="text.secondary">
-                Terminal
-              </Typography>
-              <Typography fontWeight={600}>4</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="caption" color="text.secondary">
-                Gate
-              </Typography>
-              <Typography fontWeight={600}>8</Typography>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Typography variant="caption" color="text.secondary">
-                Seat
-              </Typography>
-              <Typography fontWeight={600}>12F</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="caption" color="text.secondary">
-                Ticket No.
-              </Typography>
-              <Typography fontWeight={600}>GA1028004</Typography>
-            </Grid>
-          </Grid>
-        </Box>
-
-        <Divider />
-
-        {/* Barcode Footer */}
-        <Box sx={{ textAlign: "center", py: 2 }}>
-          <Typography variant="caption" color="text.secondary">
-            Please present this boarding pass at the gate
-          </Typography>
+          {/* Decorative Top Bar */}
           <Box
             sx={{
-              mt: 1.5,
-              height: 70,
-              width: "80%",
-              mx: "auto",
-              bgcolor: "#000",
-              borderRadius: 1,
+              height: 8,
+              background: "linear-gradient(90deg, #0f2b5e 0%, #1e4a8b 50%, #2e6bb5 100%)",
             }}
           />
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ mt: 1, display: "block" }}
+
+          {/* Main Content */}
+          <Box sx={{ p: { xs: 3, sm: 4 } }}>
+            {/* Header with Airline Logo and Status */}
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 3 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Avatar
+                  sx={{
+                    bgcolor: "#0f2b5e",
+                    width: 56,
+                    height: 56,
+                    borderRadius: 2,
+                    fontSize: 28,
+                    fontWeight: 700,
+                    color: "white",
+                  }}
+                >
+                  WN
+                </Avatar>
+                <Box>
+                  <Typography variant="body2" sx={{ color: "#64748b", fontWeight: 500 }}>
+                    Southwest Airlines
+                  </Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 800, color: "#0f2b5e", letterSpacing: "-0.5px" }}>
+                    WN 806
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ textAlign: "right" }}>
+                <Chip
+                  label="READY FOR BOARDING"
+                  size="small"
+                  sx={{
+                    bgcolor: alpha("#22c55e", 0.1),
+                    color: "#22c55e",
+                    fontWeight: 700,
+                    fontSize: "0.7rem",
+                    border: "1px solid rgba(34, 197, 94, 0.2)",
+                    mb: 1,
+                  }}
+                />
+                <Typography variant="caption" sx={{ color: "#94a3b8", display: "block" }}>
+                  Economy • Boarding Group A
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Flight Route - Modern Design */}
+            <Box
+              sx={{
+                background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
+                borderRadius: 3,
+                p: 3,
+                mb: 3,
+                border: "1px solid rgba(226, 232, 240, 0.6)",
+              }}
+            >
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item xs={5} sx={{ textAlign: "center" }}>
+                  <Typography variant="h2" sx={{ fontWeight: 800, color: "#0f2b5e", fontSize: { xs: "2rem", sm: "3rem" } }}>
+                    ONT
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "#475569", fontWeight: 500 }}>
+                    Ontario
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#94a3b8" }}>
+                    Terminal 4
+                  </Typography>
+                </Grid>
+                
+                <Grid item xs={2} sx={{ textAlign: "center" }}>
+                  <Box sx={{ position: "relative" }}>
+                    <FlightTakeoffIcon sx={{ color: "#0f2b5e", fontSize: 24, transform: "rotate(90deg)", mb: 1 }} />
+                    <Typography variant="body2" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                      2h 21m
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: 2,
+                        background: "linear-gradient(90deg, transparent, #0f2b5e 20%, #0f2b5e 80%, transparent)",
+                        my: 1,
+                      }}
+                    />
+                    <FlightLandIcon sx={{ color: "#0f2b5e", fontSize: 24, transform: "rotate(90deg)", mt: 1 }} />
+                  </Box>
+                </Grid>
+                
+                <Grid item xs={5} sx={{ textAlign: "center" }}>
+                  <Typography variant="h2" sx={{ fontWeight: 800, color: "#0f2b5e", fontSize: { xs: "2rem", sm: "3rem" } }}>
+                    PHX
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "#475569", fontWeight: 500 }}>
+                    Phoenix
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#94a3b8" }}>
+                    Terminal 3
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+
+            {/* Time Information Cards */}
+            <Grid container spacing={2} sx={{ mb: 4 }}>
+              <Grid item xs={6}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    bgcolor: alpha("#0891b2", 0.04),
+                    borderRadius: 2,
+                    border: "1px solid rgba(8, 145, 178, 0.1)",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                    <AccessTimeIcon sx={{ color: "#0891b2", fontSize: 20 }} />
+                    <Typography variant="body2" sx={{ color: "#0891b2", fontWeight: 600 }}>
+                      DEPARTURE
+                    </Typography>
+                  </Box>
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                    4:57 PM
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#64748b" }}>
+                    Gate 8 • Boarding 4:37 PM
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={6}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    bgcolor: alpha("#059669", 0.04),
+                    borderRadius: 2,
+                    border: "1px solid rgba(5, 150, 105, 0.1)",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                    <AccessTimeIcon sx={{ color: "#059669", fontSize: 20 }} />
+                    <Typography variant="body2" sx={{ color: "#059669", fontWeight: 600 }}>
+                      ARRIVAL
+                    </Typography>
+                  </Box>
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                    7:18 PM
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#64748b" }}>
+                    Gate 12 • On time
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+
+            {/* Passenger Details Grid */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid item xs={12} sm={6}>
+                <DetailItem
+                  icon={<ConfirmationNumberIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  label="TICKET NUMBER"
+                  value="GA1028004"
+                />
+                <DetailItem
+                  icon={<EventSeatIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  label="SEAT"
+                  value="12F (Window)"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <DetailItem
+                  icon={<LuggageIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  label="BAGGAGE"
+                  value="2 pieces • Carousel 5"
+                />
+                <DetailItem
+                  icon={<FlightTakeoffIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  label="FLIGHT DATE"
+                  value="January 6, 2026"
+                />
+              </Grid>
+            </Grid>
+
+            {/* Passenger Name - Prominent Display */}
+            <Box
+              sx={{
+                bgcolor: "#f8fafc",
+                p: 2,
+                borderRadius: 2,
+                mb: 3,
+                border: "1px solid #e2e8f0",
+              }}
+            >
+              <Typography variant="caption" sx={{ color: "#64748b", display: "block", mb: 0.5 }}>
+                PASSENGER
+              </Typography>
+              <Typography variant="h5" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                CHRISTOPHER GETHERS
+              </Typography>
+            </Box>
+
+            {/* Barcode Section */}
+            <Box
+              sx={{
+                bgcolor: "#ffffff",
+                p: 3,
+                borderRadius: 2,
+                border: "2px dashed #cbd5e1",
+                textAlign: "center",
+              }}
+            >
+              <ModernBarcode />
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2, mb: 1 }}>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e" }}>
+                  ONT → PHX
+                </Typography>
+                <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: 28 }} />
+              </Box>
+              <Typography variant="caption" sx={{ color: "#64748b" }}>
+                Scan for mobile boarding • Flight WN806 • Jan 06 2026
+              </Typography>
+            </Box>
+
+            {/* Flight Amenities */}
+            <Box sx={{ mt: 3, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}>
+              <Chip icon={<WifiIcon />} label="Wi-Fi" size="small" variant="outlined" sx={{ color: "#64748b" }} />
+              <Chip icon={<PowerIcon />} label="Power" size="small" variant="outlined" sx={{ color: "#64748b" }} />
+              <Chip label="Snacks" size="small" variant="outlined" sx={{ color: "#64748b" }} />
+            </Box>
+          </Box>
+
+          {/* Footer */}
+          <Box
+            sx={{
+              bgcolor: "#f8fafc",
+              borderTop: "1px solid #e2e8f0",
+              p: 2,
+              textAlign: "center",
+            }}
           >
-            WN • ONT → PHX • Jan 06 2026
-          </Typography>
-        </Box>
-      </Paper>
+            <Typography variant="caption" sx={{ color: "#94a3b8" }}>
+              Please arrive at the gate at least 30 minutes before departure • Have your ID ready
+            </Typography>
+          </Box>
+        </Paper>
+      </motion.div>
 
-      {/* Button Row */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 2,
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(20px)",
-          transition: "all 0.8s ease 0.2s",
-        }}
+      {/* Action Buttons */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loaded ? 1 : 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Button
-          component={Link}
-          to="/"
-          variant="contained"
-          sx={{
-            px: 5,
-            py: 1.5,
-            fontWeight: 600,
-            borderRadius: 3,
-            bgcolor: "#0a4fa3",
-            color: "#fff",
-            textTransform: "none",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-            "&:hover": {
-              bgcolor: "#083b7a",
-              boxShadow: "0 6px 16px rgba(0,0,0,0.2)",
-            },
-          }}
-        >
-          Exit / Back to Home
-        </Button>
-
-        <IconButton
-          onClick={handleDownload}
-          sx={{
-            bgcolor: "#0a4fa3",
-            color: "#fff",
-            p: 1.2,
-            borderRadius: 2,
-            "&:hover": { bgcolor: "#083b7a" },
-            boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-          }}
-        >
-          <DownloadIcon />
-        </IconButton>
-      </Box>
+        <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
+          <Button
+            component={Link}
+            to="/"
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderRadius: 3,
+              borderColor: "#cbd5e1",
+              color: "#475569",
+              fontWeight: 600,
+              '&:hover': {
+                borderColor: "#0f2b5e",
+                bgcolor: alpha("#0f2b5e", 0.02),
+              },
+            }}
+          >
+            Back to Home
+          </Button>
+          <Button
+            onClick={handleDownload}
+            variant="contained"
+            startIcon={<DownloadIcon />}
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderRadius: 3,
+              bgcolor: "#0f2b5e",
+              color: "white",
+              fontWeight: 600,
+              boxShadow: "0 10px 20px -5px rgba(15, 43, 94, 0.3)",
+              '&:hover': {
+                bgcolor: "#1a3a7a",
+                transform: "translateY(-2px)",
+                boxShadow: "0 15px 25px -5px rgba(15, 43, 94, 0.4)",
+              },
+            }}
+          >
+            Download Boarding Pass
+          </Button>
+        </Box>
+      </motion.div>
     </Box>
   );
 };
