@@ -30,7 +30,10 @@ import { motion } from "framer-motion";
 // Modern Barcode Design
 const ModernBarcode = () => (
   <Box sx={{ display: "flex", justifyContent: "center", gap: 0.8, my: 2 }}>
-    {[42, 28, 35, 48, 22, 38, 45, 32, 40, 25, 52, 30, 44, 38, 42, 35, 48, 28, 52, 36].map((height, i) => (
+    {[
+      42, 28, 35, 48, 22, 38, 45, 32, 40, 25, 52, 30, 44, 38, 42, 35, 48, 28,
+      52, 36,
+    ].map((height, i) => (
       <Box
         key={i}
         sx={{
@@ -47,10 +50,22 @@ const ModernBarcode = () => (
 // Passenger Detail Item Component
 const DetailItem = ({ icon, label, value, color = "#0a2a5a" }) => (
   <Box sx={{ mb: 2 }}>
-    <Typography variant="caption" sx={{ color: "#94a3b8", display: "flex", alignItems: "center", gap: 0.5, mb: 0.5 }}>
+    <Typography
+      variant="caption"
+      sx={{
+        color: "#94a3b8",
+        display: "flex",
+        alignItems: "center",
+        gap: 0.5,
+        mb: 0.5,
+      }}
+    >
       {icon} {label}
     </Typography>
-    <Typography variant="body1" sx={{ fontWeight: 600, color, fontSize: "1.1rem" }}>
+    <Typography
+      variant="body1"
+      sx={{ fontWeight: 600, color, fontSize: "1.1rem" }}
+    >
       {value}
     </Typography>
   </Box>
@@ -89,7 +104,8 @@ const BoardingPass = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "radial-gradient(circle at 10% 30%, #f8fafc 0%, #e2e8f0 100%)",
+        background:
+          "radial-gradient(circle at 10% 30%, #f8fafc 0%, #e2e8f0 100%)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -123,14 +139,22 @@ const BoardingPass = () => {
           <Box
             sx={{
               height: 8,
-              background: "linear-gradient(90deg, #0f2b5e 0%, #1e4a8b 50%, #2e6bb5 100%)",
+              background:
+                "linear-gradient(90deg, #0f2b5e 0%, #1e4a8b 50%, #2e6bb5 100%)",
             }}
           />
 
           {/* Main Content */}
           <Box sx={{ p: { xs: 3, sm: 4 } }}>
             {/* Header with Airline Logo and Status */}
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                mb: 3,
+              }}
+            >
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Avatar
                   sx={{
@@ -146,17 +170,27 @@ const BoardingPass = () => {
                   WN
                 </Avatar>
                 <Box>
-                  <Typography variant="body2" sx={{ color: "#64748b", fontWeight: 500 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#64748b", fontWeight: 500 }}
+                  >
                     Southwest Airlines
                   </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: 800, color: "#0f2b5e", letterSpacing: "-0.5px" }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 800,
+                      color: "#0f2b5e",
+                      letterSpacing: "-0.5px",
+                    }}
+                  >
                     WN 806
                   </Typography>
                 </Box>
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="READY FOR BOARDING"
+                  label="Status: READY FOR BOARDING"
                   size="small"
                   sx={{
                     bgcolor: alpha("#22c55e", 0.1),
@@ -167,7 +201,10 @@ const BoardingPass = () => {
                     mb: 1,
                   }}
                 />
-                <Typography variant="caption" sx={{ color: "#94a3b8", display: "block" }}>
+                <Typography
+                  variant="caption"
+                  sx={{ color: "#94a3b8", display: "block" }}
+                >
                   Economy • Boarding Group A
                 </Typography>
               </Box>
@@ -185,40 +222,78 @@ const BoardingPass = () => {
             >
               <Grid container alignItems="center" spacing={2}>
                 <Grid item xs={5} sx={{ textAlign: "center" }}>
-                  <Typography variant="h2" sx={{ fontWeight: 800, color: "#0f2b5e", fontSize: { xs: "2rem", sm: "3rem" } }}>
+                  <Typography
+                    variant="h2"
+                    sx={{
+                      fontWeight: 800,
+                      color: "#0f2b5e",
+                      fontSize: { xs: "2rem", sm: "3rem" },
+                    }}
+                  >
                     ONT
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "#475569", fontWeight: 500 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#475569", fontWeight: 500 }}
+                  >
                     Ontario
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#94a3b8" }}>
                     Terminal 4
                   </Typography>
                 </Grid>
-                
+
                 <Grid item xs={2} sx={{ textAlign: "center" }}>
                   <Box sx={{ position: "relative" }}>
-                    <FlightTakeoffIcon sx={{ color: "#0f2b5e", fontSize: 24, transform: "rotate(90deg)", mb: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                    <FlightTakeoffIcon
+                      sx={{
+                        color: "#0f2b5e",
+                        fontSize: 24,
+                        transform: "rotate(90deg)",
+                        mb: 1,
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: 700, color: "#0f2b5e" }}
+                    >
                       2h 21m
                     </Typography>
                     <Box
                       sx={{
                         width: "100%",
                         height: 2,
-                        background: "linear-gradient(90deg, transparent, #0f2b5e 20%, #0f2b5e 80%, transparent)",
+                        background:
+                          "linear-gradient(90deg, transparent, #0f2b5e 20%, #0f2b5e 80%, transparent)",
                         my: 1,
                       }}
                     />
-                    <FlightLandIcon sx={{ color: "#0f2b5e", fontSize: 24, transform: "rotate(90deg)", mt: 1 }} />
+                    <FlightLandIcon
+                      sx={{
+                        color: "#0f2b5e",
+                        fontSize: 24,
+                        transform: "rotate(90deg)",
+                        mt: 1,
+                      }}
+                    />
                   </Box>
                 </Grid>
-                
+
                 <Grid item xs={5} sx={{ textAlign: "center" }}>
-                  <Typography variant="h2" sx={{ fontWeight: 800, color: "#0f2b5e", fontSize: { xs: "2rem", sm: "3rem" } }}>
+                  <Typography
+                    variant="h2"
+                    sx={{
+                      fontWeight: 800,
+                      color: "#0f2b5e",
+                      fontSize: { xs: "2rem", sm: "3rem" },
+                    }}
+                  >
                     PHX
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "#475569", fontWeight: 500 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#475569", fontWeight: 500 }}
+                  >
                     Phoenix
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#94a3b8" }}>
@@ -240,13 +315,26 @@ const BoardingPass = () => {
                     border: "1px solid rgba(8, 145, 178, 0.1)",
                   }}
                 >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 1,
+                    }}
+                  >
                     <AccessTimeIcon sx={{ color: "#0891b2", fontSize: 20 }} />
-                    <Typography variant="body2" sx={{ color: "#0891b2", fontWeight: 600 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#0891b2", fontWeight: 600 }}
+                    >
                       DEPARTURE
                     </Typography>
                   </Box>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, color: "#0f2b5e" }}
+                  >
                     4:57 PM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
@@ -264,13 +352,26 @@ const BoardingPass = () => {
                     border: "1px solid rgba(5, 150, 105, 0.1)",
                   }}
                 >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 1,
+                    }}
+                  >
                     <AccessTimeIcon sx={{ color: "#059669", fontSize: 20 }} />
-                    <Typography variant="body2" sx={{ color: "#059669", fontWeight: 600 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#059669", fontWeight: 600 }}
+                    >
                       ARRIVAL
                     </Typography>
                   </Box>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, color: "#0f2b5e" }}
+                  >
                     7:18 PM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
@@ -284,12 +385,18 @@ const BoardingPass = () => {
             <Grid container spacing={3} sx={{ mb: 4 }}>
               <Grid item xs={12} sm={6}>
                 <DetailItem
-                  icon={<ConfirmationNumberIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  icon={
+                    <ConfirmationNumberIcon
+                      sx={{ fontSize: 16, color: "#0f2b5e" }}
+                    />
+                  }
                   label="TICKET NUMBER"
                   value="GA1028004"
                 />
                 <DetailItem
-                  icon={<EventSeatIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  icon={
+                    <EventSeatIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />
+                  }
                   label="SEAT"
                   value="12F (Window)"
                 />
@@ -301,7 +408,11 @@ const BoardingPass = () => {
                   value="2 pieces • Carousel 5"
                 />
                 <DetailItem
-                  icon={<FlightTakeoffIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  icon={
+                    <FlightTakeoffIcon
+                      sx={{ fontSize: 16, color: "#0f2b5e" }}
+                    />
+                  }
                   label="FLIGHT DATE"
                   value="January 6, 2026"
                 />
@@ -318,10 +429,16 @@ const BoardingPass = () => {
                 border: "1px solid #e2e8f0",
               }}
             >
-              <Typography variant="caption" sx={{ color: "#64748b", display: "block", mb: 0.5 }}>
+              <Typography
+                variant="caption"
+                sx={{ color: "#64748b", display: "block", mb: 0.5 }}
+              >
                 PASSENGER
               </Typography>
-              <Typography variant="h5" sx={{ fontWeight: 700, color: "#0f2b5e" }}>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 700, color: "#0f2b5e" }}
+              >
                 CHRISTOPHER GETHERS
               </Typography>
             </Box>
@@ -337,8 +454,19 @@ const BoardingPass = () => {
               }}
             >
               <ModernBarcode />
-              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2, mb: 1 }}>
-                <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                  mb: 1,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 600, color: "#0f2b5e" }}
+                >
                   ONT → PHX
                 </Typography>
                 <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: 28 }} />
@@ -349,10 +477,35 @@ const BoardingPass = () => {
             </Box>
 
             {/* Flight Amenities */}
-            <Box sx={{ mt: 3, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}>
-              <Chip icon={<WifiIcon />} label="Wi-Fi" size="small" variant="outlined" sx={{ color: "#64748b" }} />
-              <Chip icon={<PowerIcon />} label="Power" size="small" variant="outlined" sx={{ color: "#64748b" }} />
-              <Chip label="Snacks" size="small" variant="outlined" sx={{ color: "#64748b" }} />
+            <Box
+              sx={{
+                mt: 3,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+              }}
+            >
+              <Chip
+                icon={<WifiIcon />}
+                label="Wi-Fi"
+                size="small"
+                variant="outlined"
+                sx={{ color: "#64748b" }}
+              />
+              <Chip
+                icon={<PowerIcon />}
+                label="Power"
+                size="small"
+                variant="outlined"
+                sx={{ color: "#64748b" }}
+              />
+              <Chip
+                label="Snacks"
+                size="small"
+                variant="outlined"
+                sx={{ color: "#64748b" }}
+              />
             </Box>
           </Box>
 
@@ -366,7 +519,8 @@ const BoardingPass = () => {
             }}
           >
             <Typography variant="caption" sx={{ color: "#94a3b8" }}>
-              Please arrive at the gate at least 30 minutes before departure • Have your ID ready
+              Please arrive at the gate at least 30 minutes before departure •
+              Have your ID ready
             </Typography>
           </Box>
         </Paper>
@@ -378,7 +532,13 @@ const BoardingPass = () => {
         animate={{ opacity: loaded ? 1 : 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexDirection: { xs: "column", sm: "row" },
+          }}
+        >
           <Button
             component={Link}
             to="/"
@@ -391,7 +551,7 @@ const BoardingPass = () => {
               borderColor: "#cbd5e1",
               color: "#475569",
               fontWeight: 600,
-              '&:hover': {
+              "&:hover": {
                 borderColor: "#0f2b5e",
                 bgcolor: alpha("#0f2b5e", 0.02),
               },
@@ -411,7 +571,7 @@ const BoardingPass = () => {
               color: "white",
               fontWeight: 600,
               boxShadow: "0 10px 20px -5px rgba(15, 43, 94, 0.3)",
-              '&:hover': {
+              "&:hover": {
                 bgcolor: "#1a3a7a",
                 transform: "translateY(-2px)",
                 boxShadow: "0 15px 25px -5px rgba(15, 43, 94, 0.4)",

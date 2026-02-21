@@ -56,10 +56,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // ==================== CONSTANTS & MOCK DATA ====================
 const MOCK_FLIGHTS = {
-  "GA1028004": {
-    id: "GA1028004",
+  "GA10280088": {
+    id: "GA10280088",
     airline: "Garuda Indonesia",
-    flightNumber: "GA1028004",
+    flightNumber: "GA10280088",
     from: {
       code: "CGK",
       name: "Soekarno-Hatta International Airport",
