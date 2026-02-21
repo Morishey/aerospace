@@ -167,14 +167,14 @@ const BoardingPass = () => {
                     color: "white",
                   }}
                 >
-                  WN
+                  DL
                 </Avatar>
                 <Box>
                   <Typography
                     variant="body2"
                     sx={{ color: "#64748b", fontWeight: 500 }}
                   >
-                    Southwest Airlines
+                    SkyWest DBA
                   </Typography>
                   <Typography
                     variant="h5"
@@ -184,7 +184,7 @@ const BoardingPass = () => {
                       letterSpacing: "-0.5px",
                     }}
                   >
-                    WN 806
+                    DL 802
                   </Typography>
                 </Box>
               </Box>
@@ -230,13 +230,13 @@ const BoardingPass = () => {
                       fontSize: { xs: "2rem", sm: "3rem" },
                     }}
                   >
-                    ONT
+                    BOI
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ color: "#475569", fontWeight: 500 }}
                   >
-                    Ontario
+                    Boise
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#94a3b8" }}>
                     Terminal 4
@@ -257,7 +257,7 @@ const BoardingPass = () => {
                       variant="body2"
                       sx={{ fontWeight: 700, color: "#0f2b5e" }}
                     >
-                      2h 21m
+                      12h 5m
                     </Typography>
                     <Box
                       sx={{
@@ -288,16 +288,16 @@ const BoardingPass = () => {
                       fontSize: { xs: "2rem", sm: "3rem" },
                     }}
                   >
-                    PHX
+                    FWA
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ color: "#475569", fontWeight: 500 }}
                   >
-                    Phoenix
+                    Fort Wayne
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#94a3b8" }}>
-                    Terminal 3
+                    Terminal 1
                   </Typography>
                 </Grid>
               </Grid>
@@ -335,10 +335,10 @@ const BoardingPass = () => {
                     variant="h4"
                     sx={{ fontWeight: 700, color: "#0f2b5e" }}
                   >
-                    4:57 PM
+                    7:00 AM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
-                    Gate 8 • Boarding 4:37 PM
+                    Gate 8 • Boarding 6:50 AM
                   </Typography>
                 </Paper>
               </Grid>
@@ -372,7 +372,7 @@ const BoardingPass = () => {
                     variant="h4"
                     sx={{ fontWeight: 700, color: "#0f2b5e" }}
                   >
-                    7:18 PM
+                    9:05 AM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
                     Gate 12 • On time
@@ -391,7 +391,7 @@ const BoardingPass = () => {
                     />
                   }
                   label="TICKET NUMBER"
-                  value="GA1028004"
+                  value="DL10280088"
                 />
                 <DetailItem
                   icon={
@@ -414,7 +414,7 @@ const BoardingPass = () => {
                     />
                   }
                   label="FLIGHT DATE"
-                  value="January 6, 2026"
+                  value="February 23, 2026"
                 />
               </Grid>
             </Grid>
@@ -439,7 +439,7 @@ const BoardingPass = () => {
                 variant="h5"
                 sx={{ fontWeight: 700, color: "#0f2b5e" }}
               >
-                CHRISTOPHER GETHERS
+                GINA WELLS
               </Typography>
             </Box>
 
@@ -467,12 +467,12 @@ const BoardingPass = () => {
                   variant="body2"
                   sx={{ fontWeight: 600, color: "#0f2b5e" }}
                 >
-                  ONT → PHX
+                  BOI → FWA
                 </Typography>
                 <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: 28 }} />
               </Box>
               <Typography variant="caption" sx={{ color: "#64748b" }}>
-                Scan for mobile boarding • Flight WN806 • Jan 06 2026
+                Scan for mobile boarding • Flight DL802 • Feb 23 2026
               </Typography>
             </Box>
 
