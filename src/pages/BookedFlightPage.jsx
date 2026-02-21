@@ -11,6 +11,7 @@ import {
   Chip,
   Container,
   alpha,
+  Tooltip,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -23,8 +24,10 @@ import FlightLandIcon from "@mui/icons-material/FlightLand";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import WifiIcon from "@mui/icons-material/Wifi";
 import PowerIcon from "@mui/icons-material/Power";
+import PetsIcon from "@mui/icons-material/Pets";
+import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas"; 
 import { motion } from "framer-motion";
 
 // Modern Barcode Design
@@ -162,7 +165,7 @@ const BoardingPass = () => {
                     width: 56,
                     height: 56,
                     borderRadius: 2,
-                    fontSize: 28,
+                    fontSize: 20,
                     fontWeight: 700,
                     color: "white",
                   }}
@@ -177,9 +180,9 @@ const BoardingPass = () => {
                     SkyWest DBA
                   </Typography>
                   <Typography
-                    variant="h5"
+                    variant="h6"
                     sx={{
-                      fontWeight: 800,
+                      fontWeight: 700,
                       color: "#0f2b5e",
                       letterSpacing: "-0.5px",
                     }}
@@ -190,7 +193,7 @@ const BoardingPass = () => {
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="Status: READY FOR BOARDING"
+                  label="READY FOR BOARDING"
                   size="small"
                   sx={{
                     bgcolor: alpha("#22c55e", 0.1),
@@ -205,9 +208,38 @@ const BoardingPass = () => {
                   variant="caption"
                   sx={{ color: "#94a3b8", display: "block" }}
                 >
-                  Economy • Boarding Group A
+                  Economy • <br />Boarding Group A
                 </Typography>
               </Box>
+            </Box>
+
+            {/* Pet in cabin Badge - NEW */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mb: 2,
+              }}
+            >
+              <Tooltip title="Service animal accompanying passenger">
+                <Chip
+                  icon={<PetsIcon />}
+                  label="PET IN CABIN • Cabin Approved"
+                  color="secondary"
+                  sx={{
+                    bgcolor: alpha("#9c27b0", 0.1),
+                    color: "#9c27b0",
+                    fontWeight: 700,
+                    fontSize: "0.8rem",
+                    border: "1px solid rgba(156, 39, 176, 0.3)",
+                    py: 2,
+                    "& .MuiChip-icon": {
+                      color: "#9c27b0",
+                    },
+                  }}
+                />
+              </Tooltip>
             </Box>
 
             {/* Flight Route - Modern Design */}
@@ -381,7 +413,7 @@ const BoardingPass = () => {
               </Grid>
             </Grid>
 
-            {/* Passenger Details Grid */}
+            {/* Passenger Details Grid with Pet Information */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
               <Grid item xs={12} sm={6}>
                 <DetailItem
@@ -400,6 +432,13 @@ const BoardingPass = () => {
                   label="SEAT"
                   value="12F (Window)"
                 />
+                {/* Pet in cabin Detail - NEW */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                  <PetsIcon sx={{ color: "#9c27b0", fontSize: 18 }} />
+                  <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 600 }}>
+                    Service Animal: "Max" (Cabin)
+                  </Typography>
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <DetailItem
@@ -416,6 +455,13 @@ const BoardingPass = () => {
                   label="FLIGHT DATE"
                   value="February 23, 2026"
                 />
+                {/* Additional Pet Info */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                  <InfoIcon sx={{ color: "#64748b", fontSize: 16 }} />
+                  <Typography variant="caption" sx={{ color: "#64748b" }}>
+                    Pet carrier counts as carry-on
+                  </Typography>
+                </Box>
               </Grid>
             </Grid>
 
@@ -441,6 +487,13 @@ const BoardingPass = () => {
               >
                 GINA WELLS
               </Typography>
+              {/* Pet name under passenger - NEW */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.5 }}>
+                <PetsIcon sx={{ color: "#9c27b0", fontSize: 14 }} />
+                <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 500 }}>
+                  Traveling with service animal (Golden Retriever - "Max")
+                </Typography>
+              </Box>
             </Box>
 
             {/* Barcode Section */}
@@ -476,7 +529,7 @@ const BoardingPass = () => {
               </Typography>
             </Box>
 
-            {/* Flight Amenities */}
+            {/* Flight Amenities with Pet Icon */}
             <Box
               sx={{
                 mt: 3,
@@ -484,6 +537,7 @@ const BoardingPass = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: 2,
+                flexWrap: "wrap",
               }}
             >
               <Chip
@@ -506,6 +560,21 @@ const BoardingPass = () => {
                 variant="outlined"
                 sx={{ color: "#64748b" }}
               />
+              {/* Pet amenity chip - NEW */}
+              <Chip
+                icon={<PetsIcon />}
+                label="Pet Service"
+                size="small"
+                sx={{
+                  bgcolor: alpha("#9c27b0", 0.1),
+                  color: "#9c27b0",
+                  borderColor: alpha("#9c27b0", 0.3),
+                  "& .MuiChip-icon": {
+                    color: "#9c27b0",
+                  },
+                }}
+                variant="outlined"
+              />
             </Box>
           </Box>
 
@@ -521,6 +590,10 @@ const BoardingPass = () => {
             <Typography variant="caption" sx={{ color: "#94a3b8" }}>
               Please arrive at the gate at least 30 minutes before departure •
               Have your ID ready
+            </Typography>
+            {/* Pet reminder in footer - NEW */}
+            <Typography variant="caption" sx={{ color: "#9c27b0", display: "block", mt: 0.5 }}>
+              🐾 Service animal must remain in carrier during flight
             </Typography>
           </Box>
         </Paper>
