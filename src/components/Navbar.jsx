@@ -13,10 +13,15 @@ import {
   ListItemText,
   Divider,
   CircularProgress,
+  Menu,
+  MenuItem,
+  Avatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LanguageIcon from "@mui/icons-material/Language";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const navLinks = [
@@ -25,9 +30,23 @@ const navLinks = [
   { title: "Track Flight", path: "/track" },
 ];
 
+// Language options
+const languages = [
+  { code: "US", name: "English (US)", flag: "🇺🇸" },
+  { code: "GB", name: "English (UK)", flag: "🇬🇧" },
+  { code: "ES", name: "Español", flag: "🇪🇸" },
+  { code: "FR", name: "Français", flag: "🇫🇷" },
+  { code: "DE", name: "Deutsch", flag: "🇩🇪" },
+  { code: "JP", name: "日本語", flag: "🇯🇵" },
+  { code: "CN", name: "中文", flag: "🇨🇳" },
+];
+
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // ✅ loading state
+  const [loading, setLoading] = useState(false);
+  const [languageAnchor, setLanguageAnchor] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]); // Default to US
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -35,7 +54,23 @@ const Navbar = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  // ✅ Handle "Book Flight" scroll smoothly
+  // Language menu handlers
+  const handleLanguageClick = (event) => {
+    setLanguageAnchor(event.currentTarget);
+  };
+
+  const handleLanguageClose = () => {
+    setLanguageAnchor(null);
+  };
+
+  const handleLanguageSelect = (language) => {
+    setSelectedLanguage(language);
+    handleLanguageClose();
+    // Here you would typically trigger a language change in your app
+    console.log(`Language changed to: ${language.name}`);
+  };
+
+  // Handle "Book Flight" scroll smoothly
   const scrollToBookFlight = () => {
     if (location.pathname !== "/") {
       navigate("/", { replace: false });
@@ -49,16 +84,16 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Simulate network check
+  // Simulate network check
   const simulateNetworkCheck = () => {
     return new Promise((resolve) => {
-      setTimeout(() => resolve(true), 2000); // 2s network wait
+      setTimeout(() => resolve(true), 2000);
     });
   };
 
-  // ✅ Handle Logout with loading
+  // Handle Logout with loading
   const handleLogout = async () => {
-    setLoading(true); // show loading
+    setLoading(true);
     try {
       const networkOk = await simulateNetworkCheck();
       if (networkOk) {
@@ -75,7 +110,7 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Drawer content for mobile
+  // Drawer content for mobile
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography
@@ -89,8 +124,27 @@ const Navbar = () => {
         }}
       >
         <FlightTakeoffIcon />
-       Aerospace
+        Aerospace
       </Typography>
+      
+      {/* Language selector in drawer */}
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <Button
+          onClick={handleLanguageClick}
+          sx={{
+            color: "#fff",
+            border: "1px solid rgba(255,255,255,0.3)",
+            borderRadius: 2,
+            px: 2,
+            py: 0.5,
+          }}
+        >
+          <span style={{ fontSize: "1.2rem", marginRight: "8px" }}>{selectedLanguage.flag}</span>
+          {selectedLanguage.code}
+          <ArrowDropDownIcon />
+        </Button>
+      </Box>
+      
       <List>
         {navLinks.map((item) => (
           <ListItem key={item.title} disablePadding>
@@ -109,12 +163,12 @@ const Navbar = () => {
 
       <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
 
-      {/* ✅ Logout button in Drawer */}
+      {/* Logout button in Drawer */}
       <Button
         startIcon={<LogoutIcon />}
         onClick={handleLogout}
         fullWidth
-        disabled={loading} // prevent clicking while loading
+        disabled={loading}
         sx={{
           color: "#fff",
           border: "1px solid rgba(255,255,255,0.4)",
@@ -154,7 +208,8 @@ const Navbar = () => {
           >
             <FlightTakeoffIcon />
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-Aerospace            </Typography>
+              Aerospace
+            </Typography>
           </Box>
 
           {/* === Desktop Links === */}
@@ -180,7 +235,89 @@ Aerospace            </Typography>
               )
             )}
 
-            {/* ✅ Desktop Logout button */}
+            {/* === Language Indicator with US Flag === */}
+            <Button
+              onClick={handleLanguageClick}
+              sx={{
+                color: "#fff",
+                minWidth: "auto",
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 2,
+                border: "1px solid rgba(255,255,255,0.3)",
+                "&:hover": {
+                  bgcolor: "rgba(255,255,255,0.1)",
+                },
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                <span style={{ fontSize: "1.3rem", lineHeight: 1 }}>{selectedLanguage.flag}</span>
+                <Typography variant="body2" sx={{ fontWeight: 500, mx: 0.5 }}>
+                  {selectedLanguage.code}
+                </Typography>
+                <ArrowDropDownIcon fontSize="small" />
+              </Box>
+            </Button>
+
+            {/* Language Menu */}
+            <Menu
+              anchorEl={languageAnchor}
+              open={Boolean(languageAnchor)}
+              onClose={handleLanguageClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              PaperProps={{
+                sx: {
+                  mt: 1,
+                  minWidth: 180,
+                  borderRadius: 2,
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                },
+              }}
+            >
+              {languages.map((language) => (
+                <MenuItem
+                  key={language.code}
+                  onClick={() => handleLanguageSelect(language)}
+                  selected={selectedLanguage.code === language.code}
+                  sx={{
+                    py: 1,
+                    px: 2,
+                    gap: 1.5,
+                    "&.Mui-selected": {
+                      bgcolor: "primary.light",
+                      color: "primary.main",
+                      "&:hover": {
+                        bgcolor: "primary.light",
+                      },
+                    },
+                  }}
+                >
+                  <span style={{ fontSize: "1.2rem" }}>{language.flag}</span>
+                  <Typography variant="body2" sx={{ flex: 1 }}>
+                    {language.name}
+                  </Typography>
+                  {selectedLanguage.code === language.code && (
+                    <Box
+                      sx={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        bgcolor: "primary.main",
+                      }}
+                    />
+                  )}
+                </MenuItem>
+              ))}
+            </Menu>
+
+            {/* Desktop Logout button */}
             <Button
               startIcon={loading ? <CircularProgress color="inherit" size={20} /> : <LogoutIcon />}
               onClick={handleLogout}
@@ -208,6 +345,8 @@ Aerospace            </Typography>
         </Toolbar>
       </AppBar>
 
+      {/* Language Menu for mobile (when drawer is open) - handled in drawer */}
+      
       {/* === Drawer for mobile === */}
       <Drawer
         anchor="right"
@@ -215,7 +354,7 @@ Aerospace            </Typography>
         onClose={handleDrawerToggle}
         sx={{
           "& .MuiDrawer-paper": {
-            width: 240,
+            width: 260,
             bgcolor: "primary.main",
             color: "#fff",
           },
