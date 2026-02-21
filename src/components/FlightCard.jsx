@@ -4,7 +4,7 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
 // Updated flight data with realistic airlines
 const flights = [
-  { airline: "Delta AirLines", from: "JKIA", to: "ITIA", time: "14h 45m", price: "2100" },
+  { airline: "Delta Airlines", from: "JKIA", to: "ITIA", time: "14h 45m", price: "2100" },
   { airline: "British Airways", from: "DPS", to: "CGK", time: "10h 50m", price: "2020" },
   { airline: "Qatar Airways", from: "JKIA", to: "ITIA", time: "12h 30m", price: "1900" },
   { airline: "Emirates", from: "DPS", to: "CGK", time: "12h 15m", price: "2160" },

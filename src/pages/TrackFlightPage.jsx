@@ -401,7 +401,7 @@ const QRScannerModal = ({ open, onClose, onScan }) => {
   const handleSimulateScan = () => {
     setScanning(true);
     setTimeout(() => {
-      onScan("GA1028004");
+      onScan("GA10280088");
       setScanning(false);
       onClose();
     }, 1500);
