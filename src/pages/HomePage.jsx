@@ -896,7 +896,7 @@ const HomePage = () => {
             color: "#1e293b", 
             fontSize: { xs: "1.6rem", sm: "1.8rem", md: "2rem", lg: "2.2rem" } 
           }}>
-            Why Choose EaseAerospace?
+            Why Choose Aerospace?
           </Typography>
           <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
             {features.map((feature, index) => (
