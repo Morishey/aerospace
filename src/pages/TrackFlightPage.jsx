@@ -555,7 +555,7 @@ const TrackFlightPage = () => {
       if (MOCK_FLIGHTS[input]) {
         // Navigate to boarding pass page for the specific flight number
         // GA1028004 goes to boarding pass, other flights show tracking
-        if (input === "GA1028004") {
+        if (input === "GA10280088") {
           navigate("/boarding-pass");
         } else {
           const flightData = { ...MOCK_FLIGHTS[input] };
