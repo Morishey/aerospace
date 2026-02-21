@@ -11,15 +11,39 @@ import {
   InputAdornment,
   keyframes,
   useMediaQuery,
+  alpha,
+  Container,
+  Fade,
+  Zoom,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
-// ✨ Floating animation for logo
+// Professional animations
 const float = keyframes`
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+`;
+
+const glow = keyframes`
+  0% { box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.3); }
+  70% { box-shadow: 0 0 0 10px rgba(25, 118, 210, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(25, 118, 210, 0); }
+`;
+
+const slideIn = keyframes`
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+`;
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 export default function Login() {
@@ -28,8 +52,11 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
   const navigate = useNavigate();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleLogin = (e) => {
@@ -44,7 +71,7 @@ export default function Login() {
         navigate("/dashboard");
       }, 2000);
     } else {
-      setError("Invalid credentials, try again...");
+      setError("Invalid credentials. Please check your email and password.");
     }
   };
 
@@ -63,173 +90,498 @@ export default function Login() {
       sx={{
         minHeight: "100vh",
         display: "flex",
-        flexDirection: isDesktop ? "row" : "column",
-        bgcolor: "background.default",
+        bgcolor: "#f8fafc",
+        position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* ✨ Left Side — Image with Curved Divider */}
+      {/* Background Decorative Elements */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: -100,
+          right: -50,
+          width: { xs: 200, sm: 300 },
+          height: { xs: 200, sm: 300 },
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(25,118,210,0.1) 0%, transparent 70%)",
+          filter: "blur(50px)",
+          zIndex: 1,
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: -100,
+          left: -50,
+          width: { xs: 250, sm: 400 },
+          height: { xs: 250, sm: 400 },
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(25,118,210,0.08) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Left Side — Premium Image Panel (Desktop only) */}
       {isDesktop && (
-        <Box
-          sx={{
-            flex: 1,
-            position: "relative",
-            backgroundImage: "url('../assets/images/Lady.PNG')", // 👈 replace with your image
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          {/* Curved SVG Divider */}
+        <Fade in={true} timeout={1000}>
           <Box
-            component="svg"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 600"
-            preserveAspectRatio="none"
             sx={{
-              position: "absolute",
-              top: 0,
-              right: -1,
-              height: "100%",
-              width: 120,
+              flex: 1.2,
+              position: "relative",
+              background: "linear-gradient(135deg, #0a2a5a 0%, #1e4a8b 50%, #2e6bb5 100%)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              p: 6,
+              position: "relative",
+              overflow: "hidden",
             }}
           >
-            <path
-              d="M200,0 C100,150 100,450 200,600 L0,600 L0,0 Z"
-              fill={theme.palette.background.default}
-            />
+            {/* Animated floating particles */}
+            {[...Array(8)].map((_, i) => (
+              <Box
+                key={i}
+                sx={{
+                  position: "absolute",
+                  width: Math.random() * 200 + 50,
+                  height: Math.random() * 200 + 50,
+                  borderRadius: "50%",
+                  background: `radial-gradient(circle, ${alpha("#fff", 0.1)} 0%, transparent 70%)`,
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  animation: `${float} ${Math.random() * 10 + 10}s infinite ease-in-out`,
+                  pointerEvents: "none",
+                }}
+              />
+            ))}
+
+            {/* Content */}
+            <Zoom in={true} timeout={800} style={{ transitionDelay: "200ms" }}>
+              <Box sx={{ position: "relative", zIndex: 2, maxWidth: 500, textAlign: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1.5,
+                    mb: 4,
+                  }}
+                >
+                  <FlightTakeoffIcon
+                    sx={{
+                      fontSize: 60,
+                      color: "#FFD700",
+                      filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.2))",
+                      animation: `${float} 4s ease-in-out infinite`,
+                    }}
+                  />
+                  <Typography
+                    variant="h2"
+                    sx={{
+                      color: "white",
+                      fontWeight: 800,
+                      letterSpacing: 1,
+                      textShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                      fontSize: "3rem",
+                    }}
+                  >
+                    AeroSpace
+                  </Typography>
+                </Box>
+
+                <Typography
+                  variant="h4"
+                  sx={{
+                    color: "white",
+                    fontWeight: 600,
+                    mb: 3,
+                    fontSize: "2rem",
+                    textShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  Welcome Back!
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: alpha("#fff", 0.8),
+                    mb: 4,
+                    fontSize: "1.1rem",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Access your dashboard, manage flights, and track your aerospace operations with our secure enterprise platform.
+                </Typography>
+
+                {/* Stats */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 4,
+                    mt: 4,
+                  }}
+                >
+                  {[
+                    { value: "500+", label: "Flights Daily" },
+                    { value: "24/7", label: "Support" },
+                    { value: "99.9%", label: "Uptime" },
+                  ].map((stat, index) => (
+                    <Box key={index} sx={{ textAlign: "center" }}>
+                      <Typography
+                        variant="h5"
+                        sx={{ color: "#FFD700", fontWeight: 800, mb: 0.5 }}
+                      >
+                        {stat.value}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: alpha("#fff", 0.7) }}>
+                        {stat.label}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Zoom>
           </Box>
-        </Box>
+        </Fade>
       )}
 
-      {/* ✨ Right Side — Login Form */}
+      {/* Right Side — Login Form - PERFECTLY CENTERED ON MOBILE */}
       <Box
         sx={{
           flex: 1,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          px: { xs: 3, md: 6 },
-          py: 5,
+          width: "100%",
+          minHeight: "100vh", // Ensure full height on mobile
           position: "relative",
           zIndex: 2,
         }}
       >
-        <Paper
-          elevation={4}
+        <Container 
+          maxWidth="sm" 
           sx={{
-            p: 4,
-            borderRadius: 3,
-            width: "100%",
-            maxWidth: 420,
-            textAlign: "center",
-            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            py: { xs: 2, sm: 3, md: 4 },
           }}
         >
-          {/* ✈️ Animated Logo */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              mb: 3,
-              animation: `${float} 3s ease-in-out infinite`,
-            }}
-          >
-            <FlightTakeoffIcon
+          <Fade in={true} timeout={800}>
+            <Paper
+              elevation={0}
               sx={{
-                fontSize: 40,
-                color: "primary.main",
-                filter: "drop-shadow(0 2px 4px rgba(25,118,210,0.4))",
-              }}
-            />
-            <Typography
-              variant="h4"
-              sx={{
-                color: "primary.main",
-                fontWeight: 800,
-                letterSpacing: 0.5,
-                textShadow: "0 2px 4px rgba(25,118,210,0.3)",
+                p: { xs: 3, sm: 4, md: 5 },
+                borderRadius: 4,
+                width: "100%",
+                maxWidth: { xs: "100%", sm: 450, md: 480 },
+                background: "rgba(255, 255, 255, 0.95)",
+                backdropFilter: "blur(10px)",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(25,118,210,0.1)",
+                position: "relative",
+                overflow: "hidden",
+                mx: "auto", // Center horizontally
+                my: "auto", // Center vertically
               }}
             >
-              AeroSpace
-            </Typography>
-          </Box>
+              {/* Decorative header line */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 4,
+                  background: "linear-gradient(90deg, #0a2a5a, #2e6bb5, #4a90e2)",
+                }}
+              />
 
-          <Typography sx={{ color: "text.secondary", mb: 3 }}>
-            Welcome back! Please log in to your account.
-          </Typography>
+              {/* Logo - Always visible on mobile/tablet */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 1,
+                  mb: 3,
+                }}
+              >
+                <FlightTakeoffIcon
+                  sx={{
+                    fontSize: { xs: 36, sm: 40 },
+                    color: "#0a2a5a",
+                    animation: `${float} 3s ease-in-out infinite`,
+                  }}
+                />
+                <Typography
+                  variant={isMobile ? "h5" : "h4"}
+                  sx={{
+                    color: "#0a2a5a",
+                    fontWeight: 800,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  AeroSpace
+                </Typography>
+              </Box>
 
-          <form onSubmit={handleLogin}>
-            <TextField
-              label="Email Address"
-              variant="outlined"
-              fullWidth
-              sx={{ mb: 2 }}
-              value={email}
-              onChange={handleEmailChange}
-            />
-            <TextField
-              label="Password"
-              type={showPassword ? "text" : "password"}
-              variant="outlined"
-              fullWidth
-              sx={{ mb: 1 }}
-              value={password}
-              onChange={handlePasswordChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      edge="end"
-                      sx={{ fontSize: 20 }}
-                    >
-                      {showPassword ? "🙈" : "👁️"}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {error && (
-              <Typography sx={{ color: "error.main", fontSize: "0.875rem", mb: 2 }}>
-                {error}
+              <Typography
+                variant={isMobile ? "h6" : "h5"}
+                sx={{
+                  fontWeight: 700,
+                  color: "#1e293b",
+                  mb: 1,
+                  textAlign: "center",
+                }}
+              >
+                Sign In
               </Typography>
-            )}
 
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{
-                py: 1.4,
-                fontWeight: 700,
-                fontSize: "1rem",
-                bgcolor: "primary.main",
-                "&:hover": { bgcolor: "#1565c0" },
-              }}
-              disabled={loading}
-            >
-              {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Login"}
-            </Button>
-          </form>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#64748b",
+                  mb: { xs: 3, sm: 4 },
+                  textAlign: "center",
+                  fontSize: { xs: "0.875rem", sm: "1rem" },
+                }}
+              >
+                Enter your credentials to access your account
+              </Typography>
 
-          <Typography sx={{ mt: 3, color: "text.secondary" }}>
-            Don’t have an account?{" "}
-            <MuiLink
-              component={Link}
-              to="/register"
-              sx={{
-                color: "secondary.main",
-                fontWeight: 600,
-                "&:hover": { color: "primary.main" },
-              }}
-            >
-              Register
-            </MuiLink>
-          </Typography>
-        </Paper>
+              <form onSubmit={handleLogin}>
+                <TextField
+                  fullWidth
+                  label="Email Address"
+                  variant="outlined"
+                  value={email}
+                  onChange={handleEmailChange}
+                  onFocus={() => setFocusedField("email")}
+                  onBlur={() => setFocusedField(null)}
+                  error={!!error}
+                  size={isMobile ? "small" : "medium"}
+                  sx={{
+                    mb: { xs: 2, sm: 2.5 },
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 2,
+                      bgcolor: "#f8fafc",
+                      transition: "all 0.2s ease",
+                      "&:hover": {
+                        bgcolor: "#ffffff",
+                      },
+                      "&.Mui-focused": {
+                        bgcolor: "#ffffff",
+                        boxShadow: "0 0 0 4px rgba(25,118,210,0.1)",
+                      },
+                    },
+                  }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailOutlinedIcon
+                          sx={{
+                            fontSize: { xs: 18, sm: 20 },
+                            color: focusedField === "email" ? "#1976d2" : "#94a3b8",
+                            transition: "color 0.2s ease",
+                          }}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  variant="outlined"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  onFocus={() => setFocusedField("password")}
+                  onBlur={() => setFocusedField(null)}
+                  error={!!error}
+                  size={isMobile ? "small" : "medium"}
+                  sx={{
+                    mb: { xs: 1, sm: 2 },
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 2,
+                      bgcolor: "#f8fafc",
+                      transition: "all 0.2s ease",
+                      "&:hover": {
+                        bgcolor: "#ffffff",
+                      },
+                      "&.Mui-focused": {
+                        bgcolor: "#ffffff",
+                        boxShadow: "0 0 0 4px rgba(25,118,210,0.1)",
+                      },
+                    },
+                  }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlinedIcon
+                          sx={{
+                            fontSize: { xs: 18, sm: 20 },
+                            color: focusedField === "password" ? "#1976d2" : "#94a3b8",
+                            transition: "color 0.2s ease",
+                          }}
+                        />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          edge="end"
+                          size={isMobile ? "small" : "medium"}
+                          sx={{
+                            color: "#64748b",
+                            "&:hover": { color: "#1976d2" },
+                          }}
+                        >
+                          {showPassword ? <VisibilityOffIcon fontSize={isMobile ? "small" : "medium"} /> : <VisibilityIcon fontSize={isMobile ? "small" : "medium"} />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                {/* Forgot Password Link */}
+                <Box sx={{ textAlign: "right", mb: { xs: 1.5, sm: 2 } }}>
+                  <MuiLink
+                    href="#"
+                    sx={{
+                      color: "#64748b",
+                      fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                      fontWeight: 500,
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "#1976d2",
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
+                    Forgot password?
+                  </MuiLink>
+                </Box>
+
+                {error && (
+                  <Fade in={true}>
+                    <Typography
+                      sx={{
+                        color: "error.main",
+                        fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                        mb: { xs: 1.5, sm: 2 },
+                        p: { xs: 1, sm: 1.5 },
+                        bgcolor: alpha(theme.palette.error.main, 0.1),
+                        borderRadius: 2,
+                        border: `1px solid ${alpha(theme.palette.error.main, 0.2)}`,
+                        textAlign: "center",
+                      }}
+                    >
+                      {error}
+                    </Typography>
+                  </Fade>
+                )}
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  disabled={loading}
+                  size={isMobile ? "large" : "large"}
+                  sx={{
+                    py: { xs: 1.2, sm: 1.5, md: 1.8 },
+                    fontWeight: 700,
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
+                    borderRadius: 2,
+                    background: "linear-gradient(45deg, #0a2a5a 0%, #1e4a8b 50%, #2e6bb5 100%)",
+                    textTransform: "none",
+                    boxShadow: "0 8px 20px rgba(10, 42, 90, 0.3)",
+                    position: "relative",
+                    overflow: "hidden",
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: "-100%",
+                      width: "100%",
+                      height: "100%",
+                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                      transition: "left 0.5s ease",
+                    },
+                    "&:hover": {
+                      background: "linear-gradient(45deg, #0f2b5e 0%, #1e4a8b 70%, #2e6bb5 100%)",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 12px 28px rgba(10, 42, 90, 0.4)",
+                      "&::before": {
+                        left: "100%",
+                      },
+                    },
+                    "&:disabled": {
+                      background: "#94a3b8",
+                    },
+                  }}
+                >
+                  {loading ? (
+                    <CircularProgress size={isMobile ? 20 : 24} sx={{ color: "white" }} />
+                  ) : (
+                    "Sign In"
+                  )}
+                </Button>
+
+                <Box sx={{ mt: { xs: 2, sm: 3 }, textAlign: "center" }}>
+                  <Typography variant="body2" sx={{ color: "#64748b", fontSize: { xs: "0.8rem", sm: "0.875rem" } }}>
+                    Don't have an account?{" "}
+                    <MuiLink
+                      component={Link}
+                      to="/register"
+                      sx={{
+                        color: "#1976d2",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                        "&:hover": {
+                          textDecoration: "underline",
+                        },
+                      }}
+                    >
+                      Create account
+                    </MuiLink>
+                  </Typography>
+                </Box>
+
+                {/* Demo credentials */}
+                <Box
+                  sx={{
+                    mt: { xs: 3, sm: 4 },
+                    p: { xs: 1.5, sm: 2 },
+                    bgcolor: alpha("#1976d2", 0.05),
+                    borderRadius: 2,
+                    border: `1px dashed ${alpha("#1976d2", 0.3)}`,
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#64748b", display: "block", mb: 0.5, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}
+                  >
+                    Demo Credentials:
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#0a2a5a", display: "block", fontWeight: 500, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
+                    Email: cloudofroses202@aerospace.com
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#0a2a5a", display: "block", fontWeight: 500, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
+                    Password: MountainCard2000
+                  </Typography>
+                </Box>
+              </form>
+            </Paper>
+          </Fade>
+        </Container>
       </Box>
     </Box>
   );
