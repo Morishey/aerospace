@@ -208,7 +208,7 @@ const BoardingPass = () => {
                   variant="caption"
                   sx={{ color: "#94a3b8", display: "block" }}
                 >
-                  Economy • <br />Boarding Group A
+                  First Class • <br />Boarding Group A
                 </Typography>
               </Box>
             </Box>
