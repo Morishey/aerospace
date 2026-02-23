@@ -62,7 +62,10 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (email === "fly.user22872@aerospace.com" && password === "LovetoFly2017") {
+    if (
+      email === "fly.user22872@aerospace.com" &&
+      password === "LovetoFly2017"
+    ) {
       setLoading(true);
       setError("");
       setTimeout(() => {
@@ -104,7 +107,8 @@ export default function Login() {
           width: { xs: 200, sm: 300 },
           height: { xs: 200, sm: 300 },
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(25,118,210,0.1) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(25,118,210,0.1) 0%, transparent 70%)",
           filter: "blur(50px)",
           zIndex: 1,
         }}
@@ -117,7 +121,8 @@ export default function Login() {
           width: { xs: 250, sm: 400 },
           height: { xs: 250, sm: 400 },
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(25,118,210,0.08) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(25,118,210,0.08) 0%, transparent 70%)",
           filter: "blur(60px)",
           zIndex: 1,
         }}
@@ -130,7 +135,8 @@ export default function Login() {
             sx={{
               flex: 1.2,
               position: "relative",
-              background: "linear-gradient(135deg, #0a2a5a 0%, #1e4a8b 50%, #2e6bb5 100%)",
+              background:
+                "linear-gradient(135deg, #0a2a5a 0%, #1e4a8b 50%, #2e6bb5 100%)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -160,7 +166,14 @@ export default function Login() {
 
             {/* Content */}
             <Zoom in={true} timeout={800} style={{ transitionDelay: "200ms" }}>
-              <Box sx={{ position: "relative", zIndex: 2, maxWidth: 500, textAlign: "center" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  zIndex: 2,
+                  maxWidth: 500,
+                  textAlign: "center",
+                }}
+              >
                 <Box
                   sx={{
                     display: "flex",
@@ -214,7 +227,8 @@ export default function Login() {
                     lineHeight: 1.6,
                   }}
                 >
-                  Access your dashboard, manage flights, and track your aerospace operations with our secure enterprise platform.
+                  Access your dashboard, manage flights, and track your
+                  aerospace operations with our secure enterprise platform.
                 </Typography>
 
                 {/* Stats */}
@@ -238,7 +252,10 @@ export default function Login() {
                       >
                         {stat.value}
                       </Typography>
-                      <Typography variant="body2" sx={{ color: alpha("#fff", 0.7) }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: alpha("#fff", 0.7) }}
+                      >
                         {stat.label}
                       </Typography>
                     </Box>
@@ -263,8 +280,8 @@ export default function Login() {
           zIndex: 2,
         }}
       >
-        <Container 
-          maxWidth="sm" 
+        <Container
+          maxWidth="sm"
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -282,7 +299,8 @@ export default function Login() {
                 maxWidth: { xs: "100%", sm: 450, md: 480 },
                 background: "rgba(255, 255, 255, 0.95)",
                 backdropFilter: "blur(10px)",
-                boxShadow: "0 20px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(25,118,210,0.1)",
+                boxShadow:
+                  "0 20px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(25,118,210,0.1)",
                 position: "relative",
                 overflow: "hidden",
                 mx: "auto", // Center horizontally
@@ -297,7 +315,8 @@ export default function Login() {
                   left: 0,
                   right: 0,
                   height: 4,
-                  background: "linear-gradient(90deg, #0a2a5a, #2e6bb5, #4a90e2)",
+                  background:
+                    "linear-gradient(90deg, #0a2a5a, #2e6bb5, #4a90e2)",
                 }}
               />
 
@@ -386,7 +405,8 @@ export default function Login() {
                         <EmailOutlinedIcon
                           sx={{
                             fontSize: { xs: 18, sm: 20 },
-                            color: focusedField === "email" ? "#1976d2" : "#94a3b8",
+                            color:
+                              focusedField === "email" ? "#1976d2" : "#94a3b8",
                             transition: "color 0.2s ease",
                           }}
                         />
@@ -427,7 +447,10 @@ export default function Login() {
                         <LockOutlinedIcon
                           sx={{
                             fontSize: { xs: 18, sm: 20 },
-                            color: focusedField === "password" ? "#1976d2" : "#94a3b8",
+                            color:
+                              focusedField === "password"
+                                ? "#1976d2"
+                                : "#94a3b8",
                             transition: "color 0.2s ease",
                           }}
                         />
@@ -444,7 +467,15 @@ export default function Login() {
                             "&:hover": { color: "#1976d2" },
                           }}
                         >
-                          {showPassword ? <VisibilityOffIcon fontSize={isMobile ? "small" : "medium"} /> : <VisibilityIcon fontSize={isMobile ? "small" : "medium"} />}
+                          {showPassword ? (
+                            <VisibilityOffIcon
+                              fontSize={isMobile ? "small" : "medium"}
+                            />
+                          ) : (
+                            <VisibilityIcon
+                              fontSize={isMobile ? "small" : "medium"}
+                            />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -500,7 +531,8 @@ export default function Login() {
                     fontWeight: 700,
                     fontSize: { xs: "0.9rem", sm: "1rem" },
                     borderRadius: 2,
-                    background: "linear-gradient(45deg, #0a2a5a 0%, #1e4a8b 50%, #2e6bb5 100%)",
+                    background:
+                      "linear-gradient(45deg, #0a2a5a 0%, #1e4a8b 50%, #2e6bb5 100%)",
                     textTransform: "none",
                     boxShadow: "0 8px 20px rgba(10, 42, 90, 0.3)",
                     position: "relative",
@@ -512,11 +544,13 @@ export default function Login() {
                       left: "-100%",
                       width: "100%",
                       height: "100%",
-                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                      background:
+                        "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
                       transition: "left 0.5s ease",
                     },
                     "&:hover": {
-                      background: "linear-gradient(45deg, #0f2b5e 0%, #1e4a8b 70%, #2e6bb5 100%)",
+                      background:
+                        "linear-gradient(45deg, #0f2b5e 0%, #1e4a8b 70%, #2e6bb5 100%)",
                       transform: "translateY(-2px)",
                       boxShadow: "0 12px 28px rgba(10, 42, 90, 0.4)",
                       "&::before": {
@@ -529,14 +563,23 @@ export default function Login() {
                   }}
                 >
                   {loading ? (
-                    <CircularProgress size={isMobile ? 20 : 24} sx={{ color: "white" }} />
+                    <CircularProgress
+                      size={isMobile ? 20 : 24}
+                      sx={{ color: "white" }}
+                    />
                   ) : (
                     "Sign In"
                   )}
                 </Button>
 
                 <Box sx={{ mt: { xs: 2, sm: 3 }, textAlign: "center" }}>
-                  <Typography variant="body2" sx={{ color: "#64748b", fontSize: { xs: "0.8rem", sm: "0.875rem" } }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#64748b",
+                      fontSize: { xs: "0.8rem", sm: "0.875rem" },
+                    }}
+                  >
                     Don't have an account?{" "}
                     <MuiLink
                       component={Link}
@@ -552,30 +595,6 @@ export default function Login() {
                     >
                       Create account
                     </MuiLink>
-                  </Typography>
-                </Box>
-
-                {/* Demo credentials */}
-                <Box
-                  sx={{
-                    mt: { xs: 3, sm: 4 },
-                    p: { xs: 1.5, sm: 2 },
-                    bgcolor: alpha("#1976d2", 0.05),
-                    borderRadius: 2,
-                    border: `1px dashed ${alpha("#1976d2", 0.3)}`,
-                  }}
-                >
-                  <Typography
-                    variant="caption"
-                    sx={{ color: "#64748b", display: "block", mb: 0.5, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}
-                  >
-                    Demo Credentials:
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: "#0a2a5a", display: "block", fontWeight: 500, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
-                    Email: cloudofroses202@aerospace.com
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: "#0a2a5a", display: "block", fontWeight: 500, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
-                    Password: MountainCard2000
                   </Typography>
                 </Box>
               </form>
