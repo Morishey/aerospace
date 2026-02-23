@@ -618,28 +618,24 @@ const HomePage = () => {
         )}
       </Box>
 
-      {/* Book Your Flight Section - FIXED CENTERING */}
+      {/* Book Your Flight Section - FIXED: Container handles centering automatically */}
       <Container 
         id="booking-form" 
+        maxWidth="lg"
         sx={{ 
           py: { xs: 4, sm: 5, md: 6 }, 
           animation: `${fadeInUp} 0.8s ease-out`,
-          maxWidth: { lg: "lg", xl: "xl" },
-          px: { xs: 2, sm: 3, md: 4 },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
+          px: { xs: 2, sm: 3, md: 4 }
         }}
       >
         <Typography
-          variant="h5"
+          variant="h4"
           sx={{
             mb: { xs: 3, sm: 4 },
             textAlign: "center",
             color: "#0d47a1",
             fontWeight: 700,
-            fontSize: { xs: "1.4rem", sm: "1.6rem", md: "1.8rem", lg: "2rem" },
-            width: "100%"
+            fontSize: { xs: "1.6rem", sm: "1.8rem", md: "2rem", lg: "2.2rem" }
           }}
         >
           Book Your Flight
@@ -735,10 +731,7 @@ const HomePage = () => {
         </Box>
 
         {/* Popular Global Destinations */}
-        <Box sx={{ 
-          py: { xs: 4, sm: 6, md: 8 },
-          width: "100%"
-        }}>
+        <Box sx={{ py: { xs: 4, sm: 6, md: 8 } }}>
           <Box sx={{ 
             display: "flex", 
             flexDirection: { xs: "column", sm: "row" },
@@ -747,7 +740,7 @@ const HomePage = () => {
             mb: { xs: 3, sm: 4 },
             gap: { xs: 2, sm: 0 }
           }}>
-            <Box sx={{ flex: 1 }}>
+            <Box>
               <Chip 
                 label="🌍 Global Destinations" 
                 sx={{ 
@@ -867,19 +860,15 @@ const HomePage = () => {
         </Box>
 
         {/* Available Flights */}
-        <Box sx={{ 
-          animation: `${fadeInUp} 0.8s ease-out`,
-          width: "100%"
-        }}>
+        <Box sx={{ animation: `${fadeInUp} 0.8s ease-out` }}>
           <Typography
-            variant="h5"
+            variant="h4"
             sx={{
-              mb: { xs: 2, sm: 3 },
+              mb: { xs: 3, sm: 4 },
               textAlign: "center",
               color: "#0d47a1",
-              fontWeight: 600,
-              fontSize: { xs: "1.3rem", sm: "1.5rem", md: "1.7rem", lg: "1.8rem" },
-              width: "100%"
+              fontWeight: 700,
+              fontSize: { xs: "1.6rem", sm: "1.8rem", md: "2rem", lg: "2.2rem" }
             }}
           >
             Available Flights
@@ -901,20 +890,13 @@ const HomePage = () => {
         </Box>
       </Container>
 
-      {/* Features Section - FIXED CENTERING */}
+      {/* Features Section - FIXED: Container handles centering automatically */}
       <Box sx={{ 
         bgcolor: "rgba(13, 71, 161, 0.02)", 
         py: { xs: 6, sm: 7, md: 8 }, 
-        animation: `${fadeInUp} 0.8s ease-out`,
-        display: "flex",
-        justifyContent: "center"
+        animation: `${fadeInUp} 0.8s ease-out`
       }}>
-        <Container maxWidth="xl" sx={{ 
-          px: { xs: 2, sm: 3, md: 4 },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
-        }}>
+        <Container maxWidth="lg">
           <Typography 
             variant="h4" 
             sx={{ 
@@ -922,19 +904,14 @@ const HomePage = () => {
               mb: { xs: 4, sm: 5, md: 6 }, 
               fontWeight: 800, 
               color: "#1e293b", 
-              fontSize: { xs: "1.6rem", sm: "1.8rem", md: "2rem", lg: "2.2rem" },
-              width: "100%"
+              fontSize: { xs: "1.6rem", sm: "1.8rem", md: "2rem", lg: "2.2rem" }
             }}
           >
             Why Choose Aerospace?
           </Typography>
           <Grid 
             container 
-            spacing={{ xs: 2, sm: 3, md: 4 }} 
-            sx={{ 
-              maxWidth: "1200px",
-              mx: "auto"
-            }}
+            spacing={{ xs: 2, sm: 3, md: 4 }}
           >
             {features.map((feature, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
