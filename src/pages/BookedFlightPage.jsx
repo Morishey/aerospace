@@ -27,7 +27,7 @@ import PowerIcon from "@mui/icons-material/Power";
 import PetsIcon from "@mui/icons-material/Pets";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
-import html2canvas from "html2canvas"; 
+import html2canvas from "html2canvas";
 import { motion } from "framer-motion";
 
 // Modern Barcode Design
@@ -193,7 +193,7 @@ const BoardingPass = () => {
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="Flight Canceled • Contact Support"
+                  label="Flight Canceled"
                   size="medium"
                   sx={{
                     bgcolor: alpha("#ef4444", 0.1),
@@ -208,7 +208,8 @@ const BoardingPass = () => {
                   variant="caption"
                   sx={{ color: "#94a3b8", display: "block" }}
                 >
-                  First Class • <br />Boarding Group A
+                  First Class • <br />
+                  Boarding Group A
                 </Typography>
               </Box>
             </Box>
@@ -433,9 +434,14 @@ const BoardingPass = () => {
                   value="12F (Window)"
                 />
                 {/* Pet in cabin Detail - NEW */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+                >
                   <PetsIcon sx={{ color: "#9c27b0", fontSize: 18 }} />
-                  <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 600 }}>
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "#9c27b0", fontWeight: 600 }}
+                  >
                     Service Animal: "Coco" (Cabin)
                   </Typography>
                 </Box>
@@ -456,7 +462,9 @@ const BoardingPass = () => {
                   value="February 23, 2026"
                 />
                 {/* Additional Pet Info */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+                >
                   <InfoIcon sx={{ color: "#64748b", fontSize: 16 }} />
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
                     Pet carrier counts as carry-on
@@ -488,9 +496,19 @@ const BoardingPass = () => {
                 GINA WELLS
               </Typography>
               {/* Pet name under passenger - NEW */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.5 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                  mt: 0.5,
+                }}
+              >
                 <PetsIcon sx={{ color: "#9c27b0", fontSize: 14 }} />
-                <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 500 }}>
+                <Typography
+                  variant="caption"
+                  sx={{ color: "#9c27b0", fontWeight: 500 }}
+                >
                   Traveling with service animal (Pomeranian - "Coco")
                 </Typography>
               </Box>
@@ -592,7 +610,10 @@ const BoardingPass = () => {
               Have your ID ready
             </Typography>
             {/* Pet reminder in footer - NEW */}
-            <Typography variant="caption" sx={{ color: "#9c27b0", display: "block", mt: 0.5 }}>
+            <Typography
+              variant="caption"
+              sx={{ color: "#9c27b0", display: "block", mt: 0.5 }}
+            >
               🐾 Service animal must remain in carrier during flight
             </Typography>
           </Box>
