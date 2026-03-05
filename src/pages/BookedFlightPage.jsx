@@ -290,7 +290,7 @@ const BoardingPass = () => {
                       variant="body2"
                       sx={{ fontWeight: 700, color: "#0f2b5e" }}
                     >
-                      5h 20m
+                      6h 27m
                     </Typography>
                     <Box
                       sx={{
