@@ -193,7 +193,7 @@ const BoardingPass = () => {
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="Canceled"
+                  label=" Flight canceled"
                   size="small"
                   sx={{
                     bgcolor: alpha("#dd3518", 0.1),
