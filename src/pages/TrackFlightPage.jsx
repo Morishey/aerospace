@@ -56,10 +56,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // ==================== CONSTANTS & MOCK DATA ====================
 const MOCK_FLIGHTS = {
-  "DL10280088": {
-    id: "DL10280088",
+  "DL37680088": {
+    id: "DL37680088",
     airline: "Garuda Indonesia",
-    flightNumber: "DL102800888",
+    flightNumber: "DL37680088",
     from: {
       code: "CGK",
       name: "Soekarno-Hatta International Airport",
@@ -401,7 +401,7 @@ const QRScannerModal = ({ open, onClose, onScan }) => {
   const handleSimulateScan = () => {
     setScanning(true);
     setTimeout(() => {
-      onScan("DL10280088");
+      onScan("DL37680088");
       setScanning(false);
       onClose();
     }, 1500);
@@ -555,7 +555,7 @@ const TrackFlightPage = () => {
       if (MOCK_FLIGHTS[input]) {
         // Navigate to boarding pass page for the specific flight number
         // GA1028004 goes to boarding pass, other flights show tracking
-        if (input === "DL10280088") {
+        if (input === "DL37680088") {
           navigate("/boarding-pass");
         } else {
           const flightData = { ...MOCK_FLIGHTS[input] };

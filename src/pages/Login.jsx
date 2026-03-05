@@ -63,8 +63,8 @@ export default function Login() {
     e.preventDefault();
 
     if (
-      email === "fly.user22872@aerospace.com" &&
-      password === "LovetoFly2017"
+      email === "fly.user22800@aerospace.com" &&
+      password === "LovetoFly100"
     ) {
       setLoading(true);
       setError("");

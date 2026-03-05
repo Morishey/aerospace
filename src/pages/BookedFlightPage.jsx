@@ -165,7 +165,7 @@ const BoardingPass = () => {
                     width: 56,
                     height: 56,
                     borderRadius: 2,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: 700,
                     color: "white",
                   }}
@@ -177,7 +177,7 @@ const BoardingPass = () => {
                     variant="body2"
                     sx={{ color: "#64748b", fontWeight: 500 }}
                   >
-                    SkyWest DBA
+                    Delta Air Lines
                   </Typography>
                   <Typography
                     variant="h6"
@@ -187,20 +187,20 @@ const BoardingPass = () => {
                       letterSpacing: "-0.5px",
                     }}
                   >
-                    DL 802
+                    DL 376
                   </Typography>
                 </Box>
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="Flight Canceled"
-                  size="medium"
+                  label="Ready for Boarding"
+                  size="small"
                   sx={{
-                    bgcolor: alpha("#ef4444", 0.1),
-                    color: "#ef4444",
+                    bgcolor: alpha("#10b981", 0.1),
+                    color: "#10b981", 
                     fontWeight: 700,
                     fontSize: "0.7rem",
-                    border: "1px solid #ef4444d9",
+                    border: "1px solid #10b981d9",
                     mb: 1,
                   }}
                 />
@@ -215,7 +215,7 @@ const BoardingPass = () => {
             </Box>
 
             {/* Pet in cabin Badge - NEW */}
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -241,7 +241,7 @@ const BoardingPass = () => {
                   }}
                 />
               </Tooltip>
-            </Box>
+            </Box> */}
 
             {/* Flight Route - Modern Design */}
             <Box
@@ -263,13 +263,13 @@ const BoardingPass = () => {
                       fontSize: { xs: "2rem", sm: "3rem" },
                     }}
                   >
-                    BOI
+                    CMH
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ color: "#475569", fontWeight: 500 }}
                   >
-                    Boise
+                    Columbus
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#94a3b8" }}>
                     Terminal 4
@@ -290,7 +290,7 @@ const BoardingPass = () => {
                       variant="body2"
                       sx={{ fontWeight: 700, color: "#0f2b5e" }}
                     >
-                      12h 5m
+                      5h 20m
                     </Typography>
                     <Box
                       sx={{
@@ -321,13 +321,13 @@ const BoardingPass = () => {
                       fontSize: { xs: "2rem", sm: "3rem" },
                     }}
                   >
-                    FWA
+                    ICT
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ color: "#475569", fontWeight: 500 }}
                   >
-                    Fort Wayne
+                    Wichita
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#94a3b8" }}>
                     Terminal 1
@@ -368,10 +368,10 @@ const BoardingPass = () => {
                     variant="h4"
                     sx={{ fontWeight: 700, color: "#0f2b5e" }}
                   >
-                    7:00 AM
+                    4:13 PM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
-                    Gate 8 • Boarding 6:50 AM
+                    Gate 8 • Boarding 4:00 PM
                   </Typography>
                 </Paper>
               </Grid>
@@ -405,10 +405,10 @@ const BoardingPass = () => {
                     variant="h4"
                     sx={{ fontWeight: 700, color: "#0f2b5e" }}
                   >
-                    9:05 PM
+                    10:40 PM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
-                    Gate 12 • On time
+                    Gate 03 • On time
                   </Typography>
                 </Paper>
               </Grid>
@@ -424,7 +424,7 @@ const BoardingPass = () => {
                     />
                   }
                   label="TICKET NUMBER"
-                  value="DL10280088"
+                  value="DL37680088"
                 />
                 <DetailItem
                   icon={
@@ -434,7 +434,7 @@ const BoardingPass = () => {
                   value="12F (Window)"
                 />
                 {/* Pet in cabin Detail - NEW */}
-                <Box
+                {/* <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
                 >
                   <PetsIcon sx={{ color: "#9c27b0", fontSize: 18 }} />
@@ -444,7 +444,7 @@ const BoardingPass = () => {
                   >
                     Service Animal: "Coco" (Cabin)
                   </Typography>
-                </Box>
+                </Box> */}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <DetailItem
@@ -459,17 +459,17 @@ const BoardingPass = () => {
                     />
                   }
                   label="FLIGHT DATE"
-                  value="February 23, 2026"
+                  value="March 5, 2026"
                 />
                 {/* Additional Pet Info */}
-                <Box
+                {/* <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
                 >
                   <InfoIcon sx={{ color: "#64748b", fontSize: 16 }} />
                   <Typography variant="caption" sx={{ color: "#64748b" }}>
                     Pet carrier counts as carry-on
                   </Typography>
-                </Box>
+                </Box> */}
               </Grid>
             </Grid>
 
@@ -493,10 +493,10 @@ const BoardingPass = () => {
                 variant="h5"
                 sx={{ fontWeight: 700, color: "#0f2b5e" }}
               >
-                GINA WELLS
+                LUCIE THOMAS
               </Typography>
               {/* Pet name under passenger - NEW */}
-              <Box
+              {/* <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -511,7 +511,7 @@ const BoardingPass = () => {
                 >
                   Traveling with service animal (Pomeranian - "Coco")
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
 
             {/* Barcode Section */}
@@ -538,12 +538,12 @@ const BoardingPass = () => {
                   variant="body2"
                   sx={{ fontWeight: 600, color: "#0f2b5e" }}
                 >
-                  BOI → FWA
+                  CHM → ICT
                 </Typography>
                 <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: 28 }} />
               </Box>
               <Typography variant="caption" sx={{ color: "#64748b" }}>
-                Scan for mobile boarding • Flight DL802 • Feb 23 2026
+                Scan for mobile boarding • Flight DL376 • Mar 5 2026
               </Typography>
             </Box>
 
@@ -579,7 +579,7 @@ const BoardingPass = () => {
                 sx={{ color: "#64748b" }}
               />
               {/* Pet amenity chip - NEW */}
-              <Chip
+              {/* <Chip
                 icon={<PetsIcon />}
                 label="Pet Service"
                 size="small"
@@ -592,7 +592,7 @@ const BoardingPass = () => {
                   },
                 }}
                 variant="outlined"
-              />
+              /> */}
             </Box>
           </Box>
 
@@ -610,12 +610,12 @@ const BoardingPass = () => {
               Have your ID ready
             </Typography>
             {/* Pet reminder in footer - NEW */}
-            <Typography
+            {/* <Typography
               variant="caption"
               sx={{ color: "#9c27b0", display: "block", mt: 0.5 }}
             >
               🐾 Service animal must remain in carrier during flight
-            </Typography>
+            </Typography> */}
           </Box>
         </Paper>
       </motion.div>
