@@ -2,14 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   Box,
   Typography,
-  Divider,
   Paper,
   Grid,
   Button,
-  IconButton,
   Avatar,
   Chip,
-  Container,
   alpha,
   Tooltip,
 } from "@mui/material";
@@ -26,8 +23,9 @@ import WifiIcon from "@mui/icons-material/Wifi";
 import PowerIcon from "@mui/icons-material/Power";
 import PetsIcon from "@mui/icons-material/Pets";
 import InfoIcon from "@mui/icons-material/Info";
+import TimelineIcon from "@mui/icons-material/Timeline";
 import { Link } from "react-router-dom";
-import html2canvas from "html2canvas"; 
+import html2canvas from "html2canvas";
 import { motion } from "framer-motion";
 
 // Modern Barcode Design
@@ -61,13 +59,14 @@ const DetailItem = ({ icon, label, value, color = "#0a2a5a" }) => (
         alignItems: "center",
         gap: 0.5,
         mb: 0.5,
+        fontSize: { xs: "0.65rem", sm: "0.7rem" },
       }}
     >
       {icon} {label}
     </Typography>
     <Typography
       variant="body1"
-      sx={{ fontWeight: 600, color, fontSize: "1.1rem" }}
+      sx={{ fontWeight: 600, color, fontSize: { xs: "0.95rem", sm: "1.1rem" } }}
     >
       {value}
     </Typography>
@@ -113,11 +112,10 @@ const BoardingPass = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        p: { xs: 2, sm: 3 },
+        p: { xs: 1.5, sm: 3 },
         gap: 3,
       }}
     >
-      {/* Modern Boarding Pass Card */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
@@ -130,7 +128,7 @@ const BoardingPass = () => {
           sx={{
             width: "100%",
             maxWidth: 700,
-            borderRadius: 4,
+            borderRadius: { xs: 3, sm: 4 },
             overflow: "hidden",
             bgcolor: "#ffffff",
             boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
@@ -147,25 +145,24 @@ const BoardingPass = () => {
             }}
           />
 
-          {/* Main Content */}
-          <Box sx={{ p: { xs: 3, sm: 4 } }}>
-            {/* Header with Airline Logo and Status */}
+          <Box sx={{ p: { xs: 2, sm: 4 } }}>
+            {/* Header */}
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                mb: 3,
+                mb: 2,
               }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                 <Avatar
                   sx={{
                     bgcolor: "#0f2b5e",
-                    width: 56,
-                    height: 56,
+                    width: { xs: 48, sm: 56 },
+                    height: { xs: 48, sm: 56 },
                     borderRadius: 2,
-                    fontSize: 20,
+                    fontSize: { xs: 16, sm: 20 },
                     fontWeight: 700,
                     color: "white",
                   }}
@@ -175,7 +172,7 @@ const BoardingPass = () => {
                 <Box>
                   <Typography
                     variant="body2"
-                    sx={{ color: "#64748b", fontWeight: 500 }}
+                    sx={{ color: "#64748b", fontWeight: 500, fontSize: { xs: "0.7rem", sm: "0.875rem" } }}
                   >
                     SkyWest DBA
                   </Typography>
@@ -185,9 +182,24 @@ const BoardingPass = () => {
                       fontWeight: 700,
                       color: "#0f2b5e",
                       letterSpacing: "-0.5px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      fontSize: { xs: "1rem", sm: "1.25rem" },
                     }}
                   >
                     DL 802
+                    <Chip
+                      label="ONE WAY"
+                      size="small"
+                      sx={{
+                        bgcolor: alpha("#0f2b5e", 0.1),
+                        color: "#0f2b5e",
+                        fontWeight: 700,
+                        fontSize: "0.5rem",
+                        height: 18,
+                      }}
+                    />
                   </Typography>
                 </Box>
               </Box>
@@ -199,21 +211,22 @@ const BoardingPass = () => {
                     bgcolor: alpha("#22c55e", 0.1),
                     color: "#22c55e",
                     fontWeight: 700,
-                    fontSize: "0.7rem",
+                    fontSize: { xs: "0.55rem", sm: "0.7rem" },
                     border: "1px solid rgba(34, 197, 94, 0.2)",
-                    mb: 1,
+                    mb: 0.5,
+                    height: { xs: 20, sm: 24 },
                   }}
                 />
                 <Typography
                   variant="caption"
-                  sx={{ color: "#94a3b8", display: "block" }}
+                  sx={{ color: "#94a3b8", display: "block", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}
                 >
                   First Class • <br />Boarding Group A
                 </Typography>
               </Box>
             </Box>
 
-            {/* Pet in cabin Badge - NEW */}
+            {/* Pet in cabin badge */}
             <Box
               sx={{
                 display: "flex",
@@ -224,16 +237,17 @@ const BoardingPass = () => {
             >
               <Tooltip title="Service animal accompanying passenger">
                 <Chip
-                  icon={<PetsIcon />}
+                  icon={<PetsIcon sx={{ fontSize: { xs: 14, sm: 18 } }} />}
                   label="PET IN CABIN • Cabin Approved"
                   color="secondary"
                   sx={{
                     bgcolor: alpha("#9c27b0", 0.1),
                     color: "#9c27b0",
                     fontWeight: 700,
-                    fontSize: "0.8rem",
+                    fontSize: { xs: "0.65rem", sm: "0.8rem" },
                     border: "1px solid rgba(156, 39, 176, 0.3)",
-                    py: 2,
+                    py: { xs: 1, sm: 2 },
+                    height: { xs: 28, sm: 32 },
                     "& .MuiChip-icon": {
                       color: "#9c27b0",
                     },
@@ -242,135 +256,211 @@ const BoardingPass = () => {
               </Tooltip>
             </Box>
 
-            {/* Flight Route - Modern Design */}
+            {/* Flight Route with Stops - PDX → JFK → DTW */}
             <Box
               sx={{
                 background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
                 borderRadius: 3,
-                p: 3,
+                p: { xs: 1.5, sm: 3 },
                 mb: 3,
                 border: "1px solid rgba(226, 232, 240, 0.6)",
               }}
             >
-              <Grid container alignItems="center" spacing={2}>
-                <Grid item xs={5} sx={{ textAlign: "center" }}>
-                  <Typography
-                    variant="h2"
-                    sx={{
-                      fontWeight: 800,
-                      color: "#0f2b5e",
-                      fontSize: { xs: "2rem", sm: "3rem" },
-                    }}
-                  >
-                    BOI
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "#475569", fontWeight: 500 }}
-                  >
-                    Boise
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: "#94a3b8" }}>
-                    Terminal 4
-                  </Typography>
-                </Grid>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  color: "#0f2b5e",
+                  fontWeight: 700,
+                  mb: 1.5,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  fontSize: { xs: "0.7rem", sm: "0.875rem" },
+                }}
+              >
+                <TimelineIcon sx={{ fontSize: { xs: 16, sm: 18 } }} /> ONE WAY • 2 STOPS
+              </Typography>
 
-                <Grid item xs={2} sx={{ textAlign: "center" }}>
-                  <Box sx={{ position: "relative" }}>
-                    <FlightTakeoffIcon
-                      sx={{
-                        color: "#0f2b5e",
-                        fontSize: 24,
-                        transform: "rotate(90deg)",
-                        mb: 1,
-                      }}
-                    />
+              {/* Main route row - fits without scroll */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                {/* PDX */}
+                <Box sx={{ textAlign: "center", minWidth: 0, flex: 1 }}>
+                  <Tooltip title="Portland, OR" arrow>
                     <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 700, color: "#0f2b5e" }}
-                    >
-                      12h 5m
-                    </Typography>
-                    <Box
+                      variant="h6"
                       sx={{
-                        width: "100%",
-                        height: 2,
-                        background:
-                          "linear-gradient(90deg, transparent, #0f2b5e 20%, #0f2b5e 80%, transparent)",
-                        my: 1,
-                      }}
-                    />
-                    <FlightLandIcon
-                      sx={{
+                        fontWeight: 800,
                         color: "#0f2b5e",
-                        fontSize: 24,
-                        transform: "rotate(90deg)",
-                        mt: 1,
+                        fontSize: { xs: "1rem", sm: "1.5rem" },
+                        lineHeight: 1.2,
                       }}
-                    />
-                  </Box>
-                </Grid>
-
-                <Grid item xs={5} sx={{ textAlign: "center" }}>
+                    >
+                      PDX
+                    </Typography>
+                  </Tooltip>
                   <Typography
-                    variant="h2"
+                    variant="caption"
                     sx={{
-                      fontWeight: 800,
-                      color: "#0f2b5e",
-                      fontSize: { xs: "2rem", sm: "3rem" },
+                      color: "#64748b",
+                      display: { xs: "none", sm: "block" },
+                      fontSize: "0.7rem",
                     }}
                   >
-                    FWA
+                    Portland
                   </Typography>
+                </Box>
+
+                <FlightTakeoffIcon
+                  sx={{
+                    color: "#94a3b8",
+                    fontSize: { xs: 14, sm: 18 },
+                    mx: { xs: 0.5, sm: 1 },
+                    flexShrink: 0,
+                  }}
+                />
+
+                {/* JFK */}
+                <Box sx={{ textAlign: "center", minWidth: 0, flex: 1 }}>
+                  <Tooltip title="New York" arrow>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 800,
+                        color: "#0f2b5e",
+                        fontSize: { xs: "1rem", sm: "1.5rem" },
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      JFK
+                    </Typography>
+                  </Tooltip>
                   <Typography
-                    variant="body2"
-                    sx={{ color: "#475569", fontWeight: 500 }}
+                    variant="caption"
+                    sx={{
+                      color: "#64748b",
+                      display: { xs: "none", sm: "block" },
+                      fontSize: "0.7rem",
+                    }}
+                  />
+                  <Chip
+                    label="5h19m layover"
+                    size="small"
+                    sx={{
+                      mt: 0.5,
+                      height: 16,
+                      fontSize: "0.5rem",
+                      bgcolor: alpha("#f59e0b", 0.1),
+                      color: "#f59e0b",
+                    }}
+                  />
+                </Box>
+
+                <FlightTakeoffIcon
+                  sx={{
+                    color: "#94a3b8",
+                    fontSize: { xs: 14, sm: 18 },
+                    mx: { xs: 0.5, sm: 1 },
+                    flexShrink: 0,
+                  }}
+                />
+
+                {/* DTW (Final) */}
+                <Box sx={{ textAlign: "center", minWidth: 0, flex: 1 }}>
+                  <Tooltip title="Detroit" arrow>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 800,
+                        color: "#0f2b5e",
+                        fontSize: { xs: "1rem", sm: "1.5rem" },
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      DTW
+                    </Typography>
+                  </Tooltip>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "#64748b",
+                      display: { xs: "none", sm: "block" },
+                      fontSize: "0.7rem",
+                    }}
                   >
-                    Fort Wayne
+                    Detroit
                   </Typography>
-                  <Typography variant="caption" sx={{ color: "#94a3b8" }}>
-                    Terminal 1
+                </Box>
+              </Box>
+
+              {/* Journey summary */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  mt: 2,
+                  pt: 1.5,
+                  borderTop: "1px dashed #cbd5e1",
+                  gap: 1,
+                }}
+              >
+                <Box>
+                  <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+                    First Departure
                   </Typography>
-                </Grid>
-              </Grid>
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
+                    6:00 PM • PDX
+                  </Typography>
+                </Box>
+                <Box sx={{ textAlign: "center" }}>
+                  <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+                    Total Journey
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
+                    15h 30m
+                  </Typography>
+                </Box>
+                <Box sx={{ textAlign: "right" }}>
+                  <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+                    Final Arrival
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
+                    9:00 AM • DTW
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
 
-            {/* Time Information Cards */}
-            <Grid container spacing={2} sx={{ mb: 4 }}>
+            {/* Time Cards - Centered Content */}
+            <Grid container spacing={1.5} sx={{ mb: 3 }}>
               <Grid item xs={6}>
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 2,
+                    p: { xs: 1.5, sm: 2 },
                     bgcolor: alpha("#0891b2", 0.04),
                     borderRadius: 2,
                     border: "1px solid rgba(8, 145, 178, 0.1)",
+                    textAlign: "center",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mb: 1,
-                    }}
-                  >
-                    <AccessTimeIcon sx={{ color: "#0891b2", fontSize: 20 }} />
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "#0891b2", fontWeight: 600 }}
-                    >
-                      DEPARTURE
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.5, mb: 0.5 }}>
+                    <AccessTimeIcon sx={{ color: "#0891b2", fontSize: { xs: 16, sm: 20 } }} />
+                    <Typography variant="body2" sx={{ color: "#0891b2", fontWeight: 600, fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
+                      FIRST DEPARTURE
                     </Typography>
                   </Box>
-                  <Typography
-                    variant="h4"
-                    sx={{ fontWeight: 700, color: "#0f2b5e" }}
-                  >
-                    7:00 AM
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.5rem", sm: "2.125rem" } }}>
+                    6:00 PM
                   </Typography>
-                  <Typography variant="caption" sx={{ color: "#64748b" }}>
-                    Gate 8 • Boarding 6:50 AM
+                  <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+                    Portland (PDX) • Gate 4
                   </Typography>
                 </Paper>
               </Grid>
@@ -378,119 +468,88 @@ const BoardingPass = () => {
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 2,
+                    p: { xs: 1.5, sm: 2 },
                     bgcolor: alpha("#059669", 0.04),
                     borderRadius: 2,
                     border: "1px solid rgba(5, 150, 105, 0.1)",
+                    textAlign: "center",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mb: 1,
-                    }}
-                  >
-                    <AccessTimeIcon sx={{ color: "#059669", fontSize: 20 }} />
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "#059669", fontWeight: 600 }}
-                    >
-                      ARRIVAL
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.5, mb: 0.5 }}>
+                    <AccessTimeIcon sx={{ color: "#059669", fontSize: { xs: 16, sm: 20 } }} />
+                    <Typography variant="body2" sx={{ color: "#059669", fontWeight: 600, fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
+                      FINAL ARRIVAL
                     </Typography>
                   </Box>
-                  <Typography
-                    variant="h4"
-                    sx={{ fontWeight: 700, color: "#0f2b5e" }}
-                  >
-                    9:05 PM
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.5rem", sm: "2.125rem" } }}>
+                    9:00 AM
                   </Typography>
-                  <Typography variant="caption" sx={{ color: "#64748b" }}>
-                    Gate 12 • On time
+                  <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+                    Detroit (DTW) • Gate 12
                   </Typography>
                 </Paper>
               </Grid>
             </Grid>
 
-            {/* Passenger Details Grid with Pet Information */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
+            {/* Passenger Details */}
+            <Grid container spacing={2} sx={{ mb: 3 }}>
               <Grid item xs={12} sm={6}>
                 <DetailItem
-                  icon={
-                    <ConfirmationNumberIcon
-                      sx={{ fontSize: 16, color: "#0f2b5e" }}
-                    />
-                  }
+                  icon={<ConfirmationNumberIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="TICKET NUMBER"
-                  value="DL10280088"
+                  value="DL80287608"
                 />
                 <DetailItem
-                  icon={
-                    <EventSeatIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />
-                  }
+                  icon={<EventSeatIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="SEAT"
-                  value="12F (Window)"
+                  value="18A (Window) • All flights"
                 />
-                {/* Pet in cabin Detail - NEW */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-                  <PetsIcon sx={{ color: "#9c27b0", fontSize: 18 }} />
-                  <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 600 }}>
-                    Service Animal: "Coco" (Cabin)
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+                  <PetsIcon sx={{ color: "#9c27b0", fontSize: { xs: 16, sm: 18 } }} />
+                  <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 600, fontSize: { xs: "0.65rem", sm: "0.7rem" } }}>
+                    Service Animal: "Coco" (In-cabin)
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <DetailItem
-                  icon={<LuggageIcon sx={{ fontSize: 16, color: "#0f2b5e" }} />}
+                  icon={<LuggageIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="BAGGAGE"
-                  value="2 pieces • Carousel 5"
+                  value="2 pieces + Pet carrier"
                 />
                 <DetailItem
-                  icon={
-                    <FlightTakeoffIcon
-                      sx={{ fontSize: 16, color: "#0f2b5e" }}
-                    />
-                  }
+                  icon={<FlightTakeoffIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="FLIGHT DATE"
-                  value="February 23, 2026"
+                  value="March 10, 2026"
                 />
-                {/* Additional Pet Info */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-                  <InfoIcon sx={{ color: "#64748b", fontSize: 16 }} />
-                  <Typography variant="caption" sx={{ color: "#64748b" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+                  <InfoIcon sx={{ color: "#64748b", fontSize: { xs: 14, sm: 16 } }} />
+                  <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.65rem", sm: "0.7rem" } }}>
                     Pet carrier counts as carry-on
                   </Typography>
                 </Box>
               </Grid>
             </Grid>
 
-            {/* Passenger Name - Prominent Display */}
+            {/* Passenger Name */}
             <Box
               sx={{
                 bgcolor: "#f8fafc",
-                p: 2,
+                p: { xs: 1.5, sm: 2 },
                 borderRadius: 2,
                 mb: 3,
                 border: "1px solid #e2e8f0",
               }}
             >
-              <Typography
-                variant="caption"
-                sx={{ color: "#64748b", display: "block", mb: 0.5 }}
-              >
+              <Typography variant="caption" sx={{ color: "#64748b", display: "block", mb: 0.5, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
                 PASSENGER
               </Typography>
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: 700, color: "#0f2b5e" }}
-              >
+              <Typography variant="h5" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.2rem", sm: "1.5rem" } }}>
                 GINA WELLS
               </Typography>
-              {/* Pet name under passenger - NEW */}
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.5 }}>
-                <PetsIcon sx={{ color: "#9c27b0", fontSize: 14 }} />
-                <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 500 }}>
+                <PetsIcon sx={{ color: "#9c27b0", fontSize: { xs: 12, sm: 14 } }} />
+                <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 500, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
                   Traveling with service animal (Pomeranian - "Coco")
                 </Typography>
               </Box>
@@ -500,78 +559,40 @@ const BoardingPass = () => {
             <Box
               sx={{
                 bgcolor: "#ffffff",
-                p: 3,
+                p: { xs: 2, sm: 3 },
                 borderRadius: 2,
                 border: "2px dashed #cbd5e1",
                 textAlign: "center",
               }}
             >
               <ModernBarcode />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 2,
-                  mb: 1,
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: 600, color: "#0f2b5e" }}
-                >
-                  BOI → FWA
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 1 }}>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.7rem", sm: "0.875rem" } }}>
+                  PDX → JFK → DTW
                 </Typography>
-                <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: 28 }} />
+                <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: { xs: 24, sm: 28 } }} />
               </Box>
-              <Typography variant="caption" sx={{ color: "#64748b" }}>
-                Scan for mobile boarding • Flight DL802 • Feb 23 2026
+              <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+                Scan for mobile boarding • One way • March 10 2026
               </Typography>
             </Box>
 
-            {/* Flight Amenities with Pet Icon */}
-            <Box
-              sx={{
-                mt: 3,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 2,
-                flexWrap: "wrap",
-              }}
-            >
+            {/* Amenities */}
+            <Box sx={{ mt: 2, display: "flex", alignItems: "center", justifyContent: "center", gap: 1, flexWrap: "wrap" }}>
+              <Chip icon={<WifiIcon sx={{ fontSize: { xs: 14, sm: 16 } }} />} label="Wi-Fi" size="small" variant="outlined" sx={{ color: "#64748b", fontSize: { xs: "0.65rem", sm: "0.7rem" }, height: { xs: 24, sm: 28 } }} />
+              <Chip icon={<PowerIcon sx={{ fontSize: { xs: 14, sm: 16 } }} />} label="Power" size="small" variant="outlined" sx={{ color: "#64748b", fontSize: { xs: "0.65rem", sm: "0.7rem" }, height: { xs: 24, sm: 28 } }} />
+              <Chip label="Snacks" size="small" variant="outlined" sx={{ color: "#64748b", fontSize: { xs: "0.65rem", sm: "0.7rem" }, height: { xs: 24, sm: 28 } }} />
               <Chip
-                icon={<WifiIcon />}
-                label="Wi-Fi"
-                size="small"
-                variant="outlined"
-                sx={{ color: "#64748b" }}
-              />
-              <Chip
-                icon={<PowerIcon />}
-                label="Power"
-                size="small"
-                variant="outlined"
-                sx={{ color: "#64748b" }}
-              />
-              <Chip
-                label="Snacks"
-                size="small"
-                variant="outlined"
-                sx={{ color: "#64748b" }}
-              />
-              {/* Pet amenity chip - NEW */}
-              <Chip
-                icon={<PetsIcon />}
+                icon={<PetsIcon sx={{ fontSize: { xs: 14, sm: 16 } }} />}
                 label="Pet Service"
                 size="small"
                 sx={{
                   bgcolor: alpha("#9c27b0", 0.1),
                   color: "#9c27b0",
                   borderColor: alpha("#9c27b0", 0.3),
-                  "& .MuiChip-icon": {
-                    color: "#9c27b0",
-                  },
+                  fontSize: { xs: "0.65rem", sm: "0.7rem" },
+                  height: { xs: 24, sm: 28 },
+                  "& .MuiChip-icon": { color: "#9c27b0" },
                 }}
                 variant="outlined"
               />
@@ -579,21 +600,12 @@ const BoardingPass = () => {
           </Box>
 
           {/* Footer */}
-          <Box
-            sx={{
-              bgcolor: "#f8fafc",
-              borderTop: "1px solid #e2e8f0",
-              p: 2,
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="caption" sx={{ color: "#94a3b8" }}>
-              Please arrive at the gate at least 30 minutes before departure •
-              Have your ID ready
+          <Box sx={{ bgcolor: "#f8fafc", borderTop: "1px solid #e2e8f0", p: { xs: 1.5, sm: 2 }, textAlign: "center" }}>
+            <Typography variant="caption" sx={{ color: "#94a3b8", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+              Please arrive at the gate at least 30 minutes before departure • Have your ID ready
             </Typography>
-            {/* Pet reminder in footer - NEW */}
-            <Typography variant="caption" sx={{ color: "#9c27b0", display: "block", mt: 0.5 }}>
-              🐾 Service animal must remain in carrier during flight
+            <Typography variant="caption" sx={{ color: "#9c27b0", display: "block", mt: 0.5, fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
+              🐾 Service animal must remain in carrier during flight • 2-stop journey
             </Typography>
           </Box>
         </Paper>
@@ -605,25 +617,20 @@ const BoardingPass = () => {
         animate={{ opacity: loaded ? 1 : 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            flexDirection: { xs: "column", sm: "row" },
-          }}
-        >
+        <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
           <Button
             component={Link}
             to="/"
             variant="outlined"
             startIcon={<ArrowBackIcon />}
             sx={{
-              px: 4,
-              py: 1.5,
+              px: { xs: 3, sm: 4 },
+              py: { xs: 1, sm: 1.5 },
               borderRadius: 3,
               borderColor: "#cbd5e1",
               color: "#475569",
               fontWeight: 600,
+              fontSize: { xs: "0.8rem", sm: "0.875rem" },
               "&:hover": {
                 borderColor: "#0f2b5e",
                 bgcolor: alpha("#0f2b5e", 0.02),
@@ -637,12 +644,13 @@ const BoardingPass = () => {
             variant="contained"
             startIcon={<DownloadIcon />}
             sx={{
-              px: 4,
-              py: 1.5,
+              px: { xs: 3, sm: 4 },
+              py: { xs: 1, sm: 1.5 },
               borderRadius: 3,
               bgcolor: "#0f2b5e",
               color: "white",
               fontWeight: 600,
+              fontSize: { xs: "0.8rem", sm: "0.875rem" },
               boxShadow: "0 10px 20px -5px rgba(15, 43, 94, 0.3)",
               "&:hover": {
                 bgcolor: "#1a3a7a",

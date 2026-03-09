@@ -62,7 +62,7 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (email === "fly.user22872@aerospace.com" && password === "LovetoFly2017") {
+    if (email === "fly.user00872@aerospace.com" && password === "LovetoFly2100") {
       setLoading(true);
       setError("");
       setTimeout(() => {
