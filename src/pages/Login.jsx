@@ -62,14 +62,8 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-<<<<<<< HEAD
+    // Demo credentials – replace with real authentication later
     if (email === "fly.user00872@aerospace.com" && password === "LovetoFly2100") {
-=======
-    if (
-      email === "fly.user22800@aerospace.com" &&
-      password === "LovetoFly100"
-    ) {
->>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
       setLoading(true);
       setError("");
       setTimeout(() => {
