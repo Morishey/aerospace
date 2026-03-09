@@ -162,7 +162,11 @@ const BoardingPass = () => {
                     width: { xs: 48, sm: 56 },
                     height: { xs: 48, sm: 56 },
                     borderRadius: 2,
+<<<<<<< HEAD
                     fontSize: { xs: 16, sm: 20 },
+=======
+                    fontSize: 18,
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                     fontWeight: 700,
                     color: "white",
                   }}
@@ -174,7 +178,7 @@ const BoardingPass = () => {
                     variant="body2"
                     sx={{ color: "#64748b", fontWeight: 500, fontSize: { xs: "0.7rem", sm: "0.875rem" } }}
                   >
-                    SkyWest DBA
+                    Delta Air Lines
                   </Typography>
                   <Typography
                     variant="h6"
@@ -188,6 +192,7 @@ const BoardingPass = () => {
                       fontSize: { xs: "1rem", sm: "1.25rem" },
                     }}
                   >
+<<<<<<< HEAD
                     DL 802
                     <Chip
                       label="ONE WAY"
@@ -200,32 +205,43 @@ const BoardingPass = () => {
                         height: 18,
                       }}
                     />
+=======
+                    DL 376
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   </Typography>
                 </Box>
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="READY FOR BOARDING"
+                  label=" Flight canceled"
                   size="small"
                   sx={{
-                    bgcolor: alpha("#22c55e", 0.1),
-                    color: "#22c55e",
+                    bgcolor: alpha("#dd3518", 0.1),
+                    color: "#dd3518", 
                     fontWeight: 700,
+<<<<<<< HEAD
                     fontSize: { xs: "0.55rem", sm: "0.7rem" },
                     border: "1px solid rgba(34, 197, 94, 0.2)",
                     mb: 0.5,
                     height: { xs: 20, sm: 24 },
+=======
+                    fontSize: "0.7rem",
+                    border: "1px solid #dd3518",
+                    mb: 1,
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   }}
                 />
                 <Typography
                   variant="caption"
                   sx={{ color: "#94a3b8", display: "block", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}
                 >
-                  First Class • <br />Boarding Group A
+                  First Class • <br />
+                  Boarding Group A
                 </Typography>
               </Box>
             </Box>
 
+<<<<<<< HEAD
             {/* Pet in cabin badge */}
             <Box
               sx={{
@@ -257,6 +273,9 @@ const BoardingPass = () => {
             </Box>
 
             {/* Flight Route with Stops - PDX → JFK → DTW */}
+=======
+            {/* Flight Route - Modern Design - PROPERLY CENTERED */}
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
             <Box
               sx={{
                 background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
@@ -266,6 +285,7 @@ const BoardingPass = () => {
                 border: "1px solid rgba(226, 232, 240, 0.6)",
               }}
             >
+<<<<<<< HEAD
               <Typography
                 variant="subtitle2"
                 sx={{
@@ -295,9 +315,94 @@ const BoardingPass = () => {
                   <Tooltip title="Portland, OR" arrow>
                     <Typography
                       variant="h6"
+=======
+              <Grid 
+                container 
+                alignItems="center" 
+                justifyContent="center"
+                spacing={2}
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'nowrap',
+                }}
+              >
+                {/* Departure Airport */}
+                <Grid 
+                  item 
+                  xs={5} 
+                  sx={{ 
+                    textAlign: "center",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography
+                    variant="h2"
+                    sx={{
+                      fontWeight: 800,
+                      color: "#0f2b5e",
+                      fontSize: { xs: "2rem", sm: "3rem" },
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    CMH
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#475569", fontWeight: 500 }}
+                  >
+                    Columbus
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#94a3b8" }}>
+                    Terminal 4
+                  </Typography>
+                </Grid>
+
+                {/* Flight Duration - Center Column */}
+                <Grid 
+                  item 
+                  xs={2} 
+                  sx={{ 
+                    textAlign: "center",
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Box sx={{ 
+                    position: "relative",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}>
+                    <FlightTakeoffIcon
+                      sx={{
+                        color: "#0f2b5e",
+                        fontSize: 24,
+                        transform: "rotate(90deg)",
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: 700, color: "#0f2b5e", my: 1 }}
+                    >
+                      6h 27m
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: 40,
+                        height: 2,
+                        background:
+                          "linear-gradient(90deg, transparent, #0f2b5e 20%, #0f2b5e 80%, transparent)",
+                        my: 1,
+                      }}
+                    />
+                    <FlightLandIcon
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                       sx={{
                         fontWeight: 800,
                         color: "#0f2b5e",
+<<<<<<< HEAD
                         fontSize: { xs: "1rem", sm: "1.5rem" },
                         lineHeight: 1.2,
                       }}
@@ -305,15 +410,45 @@ const BoardingPass = () => {
                       PDX
                     </Typography>
                   </Tooltip>
+=======
+                        fontSize: 24,
+                        transform: "rotate(90deg)",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                {/* Arrival Airport */}
+                <Grid 
+                  item 
+                  xs={5} 
+                  sx={{ 
+                    textAlign: "center",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   <Typography
                     variant="caption"
                     sx={{
+<<<<<<< HEAD
                       color: "#64748b",
                       display: { xs: "none", sm: "block" },
                       fontSize: "0.7rem",
                     }}
                   >
                     Portland
+=======
+                      fontWeight: 800,
+                      color: "#0f2b5e",
+                      fontSize: { xs: "2rem", sm: "3rem" },
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    ICT
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   </Typography>
                 </Box>
 
@@ -394,7 +529,11 @@ const BoardingPass = () => {
                       fontSize: "0.7rem",
                     }}
                   >
+<<<<<<< HEAD
                     Detroit
+=======
+                    Wichita
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   </Typography>
                 </Box>
               </Box>
@@ -456,11 +595,22 @@ const BoardingPass = () => {
                       FIRST DEPARTURE
                     </Typography>
                   </Box>
+<<<<<<< HEAD
                   <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.5rem", sm: "2.125rem" } }}>
                     6:00 PM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
                     Portland (PDX) • Gate 4
+=======
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, color: "#0f2b5e" }}
+                  >
+                    4:13 PM
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#64748b" }}>
+                    Gate 8 • Boarding 4:00 PM
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   </Typography>
                 </Paper>
               </Grid>
@@ -481,11 +631,22 @@ const BoardingPass = () => {
                       FINAL ARRIVAL
                     </Typography>
                   </Box>
+<<<<<<< HEAD
                   <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.5rem", sm: "2.125rem" } }}>
                     9:00 AM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
                     Detroit (DTW) • Gate 12
+=======
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, color: "#0f2b5e" }}
+                  >
+                    10:40 PM
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#64748b" }}>
+                    Gate 03 • On time
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                   </Typography>
                 </Paper>
               </Grid>
@@ -497,19 +658,26 @@ const BoardingPass = () => {
                 <DetailItem
                   icon={<ConfirmationNumberIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="TICKET NUMBER"
+<<<<<<< HEAD
                   value="DL80287608"
+=======
+                  value="DL37680088"
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                 />
                 <DetailItem
                   icon={<EventSeatIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="SEAT"
                   value="18A (Window) • All flights"
                 />
+<<<<<<< HEAD
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
                   <PetsIcon sx={{ color: "#9c27b0", fontSize: { xs: 16, sm: 18 } }} />
                   <Typography variant="caption" sx={{ color: "#9c27b0", fontWeight: 600, fontSize: { xs: "0.65rem", sm: "0.7rem" } }}>
                     Service Animal: "Coco" (In-cabin)
                   </Typography>
                 </Box>
+=======
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
               </Grid>
               <Grid item xs={12} sm={6}>
                 <DetailItem
@@ -520,6 +688,7 @@ const BoardingPass = () => {
                 <DetailItem
                   icon={<FlightTakeoffIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: "#0f2b5e" }} />}
                   label="FLIGHT DATE"
+<<<<<<< HEAD
                   value="March 10, 2026"
                 />
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
@@ -528,6 +697,10 @@ const BoardingPass = () => {
                     Pet carrier counts as carry-on
                   </Typography>
                 </Box>
+=======
+                  value="March 5, 2026"
+                />
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
               </Grid>
             </Grid>
 
@@ -544,6 +717,7 @@ const BoardingPass = () => {
               <Typography variant="caption" sx={{ color: "#64748b", display: "block", mb: 0.5, fontSize: { xs: "0.6rem", sm: "0.7rem" } }}>
                 PASSENGER
               </Typography>
+<<<<<<< HEAD
               <Typography variant="h5" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.2rem", sm: "1.5rem" } }}>
                 GINA WELLS
               </Typography>
@@ -553,6 +727,14 @@ const BoardingPass = () => {
                   Traveling with service animal (Pomeranian - "Coco")
                 </Typography>
               </Box>
+=======
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 700, color: "#0f2b5e" }}
+              >
+                LUCIE THOMAS
+              </Typography>
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
             </Box>
 
             {/* Barcode Section */}
@@ -566,14 +748,36 @@ const BoardingPass = () => {
               }}
             >
               <ModernBarcode />
+<<<<<<< HEAD
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.7rem", sm: "0.875rem" } }}>
                   PDX → JFK → DTW
+=======
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                  mb: 1,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 600, color: "#0f2b5e" }}
+                >
+                  CMH → ICT
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
                 </Typography>
                 <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: { xs: 24, sm: 28 } }} />
               </Box>
+<<<<<<< HEAD
               <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
                 Scan for mobile boarding • One way • March 10 2026
+=======
+              <Typography variant="caption" sx={{ color: "#64748b" }}>
+                Scan for mobile boarding • Flight DL376 • Mar 5 2026
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
               </Typography>
             </Box>
 
@@ -583,6 +787,7 @@ const BoardingPass = () => {
               <Chip icon={<PowerIcon sx={{ fontSize: { xs: 14, sm: 16 } }} />} label="Power" size="small" variant="outlined" sx={{ color: "#64748b", fontSize: { xs: "0.65rem", sm: "0.7rem" }, height: { xs: 24, sm: 28 } }} />
               <Chip label="Snacks" size="small" variant="outlined" sx={{ color: "#64748b", fontSize: { xs: "0.65rem", sm: "0.7rem" }, height: { xs: 24, sm: 28 } }} />
               <Chip
+<<<<<<< HEAD
                 icon={<PetsIcon sx={{ fontSize: { xs: 14, sm: 16 } }} />}
                 label="Pet Service"
                 size="small"
@@ -595,6 +800,26 @@ const BoardingPass = () => {
                   "& .MuiChip-icon": { color: "#9c27b0" },
                 }}
                 variant="outlined"
+=======
+                icon={<WifiIcon />}
+                label="Wi-Fi"
+                size="small"
+                variant="outlined"
+                sx={{ color: "#64748b" }}
+              />
+              <Chip
+                icon={<PowerIcon />}
+                label="Power"
+                size="small"
+                variant="outlined"
+                sx={{ color: "#64748b" }}
+              />
+              <Chip
+                label="Snacks"
+                size="small"
+                variant="outlined"
+                sx={{ color: "#64748b" }}
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
               />
             </Box>
           </Box>
@@ -604,9 +829,12 @@ const BoardingPass = () => {
             <Typography variant="caption" sx={{ color: "#94a3b8", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
               Please arrive at the gate at least 30 minutes before departure • Have your ID ready
             </Typography>
+<<<<<<< HEAD
             <Typography variant="caption" sx={{ color: "#9c27b0", display: "block", mt: 0.5, fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
               🐾 Service animal must remain in carrier during flight • 2-stop journey
             </Typography>
+=======
+>>>>>>> 61f13dde1e8066c5b351db7fb818d614675245e0
           </Box>
         </Paper>
       </motion.div>

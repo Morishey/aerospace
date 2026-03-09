@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight cancellation – Delta Air Lines</title>
+    <style>
+        /* ----- RESET & UTILITY ----- */
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* email-safe table reset (removed mso-table-lspace/rspace – they are not standard) */
+        table {
+            border-collapse: collapse;
+        }
+        /* main container */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e2e8f0;
+        }
+        /* top bar */
+        .header-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #0f2b5e 0%, #1e4a8b 50%, #2e6bb5 100%);
+        }
+        /* inner content padding */
+        .content {
+            padding: 32px 32px 24px 32px;
+        }
+        /* typography */
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f2b5e;
+            letter-spacing: -0.5px;
+        }
+        h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f2b5e;
+        }
+        p {
+            margin: 0 0 16px 0;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #334155;
+        }
+        /* badges */
+        .cancelled-badge {
+            display: inline-block;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-bottom: 16px;
+        }
+        .pet-badge {
+            display: inline-block;
+            background-color: rgba(156, 39, 176, 0.1);
+            color: #9c27b0;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+            margin: 8px 0 16px 0;
+        }
+        /* flight card */
+        .flight-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            margin: 24px 0;
+        }
+        .airport-code {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f2b5e;
+        }
+        .airport-name {
+            font-size: 14px;
+            color: #475569;
+            font-weight: 500;
+        }
+        /* reason cards */
+        .reason-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .reason-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        /* buttons */
+        .button {
+            display: inline-block;
+            background-color: #0f2b5e;
+            color: #ffffff !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 14px 32px;
+            border-radius: 100px;
+            margin: 4px;
+            box-shadow: 0 10px 20px -5px rgba(15, 43, 94, 0.3);
+        }
+        .button-outline {
+            background-color: transparent;
+            color: #0f2b5e !important;
+            border: 2px solid #0f2b5e;
+            box-shadow: none;
+        }
+        /* dividers */
+        .divider {
+            height: 1px;
+            background-color: #e2e8f0;
+            margin: 24px 0;
+        }
+        /* footer */
+        .footer {
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+        }
+        /* responsive */
+        @media screen and (max-width: 600px) {
+            body { padding: 12px; }
+            .content { padding: 24px 20px; }
+            .airport-code { font-size: 24px; }
+            .button {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body style="margin:0; padding:24px; background-color:#f1f5f9; font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+    <!-- outer table for centering in email clients -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td align="center" style="padding:20px 0;">
+                <!-- main card -->
+                <div class="email-container" style="max-width:600px; margin:0 auto; background-color:#ffffff; border-radius:24px; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.15); border:1px solid #e2e8f0;">
+                    
+                    <!-- blue header stripe -->
+                    <div class="header-bar" style="height:8px; background:linear-gradient(90deg,#0f2b5e 0%,#1e4a8b 50%,#2e6bb5 100%);"></div>
+                    
+                    <!-- main content area -->
+                    <div class="content" style="padding:32px 32px 24px 32px;">
+                        
+                        <!-- airline header row with logo -->
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td align="left" width="60">
+                                    <div style="background-color:#0f2b5e; width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:20px;">DL</div>
+                                </td>
+                                <td align="left" style="padding-left:16px;">
+                                    <div style="color:#64748b; font-size:14px; font-weight:500;">Delta Air Lines</div>
+                                    <div style="color:#0f2b5e; font-size:20px; font-weight:700; letter-spacing:-0.5px;">Flight Cancellation Notice</div>
+                                </td>
+                                <td align="right">
+                                    <div style="color:#94a3b8; font-size:12px;">March 5, 2026</div>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- big red cancellation badge -->
+                        <div style="text-align:center; margin:24px 0 8px 0;">
+                            <span class="cancelled-badge" style="display:inline-block; background-color:rgba(239,68,68,0.1); color:#ef4444; font-weight:700; font-size:14px; padding:8px 16px; border-radius:100px; border:1px solid rgba(239,68,68,0.3);">✕ FLIGHT CANCELLED</span>
+                        </div>
+                        
+                        <!-- passenger greeting -->
+                        <h1 style="margin:0 0 8px 0; font-size:28px; font-weight:700; color:#0f2b5e; letter-spacing:-0.5px; text-align:center;">LUCIE THOMAS</h1>
+                        <p style="margin:0 0 16px 0; font-size:16px; line-height:1.5; color:#334155; text-align:center;">We regret to inform you that your upcoming flight has been cancelled</p>
+                        
+                        <!-- pet badge (service animal) -->
+                        <!-- <div style="text-align:center;">
+                            <span class="pet-badge" style="display:inline-block; background-color:rgba(156,39,176,0.1); color:#9c27b0; font-weight:600; font-size:14px; padding:8px 16px; border-radius:100px; border:1px solid rgba(156,39,176,0.3);">
+                                🐾 Service Animal "Coco" accommodation notice included
+                            </span>
+                        </div> -->
+                        
+                        <!-- flight info card -->
+                        <div class="flight-card" style="background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%); border-radius:16px; padding:24px; border:1px solid #e2e8f0; margin:24px 0;">
+                            <h3 style="margin:0 0 12px 0; font-size:18px; font-weight:600; color:#0f2b5e;">Affected Flight Details</h3>
+                            
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" width="45%">
+                                        <div class="airport-code" style="font-size:32px; font-weight:800; color:#0f2b5e;">CMH</div>
+                                        <div class="airport-name" style="font-size:14px; color:#475569; font-weight:500;">Columbus</div>
+                                        <div style="color:#94a3b8; font-size:12px;">Terminal 4</div>
+                                    </td>
+                                    <td align="center" width="10%">
+                                        <div style="color:#0f2b5e; font-size:20px;">→</div>
+                                    </td>
+                                    <td align="center" width="45%">
+                                        <div class="airport-code" style="font-size:32px; font-weight:800; color:#0f2b5e;">ICT</div>
+                                        <div class="airport-name" style="font-size:14px; color:#475569; font-weight:500;">Wichita</div>
+                                        <div style="color:#94a3b8; font-size:12px;">Terminal 1</div>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;">
+                                <tr>
+                                    <td align="center" width="33%">
+                                        <div style="color:#64748b; font-size:12px;">FLIGHT</div>
+                                        <div style="color:#0f2b5e; font-weight:700; font-size:18px;">DL 376</div>
+                                    </td>
+                                    <td align="center" width="33%">
+                                        <div style="color:#64748b; font-size:12px;">DATE</div>
+                                        <div style="color:#0f2b5e; font-weight:700; font-size:18px;">Mar 5, 2026</div>
+                                    </td>
+                                    <td align="center" width="33%">
+                                        <div style="color:#64748b; font-size:12px;">SEAT</div>
+                                        <div style="color:#0f2b5e; font-weight:700; font-size:18px;">12F (Window)</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <!-- cancellation reasons headline -->
+                        <h2 style="margin:0 0 16px 0; font-size:20px; font-weight:600; color:#1e293b;">Why was my flight cancelled?</h2>
+                        
+                        <!-- reason 1: weather -->
+                        <div class="reason-card" style="background-color:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border:1px solid #e2e8f0;">
+                            <div class="reason-title" style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                                <span style="font-size:24px;">⛈️</span>
+                                <h3 style="margin:0; font-size:16px; font-weight:600; color:#0f2b5e;">Severe Weather Conditions</h3>
+                            </div>
+                            <p style="margin:0; font-size:15px; line-height:1.5; color:#475569;">A winter storm system moving through the Midwest has created unsafe flying conditions along your planned route. The National Weather Service has issued warnings for heavy snow and icing conditions affecting airspace over multiple states.</p>
+                        </div>
+                        
+                        <!-- reason 2: ATC -->
+                        <div class="reason-card" style="background-color:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border:1px solid #e2e8f0;">
+                            <div class="reason-title" style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                                <span style="font-size:24px;">🛫</span>
+                                <h3 style="margin:0; font-size:16px; font-weight:600; color:#0f2b5e;">Air Traffic Control Restrictions</h3>
+                            </div>
+                            <p style="margin:0; font-size:15px; line-height:1.5; color:#475569;">The FAA has implemented ground stops and flow control programs at multiple airports along your route due to the weather conditions. These restrictions have resulted in cascading delays making the scheduled flight time unattainable.</p>
+                        </div>
+                        
+                        <!-- reason 3: crew rest -->
+                        <div class="reason-card" style="background-color:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border:1px solid #e2e8f0;">
+                            <div class="reason-title" style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                                <span style="font-size:24px;">👨‍✈️</span>
+                                <h3 style="margin:0; font-size:16px; font-weight:600; color:#0f2b5e;">Crew Timing Limitations</h3>
+                            </div>
+                            <p style="margin:0; font-size:15px; line-height:1.5; color:#475569;">Due to the delays caused by weather and ATC restrictions, our flight crew would exceed federally mandated duty time limits. Safety is our highest priority, and we must ensure our crew is properly rested.</p>
+                        </div>
+                        
+                        <!-- special pet note (left border) -->
+                        <!-- <div style="background-color:rgba(156,39,176,0.05); border-left:4px solid #9c27b0; padding:16px; margin:24px 0; border-radius:8px;">
+                            <p style="margin:0 0 8px 0; font-size:15px; color:#9c27b0; font-weight:600;">🐾 Important Information for Service Animal Travel</p>
+                            <p style="margin:0; font-size:14px; color:#4a5568;">We've noted that you're traveling with service animal "Coco". All pet accommodations will be honored on your rebooked flight at no additional cost. Please contact our special services desk to ensure proper arrangements.</p>
+                        </div> -->
+                        
+                        <!-- divider -->
+                        <div class="divider" style="height:1px; background-color:#e2e8f0; margin:24px 0;"></div>
+                        
+                        <!-- what happens next -->
+                        <h2 style="margin:0 0 16px 0; font-size:20px; font-weight:600; color:#1e293b;">What happens next?</h2>
+                        
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td valign="top" width="40" style="padding-bottom:16px;">
+                                    <span style="background-color:#0f2b5e; color:white; width:28px; height:28px; display:inline-block; text-align:center; line-height:28px; border-radius:50%; font-weight:700;">1</span>
+                                </td>
+                                <td style="padding-bottom:16px;">
+                                    <p style="margin:0; font-size:15px; color:#334155;"><strong style="color:#0f2b5e;">Automatic Rebooking:</strong> We've automatically reserved you on the next available flight. <a href="#" style="color:#0f2b5e;">View alternate flights</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" width="40" style="padding-bottom:16px;">
+                                    <span style="background-color:#0f2b5e; color:white; width:28px; height:28px; display:inline-block; text-align:center; line-height:28px; border-radius:50%; font-weight:700;">2</span>
+                                </td>
+                                <td style="padding-bottom:16px;">
+                                    <p style="margin:0; font-size:15px; color:#334155;"><strong style="color:#0f2b5e;">Full Refund Available:</strong> If the new flight doesn't work for you, you're entitled to a full refund to your original payment method.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" width="40" style="padding-bottom:16px;">
+                                    <span style="background-color:#0f2b5e; color:white; width:28px; height:28px; display:inline-block; text-align:center; line-height:28px; border-radius:50%; font-weight:700;">3</span>
+                                </td>
+                                <td style="padding-bottom:16px;">
+                                    <p style="margin:0; font-size:15px; color:#334155;"><strong style="color:#0f2b5e;">Compensation:</strong> As required by regulation, you may be eligible for compensation. <a href="#" style="color:#0f2b5e;">Learn more</a></p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- action buttons -->
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
+                            <tr>
+                                <td align="center">
+                                    <a href="#" class="button" style="display:inline-block; background-color:#0f2b5e; color:#ffffff !important; text-decoration:none; font-weight:600; font-size:16px; padding:14px 32px; border-radius:100px; margin:4px; box-shadow:0 10px 20px -5px rgba(15,43,94,0.3);">Accept New Flight</a>
+                                    <a href="#" class="button-outline" style="display:inline-block; background-color:transparent; color:#0f2b5e !important; text-decoration:none; font-weight:600; font-size:16px; padding:14px 32px; border-radius:100px; margin:4px; border:2px solid #0f2b5e; box-shadow:none;">Request Refund</a>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- contact info panel -->
+                        <div style="background-color:#f8fafc; border-radius:12px; padding:20px; margin:16px 0; border:1px solid #e2e8f0;">
+                            <p style="margin:0 0 12px 0; font-size:15px; color:#0f2b5e; font-weight:600;">Need immediate assistance?</p>
+                            <table width="100%">
+                                <tr>
+                                    <td align="center" style="padding:4px;">
+                                        <span style="color:#475569;">📞 1-800-555-0199</span>
+                                    </td>
+                                    <td align="center" style="padding:4px;">
+                                        <span style="color:#475569;">✉️ support@delta.com</span>
+                                    </td>
+                                    <td align="center" style="padding:4px;">
+                                        <span style="color:#475569;">💬 Live Chat</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <!-- pet reminder -->
+                        <!-- <p style="margin:16px 0 0 0; font-size:13px; color:#9c27b0; text-align:center; font-style:italic;">
+                            🐾 Service animal "Coco" has been noted in your rebooking preferences. Please confirm accommodations when selecting new flight.
+                        </p> -->
+                    </div> <!-- end content -->
+                    
+                    <!-- footer -->
+                    <div class="footer" style="background-color:#f8fafc; border-top:1px solid #e2e8f0; padding:24px; text-align:center; font-size:14px; color:#64748b;">
+                        <p style="margin:0 0 8px 0; font-size:14px; color:#64748b;">This is an automated message regarding your cancelled flight DL376 on March 5, 2026.</p>
+                        <p style="margin:0; font-size:12px; color:#94a3b8;">© 2026 Delta Air Lines, Inc. • 1030 Delta Boulevard • Atlanta, GA 30320</p>
+                        <!-- <p style="margin:8px 0 0 0; font-size:11px; color:#9c27b0;">Special handling: Service animal in cabin • Reference #AN-12345-PET</p> -->
+                    </div>
+                </div> <!-- end email-container -->
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
