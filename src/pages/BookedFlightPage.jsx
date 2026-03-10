@@ -256,7 +256,7 @@ const BoardingPass = () => {
               </Tooltip>
             </Box>
 
-            {/* Flight Route with Stops - PDX → JFK → DTW */}
+            {/* Flight Route with Stops - PDX → JFK → FWA */}
             <Box
               sx={{
                 background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
@@ -281,7 +281,7 @@ const BoardingPass = () => {
                 <TimelineIcon sx={{ fontSize: { xs: 16, sm: 18 } }} /> ONE WAY • 2 STOPS
               </Typography>
 
-              {/* Main route row - fits without scroll */}
+              {/* Main route row */}
               <Box
                 sx={{
                   display: "flex",
@@ -350,7 +350,7 @@ const BoardingPass = () => {
                     }}
                   />
                   <Chip
-                    label="5h19m layover"
+                    label="4h45m layover"
                     size="small"
                     sx={{
                       mt: 0.5,
@@ -371,9 +371,9 @@ const BoardingPass = () => {
                   }}
                 />
 
-                {/* DTW (Final) */}
+                {/* FWA (Final) */}
                 <Box sx={{ textAlign: "center", minWidth: 0, flex: 1 }}>
-                  <Tooltip title="Detroit" arrow>
+                  <Tooltip title="Fort Wayne, IN" arrow>
                     <Typography
                       variant="h6"
                       sx={{
@@ -383,7 +383,7 @@ const BoardingPass = () => {
                         lineHeight: 1.2,
                       }}
                     >
-                      DTW
+                      FWA
                     </Typography>
                   </Tooltip>
                   <Typography
@@ -394,7 +394,7 @@ const BoardingPass = () => {
                       fontSize: "0.7rem",
                     }}
                   >
-                    Detroit
+                    Fort Wayne
                   </Typography>
                 </Box>
               </Box>
@@ -423,7 +423,7 @@ const BoardingPass = () => {
                     Total Journey
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
-                    15h 30m
+                    13h 45m
                   </Typography>
                 </Box>
                 <Box sx={{ textAlign: "right" }}>
@@ -431,13 +431,13 @@ const BoardingPass = () => {
                     Final Arrival
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.65rem", sm: "0.875rem" } }}>
-                    9:00 AM • DTW
+                    7:45 AM • FWA
                   </Typography>
                 </Box>
               </Box>
             </Box>
 
-            {/* Time Cards - Centered Content */}
+            {/* Time Cards */}
             <Grid container spacing={1.5} sx={{ mb: 3 }}>
               <Grid item xs={6}>
                 <Paper
@@ -482,10 +482,10 @@ const BoardingPass = () => {
                     </Typography>
                   </Box>
                   <Typography variant="h4" sx={{ fontWeight: 700, color: "#0f2b5e", fontSize: { xs: "1.5rem", sm: "2.125rem" } }}>
-                    9:00 AM
+                    7:45 AM
                   </Typography>
                   <Typography variant="caption" sx={{ color: "#64748b", fontSize: { xs: "0.55rem", sm: "0.7rem" } }}>
-                    Detroit (DTW) • Gate 12
+                    Fort Wayne (FWA) • Gate 2
                   </Typography>
                 </Paper>
               </Grid>
@@ -568,7 +568,7 @@ const BoardingPass = () => {
               <ModernBarcode />
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600, color: "#0f2b5e", fontSize: { xs: "0.7rem", sm: "0.875rem" } }}>
-                  PDX → JFK → DTW
+                  PDX → JFK → FWA
                 </Typography>
                 <QrCode2Icon sx={{ color: "#0f2b5e", fontSize: { xs: 24, sm: 28 } }} />
               </Box>
