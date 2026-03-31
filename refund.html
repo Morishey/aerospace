@@ -1,320 +1,455 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Refund Confirmation - Delta Air Lines</title>
-    <style type="text/css">
-        /* Email Client Reset Styles — all mso-* properties removed (they are not standard CSS) */
-        body, table, td, p, a, div, span {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            font-size: 100%;
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            line-height: 1.5;
-        }
-        
-        .ExternalClass, .ReadMsgBody {
-            width: 100%;
-            background-color: #f1f5f9;
-        }
-        
-        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
-            line-height: 100%;
-        }
-        
+    <title>Flight cancellation – no refund (expired document)</title>
+    <style>
+        /* ----- RESET & UTILITY ----- */
         body {
+            margin: 0;
+            padding: 24px;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #f1f5f9;
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
         table {
             border-collapse: collapse;
         }
-        
-        td, th {
-            vertical-align: top;
-        }
-        
         .email-container {
             max-width: 600px;
             margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e2e8f0;
         }
-        
-        img {
-            border: 0;
-            height: auto;
-            line-height: 100%;
-            outline: none;
-            text-decoration: none;
-            -ms-interpolation-mode: bicubic;
+        .header-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #0f2b5e 0%, #1e4a8b 50%, #2e6bb5 100%);
         }
-        
-        /* base button style (fallback) */
-        .button-primary {
-            background-color: #0f2b5e;
-            color: #ffffff;
+        .content {
+            padding: 32px 32px 24px 32px;
+        }
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f2b5e;
+            letter-spacing: -0.5px;
+        }
+        h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
             font-weight: 600;
+            color: #1e293b;
+        }
+        h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f2b5e;
+        }
+        p {
+            margin: 0 0 16px 0;
             font-size: 16px;
-            padding: 16px 40px;
-            text-decoration: none;
+            line-height: 1.5;
+            color: #334155;
+        }
+        .cancelled-badge {
             display: inline-block;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 8px 16px;
             border-radius: 100px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-bottom: 16px;
         }
-        
-        .button-primary a, 
-        .button-primary a:link, 
-        .button-primary a:visited {
-            color: #ffffff;
-            text-decoration: none;
+        .no-refund-badge {
             display: inline-block;
-            width: 100%;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            background-color: rgba(16, 185, 129, 0.1);
-            color: #059669;
+            background-color: #0f2b5e;
+            color: white;
             font-weight: 700;
             font-size: 14px;
             padding: 8px 20px;
             border-radius: 100px;
-            border: 1px solid #059669;
+            margin: 0 0 16px 0;
+            letter-spacing: 0.5px;
         }
-    </style>
-    
-    <!--[if (gte mso 9)|(IE)]>
-    <xml>
-        <o:OfficeDocumentSettings>
-            <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-    </xml>
-    <![endif]-->
-    
-    <!--[if gte mso 9]>
-    <style type="text/css">
-        /* Outlook-specific styles (safe inside conditional) */
-        .button-primary-table td {
-            border-radius: 100px !important;
-            background-color: #0f2b5e !important;
+        .pet-badge {
+            display: inline-block;
+            background-color: rgba(156, 39, 176, 0.1);
+            color: #9c27b0;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+            margin: 8px 0 16px 0;
         }
-        .button-primary-table a {
+        .flight-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            margin: 24px 0;
+        }
+        .route-multi {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .airport-chip {
+            text-align: center;
+            min-width: 70px;
+        }
+        .airport-code {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0f2b5e;
+            line-height: 1.2;
+        }
+        .airport-name {
+            font-size: 12px;
+            color: #475569;
+            font-weight: 500;
+        }
+        .stop-icon {
+            color: #94a3b8;
+            font-size: 18px;
+            font-weight: 300;
+        }
+        .layover-chip {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .detail-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        .detail-item {
+            flex: 1 1 40%;
+            margin-bottom: 12px;
+        }
+        .detail-label {
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .detail-value {
+            color: #0f2b5e;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .reason-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .reason-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #0f2b5e;
             color: #ffffff !important;
-            text-decoration: none !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 14px 32px;
+            border-radius: 100px;
+            margin: 4px;
+            box-shadow: 0 10px 20px -5px rgba(15, 43, 94, 0.3);
         }
-        table, td, th {
-            border-collapse: collapse;
+        .button-outline {
+            background-color: transparent;
+            color: #0f2b5e !important;
+            border: 2px solid #0f2b5e;
+            box-shadow: none;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e2e8f0;
+            margin: 24px 0;
+        }
+        .footer {
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+        }
+        .policy-note {
+            background-color: #fff3e0;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            border-left: 4px solid #ed6c02;
+            font-size: 15px;
+        }
+        @media screen and (max-width: 600px) {
+            body { padding: 12px; }
+            .content { padding: 24px 20px; }
+            .airport-code { font-size: 22px; }
+            .button {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+            .route-multi { gap: 4px; }
         }
     </style>
-    <![endif]-->
 </head>
-<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: Helvetica, Arial, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-
-<!--[if (gte mso 9)|(IE)]>
-<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-    <tr>
-        <td style="padding: 20px 0; background-color: #f1f5f9;">
-<![endif]-->
-
-<!-- Main email container (Outlook-safe) -->
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; border-collapse: collapse; background-color: #f1f5f9;">
-    <tr>
-        <td align="center" style="padding: 20px 10px; background-color: #f1f5f9;">
-            
-            <!-- Main email card -->
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; background-color: #ffffff; border-radius: 24px; border: 1px solid #e2e8f0; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);" bgcolor="#ffffff">
-                
-                <!-- Decorative top bar (gradient fallback for Outlook) -->
-                <tr>
-                    <td style="padding: 0; background: #0f2b5e; height: 8px; font-size: 0; line-height: 0;" bgcolor="#0f2b5e">
-                        <div style="height: 8px; background: #0f2b5e; line-height: 8px;">&nbsp;</div>
-                    </td>
-                </tr>
-                
-                <!-- Main content -->
-                <tr>
-                    <td style="padding: 40px 32px 32px 32px; background-color: #ffffff;" bgcolor="#ffffff">
+<body style="margin:0; padding:24px; background-color:#f1f5f9; font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+    <!-- outer table for email clients -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td align="center" style="padding:20px 0;">
+                <!-- main card -->
+                <div class="email-container" style="max-width:600px; margin:0 auto; background-color:#ffffff; border-radius:24px; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.15); border:1px solid #e2e8f0;">
+                    
+                    <!-- blue header stripe -->
+                    <div class="header-bar" style="height:8px; background:linear-gradient(90deg,#0f2b5e 0%,#1e4a8b 50%,#2e6bb5 100%);"></div>
+                    
+                    <!-- main content -->
+                    <div class="content" style="padding:32px 32px 24px 32px;">
                         
-                        <!-- Success Icon / Checkmark -->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 0 auto 24px auto;">
+                        <!-- airline header -->
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td align="center" valign="middle" width="80" height="80" style="background-color: #10b981; border-radius: 50%; text-align: center; vertical-align: middle;" bgcolor="#10b981">
-                                    <span style="color: #ffffff; font-size: 40px; line-height: 80px;">✓</span>
+                                <td align="left" width="60">
+                                    <div style="background-color:#0f2b5e; width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:20px;">DL</div>
+                                </td>
+                                <td align="left" style="padding-left:16px;">
+                                    <div style="color:#64748b; font-size:14px; font-weight:500;">Delta Air Lines</div>
+                                    <div style="color:#0f2b5e; font-size:20px; font-weight:700; letter-spacing:-0.5px;">Flight Cancellation Notice</div>
+                                </td>
+                                <td align="right">
+                                    <div style="color:#94a3b8; font-size:12px;">March 5, 2026</div>
                                 </td>
                             </tr>
                         </table>
                         
-                        <!-- Status Badge -->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 0 auto 16px auto;">
+                        <!-- cancellation badge + no refund badge -->
+                        <div style="text-align:center; margin:24px 0 8px 0;">
+                            <span class="cancelled-badge" style="display:inline-block; background-color:rgba(239,68,68,0.1); color:#ef4444; font-weight:700; font-size:14px; padding:8px 16px; border-radius:100px; border:1px solid rgba(239,68,68,0.3);">✕ FLIGHT CANCELLED</span>
+                            <div style="margin-top:12px;">
+                                <span class="no-refund-badge" style="display:inline-block; background-color:#0f2b5e; color:white; font-weight:700; font-size:14px; padding:8px 20px; border-radius:100px; letter-spacing:0.5px;">⛔ NO REFUND · PASSENGER RESPONSIBILITY</span>
+                            </div>
+                        </div>
+                        
+                        <!-- passenger name -->
+                        <h1 style="margin:0 0 8px 0; font-size:28px; font-weight:700; color:#0f2b5e; letter-spacing:-0.5px; text-align:center;">GINA WELLS</h1>
+                        <p style="margin:0 0 16px 0; font-size:16px; line-height:1.5; color:#334155; text-align:center;">Your itinerary has been cancelled due to invalid travel documents</p>
+                        
+                        <!-- PET BADGE with Coco -->
+                        <div style="text-align:center;">
+                            <span class="pet-badge" style="display:inline-block; background-color:rgba(156,39,176,0.1); color:#9c27b0; font-weight:600; font-size:14px; padding:8px 16px; border-radius:100px; border:1px solid rgba(156,39,176,0.3);">
+                                🐾 Service Animal "Coco" (Pomeranian) – In-cabin accommodation
+                            </span>
+                        </div>
+                        
+                        <!-- flight card – multi-segment route -->
+                        <div class="flight-card" style="background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%); border-radius:16px; padding:24px; border:1px solid #e2e8f0; margin:24px 0;">
+                            <h3 style="margin:0 0 16px 0; font-size:18px; font-weight:600; color:#0f2b5e;">Affected itinerary • 2 stops</h3>
+                            
+                            <!-- route: PDX → JFK → DTW → FWA -->
+                            <div class="route-multi" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
+                                <!-- PDX -->
+                                <div class="airport-chip" style="text-align:center; min-width:70px;">
+                                    <div class="airport-code" style="font-size:28px; font-weight:800; color:#0f2b5e; line-height:1.2;">PDX</div>
+                                    <div class="airport-name" style="font-size:12px; color:#475569; font-weight:500;">Portland, OR</div>
+                                    <span class="layover-chip" style="background-color:rgba(245,158,11,0.1); color:#f59e0b; font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; display:inline-block; margin-top:4px;">dep 7:58PM</span>
+                                </div>
+                                <span class="stop-icon" style="color:#94a3b8; font-size:18px; font-weight:300;">→</span>
+                                <!-- JFK -->
+                                <div class="airport-chip" style="text-align:center; min-width:70px;">
+                                    <div class="airport-code" style="font-size:28px; font-weight:800; color:#0f2b5e; line-height:1.2;">JFK</div>
+                                    <div class="airport-name" style="font-size:12px; color:#475569; font-weight:500;">New York</div>
+                                    <span class="layover-chip" style="background-color:rgba(245,158,11,0.1); color:#f59e0b; font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; display:inline-block; margin-top:4px;">5h 19m</span>
+                                </div>
+                                <span class="stop-icon" style="color:#94a3b8; font-size:18px; font-weight:300;">→</span>
+                                <!-- DTW -->
+                                <div class="airport-chip" style="text-align:center; min-width:70px;">
+                                    <div class="airport-code" style="font-size:28px; font-weight:800; color:#0f2b5e; line-height:1.2;">DTW</div>
+                                    <div class="airport-name" style="font-size:12px; color:#475569; font-weight:500;">Detroit</div>
+                                    <span class="layover-chip" style="background-color:rgba(245,158,11,0.1); color:#f59e0b; font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; display:inline-block; margin-top:4px;">3h 10m</span>
+                                </div>
+                                <span class="stop-icon" style="color:#94a3b8; font-size:18px; font-weight:300;">→</span>
+                                <!-- FWA -->
+                                <div class="airport-chip" style="text-align:center; min-width:70px;">
+                                    <div class="airport-code" style="font-size:28px; font-weight:800; color:#0f2b5e; line-height:1.2;">FWA</div>
+                                    <div class="airport-name" style="font-size:12px; color:#475569; font-weight:500;">Fort Wayne, IN</div>
+                                    <span class="layover-chip" style="background-color:rgba(245,158,11,0.1); color:#f59e0b; font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; display:inline-block; margin-top:4px;">arr 10:59AM</span>
+                                </div>
+                            </div>
+                            
+                            <!-- flight numbers & additional details -->
+                            <div style="text-align:center; margin-bottom:16px; background:white; padding:8px; border-radius:30px; font-weight:600; color:#0f2b5e; border:1px solid #e2e8f0;">
+                                DL802 · DL2443 · DL3917  (DL3917 operated by SkyWest)
+                            </div>
+                            
+                            <div class="detail-row" style="display:flex; flex-wrap:wrap; justify-content:space-between; margin-top:16px; padding-top:16px; border-top:1px dashed #cbd5e1;">
+                                <div class="detail-item" style="flex:1 1 40%; margin-bottom:12px;">
+                                    <div class="detail-label" style="color:#64748b; font-size:12px; text-transform:uppercase;">DEPARTURE</div>
+                                    <div class="detail-value" style="color:#0f2b5e; font-weight:700; font-size:18px;">March 10, 2026</div>
+                                    <div style="color:#334155; font-size:14px;">7:58 PM · PDX Gate 4</div>
+                                </div>
+                                <div class="detail-item" style="flex:1 1 40%; margin-bottom:12px;">
+                                    <div class="detail-label" style="color:#64748b; font-size:12px; text-transform:uppercase;">ARRIVAL</div>
+                                    <div class="detail-value" style="color:#0f2b5e; font-weight:700; font-size:18px;">March 11, 2026</div>
+                                    <div style="color:#334155; font-size:14px;">10:59 AM · FWA Gate 2</div>
+                                </div>
+                                <div class="detail-item" style="flex:1 1 40%; margin-bottom:12px;">
+                                    <div class="detail-label" style="color:#64748b; font-size:12px; text-transform:uppercase;">TOTAL JOURNEY</div>
+                                    <div class="detail-value" style="color:#0f2b5e; font-weight:700; font-size:18px;">15h 59m</div>
+                                </div>
+                                <div class="detail-item" style="flex:1 1 40%; margin-bottom:12px;">
+                                    <div class="detail-label" style="color:#64748b; font-size:12px; text-transform:uppercase;">SEAT</div>
+                                    <div class="detail-value" style="color:#0f2b5e; font-weight:700; font-size:18px;">3C (Window all flights)</div>
+                                </div>
+                            </div>
+                            
+                            <!-- ticket and baggage info -->
+                            <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; background:#ffffff; border-radius:12px; padding:12px; margin-top:12px;">
+                                <span><strong style="color:#0f2b5e;">Ticket:</strong> DL80287608</span>
+                                <span><strong style="color:#0f2b5e;">Baggage:</strong> 2 pieces + pet carrier</span>
+                                <span><strong style="color:#0f2b5e;">Paid:</strong> $1,562 (Delta First)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- cancellation reason: expired document (no refund explanation) -->
+                        <h2 style="margin:0 0 16px 0; font-size:20px; font-weight:600; color:#1e293b;">Why no refund is issued</h2>
+                        
+                        <div class="reason-card" style="background-color:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border:1px solid #e2e8f0;">
+                            <div class="reason-title" style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                                <span style="font-size:24px;">🪪</span>
+                                <h3 style="margin:0; font-size:16px; font-weight:600; color:#0f2b5e;">Expired Travel Document – Passenger Responsibility</h3>
+                            </div>
+                            <p style="margin:0; font-size:15px; line-height:1.5; color:#475569;">
+                                During final pre-flight verification, we identified that the passport associated with your booking expired on <strong>March 1, 2026</strong>. Under U.S. Department of Transportation regulations and Delta's Conditions of Carriage, passengers are solely responsible for possessing valid travel documents for their entire journey.
+                            </p>
+                            <p style="margin:12px 0 0 0; font-size:15px; line-height:1.5; color:#475569;">
+                                Because the cancellation resulted from failure to meet government documentation requirements — not from an operational decision by Delta — the ticket is non-refundable. The fare rules applied to your ticket (Delta First, non-refundable fare class) do not provide for refunds in cases where the passenger cannot present valid documentation.
+                            </p>
+                        </div>
+                        
+                        <!-- Policy highlight -->
+                        <div class="policy-note" style="background-color:#fff3e0; border-radius:8px; padding:16px; margin:16px 0; border-left:4px solid #ed6c02; font-size:15px;">
+                            <p style="margin:0; font-weight:600; color:#7a4c0d;">📘 Fare Rule Reference: Non‑refundable due to invalid documents</p>
+                            <p style="margin:8px 0 0 0; color:#5e3e0b;">According to Delta's Contract of Carriage § 9.3(C): "Delta is not required to provide a refund when a passenger is denied boarding or their reservation is cancelled due to failure to present valid travel documents required by any governmental authority."</p>
+                        </div>
+                        
+                        <!-- pet reminder with Coco details -->
+                        <div style="background-color:rgba(156,39,176,0.05); border-left:4px solid #9c27b0; padding:16px; margin:24px 0; border-radius:8px;">
+                            <p style="margin:0 0 8px 0; font-size:15px; color:#9c27b0; font-weight:600;">🐾 Important: Service Animal "Coco" (Pomeranian)</p>
+                            <p style="margin:0; font-size:14px; color:#4a5568;">We have noted that you are traveling with a service animal. Although the ticket is non‑refundable, if you renew your passport and wish to purchase a new ticket, all in‑cabin accommodations for Coco will be honored on the new booking. Please contact our special services desk for assistance.</p>
+                        </div>
+                        
+                        <div class="divider" style="height:1px; background-color:#e2e8f0; margin:24px 0;"></div>
+                        
+                        <!-- what happens next (modified for no refund) -->
+                        <h2 style="margin:0 0 16px 0; font-size:20px; font-weight:600; color:#1e293b;">Available options</h2>
+                        
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td align="center" style="background-color: #ecfdf5; border-radius: 100px; padding: 8px 20px; border: 1px solid #059669;" bgcolor="#ecfdf5">
-                                    <span style="color: #059669; font-weight: 700; font-size: 14px;">✓ REFUND PROCESSED</span>
+                                <td valign="top" width="40" style="padding-bottom:16px;">
+                                    <span style="background-color:#0f2b5e; color:white; width:28px; height:28px; display:inline-block; text-align:center; line-height:28px; border-radius:50%; font-weight:700;">1</span>
+                                </td>
+                                <td style="padding-bottom:16px;">
+                                    <p style="margin:0; font-size:15px; color:#334155;"><strong style="color:#0f2b5e;">Purchase a new ticket:</strong> Once you obtain a valid passport, you may book a new flight. The value of the cancelled ticket cannot be transferred or credited due to the expired‑document clause, but we waive any change fees for the <em>next</em> booking as a courtesy.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" width="40" style="padding-bottom:16px;">
+                                    <span style="background-color:#0f2b5e; color:white; width:28px; height:28px; display:inline-block; text-align:center; line-height:28px; border-radius:50%; font-weight:700;">2</span>
+                                </td>
+                                <td style="padding-bottom:16px;">
+                                    <p style="margin:0; font-size:15px; color:#334155;"><strong style="color:#0f2b5e;">SkyMiles credit (if applicable):</strong> Any taxes or fees from the original purchase that are not required to be remitted to government agencies may be refunded to your original payment method. This amount is typically less than $50. <a href="#" style="color:#0f2b5e;">Check eligibility</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" width="40" style="padding-bottom:16px;">
+                                    <span style="background-color:#0f2b5e; color:white; width:28px; height:28px; display:inline-block; text-align:center; line-height:28px; border-radius:50%; font-weight:700;">3</span>
+                                </td>
+                                <td style="padding-bottom:16px;">
+                                    <p style="margin:0; font-size:15px; color:#334155;"><strong style="color:#0f2b5e;">No penalty on future bookings:</strong> This cancellation does not affect your SkyMiles account or your ability to book future travel with Delta.</p>
                                 </td>
                             </tr>
                         </table>
                         
-                        <!-- Greeting -->
-                        <h1 style="margin: 0 0 8px 0; font-size: 28px; font-weight: 700; color: #0f2b5e; letter-spacing: -0.5px; text-align: center; line-height: 1.2;">LUCIE THOMAS</h1>
-                        <p style="margin: 0 0 24px 0; font-size: 16px; color: #475569; text-align: center;">Your refund has been successfully processed</p>
-                        
-                        <!-- Refund Amount Card -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; background: #f0f9ff; border-radius: 20px; border: 1px solid #b8d1e6; margin: 24px 0;" bgcolor="#f0f9ff">
-                            <tr>
-                                <td style="padding: 28px 20px; text-align: center;">
-                                    <span style="color: #64748b; font-size: 14px; font-weight: 500; display: block; margin-bottom: 8px;">REFUND AMOUNT</span>
-                                    <span style="color: #0f2b5e; font-size: 48px; font-weight: 800; letter-spacing: -1px; display: block; line-height: 1.2;">$1550.50</span>
-                                    <span style="color: #059669; font-size: 16px; font-weight: 600; display: block; margin-top: 8px;">Full fare + compensation</span>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- Timeline Information -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 24px 0;">
+                        <!-- action buttons – only rebook (no refund button) -->
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
                             <tr>
                                 <td align="center">
-                                    <span style="font-size: 18px; font-weight: 600; color: #0f2b5e;">⏳ 21 Business Days</span>
-                                    <p style="margin: 8px 0 0 0; font-size: 16px; color: #475569;">Your refund will arrive in <strong>21 business days</strong> depending on your financial institution</p>
+                                    <a href="#" class="button" style="display:inline-block; background-color:#0f2b5e; color:#ffffff !important; text-decoration:none; font-weight:600; font-size:16px; padding:14px 32px; border-radius:100px; margin:4px; box-shadow:0 10px 20px -5px rgba(15,43,94,0.3);">Rebook after renewing passport</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding-top:12px;">
+                                    <span style="color:#64748b; font-size:14px;">Refund requests cannot be processed per fare rules.</span>
                                 </td>
                             </tr>
                         </table>
                         
-                        <!-- Divider -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-                            <tr>
-                                <td style="height: 1px; background-color: #e2e8f0; font-size: 0; line-height: 1px;" bgcolor="#e2e8f0">&nbsp;</td>
-                            </tr>
-                        </table>
+                        <!-- contact panel -->
+                        <div style="background-color:#f8fafc; border-radius:12px; padding:20px; margin:16px 0; border:1px solid #e2e8f0;">
+                            <p style="margin:0 0 12px 0; font-size:15px; color:#0f2b5e; font-weight:600;">Need assistance with document verification or rebooking?</p>
+                            <table width="100%">
+                                <tr>
+                                    <td align="center" style="padding:4px;">
+                                        <span style="color:#475569;">📞 1-800-555-0199</span>
+                                    </td>
+                                    <td align="center" style="padding:4px;">
+                                        <span style="color:#475569;">✉️ support@delta.com</span>
+                                    </td>
+                                    <td align="center" style="padding:4px;">
+                                        <span style="color:#475569;">💬 Live Chat</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         
-                        <!-- Flight Details -->
-                        <h2 style="margin: 24px 0 16px 0; font-size: 18px; font-weight: 600; color: #1e293b;">Refund Details</h2>
-                        
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-                            <tr>
-                                <td width="50%" style="padding: 8px 8px 8px 0;">
-                                    <span style="color: #64748b; font-size: 13px; display: block;">FLIGHT NUMBER</span>
-                                    <span style="color: #0f2b5e; font-weight: 600; font-size: 16px;">DL 376</span>
-                                </td>
-                                <td width="50%" style="padding: 8px 0 8px 8px;">
-                                    <span style="color: #64748b; font-size: 13px; display: block;">PASSENGER</span>
-                                    <span style="color: #0f2b5e; font-weight: 600; font-size: 16px;">LUCIE THOMAS</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 8px 8px 8px 0;">
-                                    <span style="color: #64748b; font-size: 13px; display: block;">ROUTE</span>
-                                    <span style="color: #0f2b5e; font-weight: 600; font-size: 16px;">CMH → ICT</span>
-                                </td>
-                                <td style="padding: 8px 0 8px 8px;">
-                                    <span style="color: #64748b; font-size: 13px; display: block;">ORIGINAL DATE</span>
-                                    <span style="color: #0f2b5e; font-weight: 600; font-size: 16px;">March 5, 2026</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 8px 8px 8px 0;">
-                                    <span style="color: #64748b; font-size: 13px; display: block;">TICKET NUMBER</span>
-                                    <span style="color: #0f2b5e; font-weight: 600; font-size: 16px;">DL37680088</span>
-                                </td>
-                                <td style="padding: 8px 0 8px 8px;">
-                                    <span style="color: #64748b; font-size: 13px; display: block;">REFERENCE ID</span>
-                                    <span style="color: #0f2b5e; font-weight: 600; font-size: 16px;">REF-9876-5421</span>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- Payment Method -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; margin: 24px 0;" bgcolor="#f8fafc">
-                            <tr>
-                                <td style="padding: 20px;">
-                                    <span style="color: #64748b; font-size: 13px; font-weight: 500; display: block; margin-bottom: 12px;">REFUND TO</span>
-                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-                                        <tr>
-                                            <td width="40" valign="middle">
-                                                <span style="font-size: 24px;">💳</span>
-                                            </td>
-                                            <td valign="middle" style="padding-left: 12px;">
-                                                <span style="color: #0f2b5e; font-weight: 600; font-size: 16px; display: block;">Bank of America Preferred</span>
-                                                <span style="color: #64748b; font-size: 14px;">•••• 4242</span>
-                                            </td>
-                                            <td align="right" valign="middle">
-                                                <span style="color: #10b981; font-weight: 600; font-size: 14px;">Primary</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- Important Notes -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; background-color: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 8px; margin: 24px 0;" bgcolor="#fffbeb">
-                            <tr>
-                                <td style="padding: 16px;">
-                                    <p style="margin: 0 0 8px 0; font-size: 15px; color: #92400e; font-weight: 600;">📌 Important Information</p>
-                                    <ul style="margin: 0; padding-left: 20px; color: #78350f; font-size: 14px;">
-                                        <li style="margin-bottom: 6px;">Processing time varies by bank - typically 14 business days</li>
-                                        <li style="margin-bottom: 6px;">Some institutions may take up to 21 business days to display the refund</li>
-                                        <li>No further action is required from you at this time</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- ACTION BUTTON (fixed: background covers entire pill) -->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 32px auto 16px auto;">
-                            <tr>
-                                <td align="center" bgcolor="#0f2b5e" style="background-color: #0f2b5e; border-radius: 100px; padding: 0;" class="button-primary-table">
-                                    <a href="#" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 16px 40px; text-decoration: none; display: inline-block; border-radius: 100px;">View Refund Status</a>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- Secondary outline button -->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 16px auto 8px auto;">
-                            <tr>
-                                <td align="center" bgcolor="#ffffff" style="background-color: #ffffff; border: 2px solid #0f2b5e; border-radius: 100px; padding: 0;">
-                                    <a href="#" style="color: #0f2b5e; font-weight: 600; font-size: 16px; padding: 14px 38px; text-decoration: none; display: inline-block; border-radius: 100px;">Download Receipt</a>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- Support Options -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 24px 0 8px 0;">
-                            <tr>
-                                <td align="center" style="padding: 4px;">
-                                    <span style="color: #64748b; font-size: 14px;">Questions? Contact us:</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="padding: 4px;">
-                                    <span style="color: #0f2b5e; font-weight: 500; font-size: 15px;">1-800-555-0199  |  refunds@delta.com</span>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                    </td>
-                </tr>
-                
-                <!-- Footer -->
-                <tr>
-                    <td style="padding: 24px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;" bgcolor="#f8fafc">
-                        <p style="margin: 0 0 8px 0; font-size: 14px; color: #64748b;">This confirms your refund for cancelled flight DL376</p>
-                        <p style="margin: 0; font-size: 12px; color: #94a3b8;">© 2026 Delta Air Lines, Inc. • 1030 Delta Boulevard • Atlanta, GA 30320</p>
-                        <!-- <p style="margin: 8px 0 0 0; font-size: 11px; color: #9c27b0;">Refund Reference: REF-9876-5421 • Service Animal: Coco</p> -->
-                    </td>
-                </tr>
-            </table>
-            
-        </td>
-    </tr>
-</table>
-
-<!--[if (gte mso 9)|(IE)]>
-        </td>
-    </tr>
-</table>
-<![endif]-->
-
+                        <!-- final pet reminder -->
+                        <p style="margin:16px 0 0 0; font-size:13px; color:#9c27b0; text-align:center; font-style:italic;">
+                            🐾 Service animal "Coco" accommodation will be ready when you rebook. Please contact us to link the new booking with your pet profile.
+                        </p>
+                    </div> <!-- end content -->
+                    
+                    <!-- footer -->
+                    <div class="footer" style="background-color:#f8fafc; border-top:1px solid #e2e8f0; padding:24px; text-align:center; font-size:14px; color:#64748b;">
+                        <p style="margin:0 0 8px 0; font-size:14px; color:#64748b;">This is the final notice regarding cancelled itinerary PDX→JFK→DTW→FWA due to expired passport. No refund is issuable under fare rules.</p>
+                        <p style="margin:0; font-size:12px; color:#94a3b8;">© 2026 Delta Air Lines, Inc. • 1030 Delta Boulevard • Atlanta, GA 30320</p>
+                        <p style="margin:8px 0 0 0; font-size:11px; color:#9c27b0;">Special handling: Service animal in cabin • Reference #AN-12345-PET</p>
+                    </div>
+                </div> <!-- end email-container -->
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
+
