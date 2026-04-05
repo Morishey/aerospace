@@ -716,7 +716,7 @@ const BoardingPass = () => {
                     />
                   }
                   label="FLIGHT DATE"
-                  value="April 4, 2026"
+                  value="April 6, 2026"
                 />
                 <Box
                   sx={{
@@ -873,7 +873,7 @@ const BoardingPass = () => {
                   fontSize: { xs: "0.55rem", sm: "0.7rem" },
                 }}
               >
-                Scan for mobile boarding • One way • April 4 2026
+                Scan for mobile boarding • One way • April 6 2026
               </Typography>
             </Box>
 
