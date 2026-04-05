@@ -215,7 +215,7 @@ const BoardingPass = () => {
               </Box>
               <Box sx={{ textAlign: "right" }}>
                 <Chip
-                  label="Ready for boarding"
+                  label="Rescheduled"
                   size="small"
                   sx={{
                     bgcolor: alpha("#10b981", 0.1),
@@ -493,7 +493,7 @@ const BoardingPass = () => {
                       fontSize: { xs: "0.65rem", sm: "0.875rem" },
                     }}
                   >
-                    4:45 AM • NBO
+                    12:45 AM • NBO
                   </Typography>
                 </Box>
                 <Box sx={{ textAlign: "center" }}>
@@ -535,7 +535,7 @@ const BoardingPass = () => {
                       fontSize: { xs: "0.65rem", sm: "0.875rem" },
                     }}
                   >
-                    11:00 AM • ORD
+                    10:45 PM • ORD
                   </Typography>
                 </Box>
               </Box>
@@ -585,7 +585,7 @@ const BoardingPass = () => {
                       fontSize: { xs: "1.5rem", sm: "2.125rem" },
                     }}
                   >
-                    5:45 AM
+                    12:45 AM
                   </Typography>
                   <Typography
                     variant="caption"
@@ -640,7 +640,7 @@ const BoardingPass = () => {
                       fontSize: { xs: "1.5rem", sm: "2.125rem" },
                     }}
                   >
-                    11:00 AM
+                    10:45 AM
                   </Typography>
                   <Typography
                     variant="caption"
