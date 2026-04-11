@@ -30,7 +30,7 @@ import html2canvas from "html2canvas";
 import { motion } from "framer-motion";
 import { supabase } from "../supabaseClient";
 
-// Modern Barcode Design (unchanged)
+// Modern Barcode Design
 const ModernBarcode = () => (
   <Box sx={{ display: "flex", justifyContent: "center", gap: 0.8, my: 2 }}>
     {[
@@ -50,7 +50,7 @@ const ModernBarcode = () => (
   </Box>
 );
 
-// Passenger Detail Item Component (unchanged)
+// Passenger Detail Item Component
 const DetailItem = ({ icon, label, value, color = "#0a2a5a" }) => (
   <Box sx={{ mb: 2 }}>
     <Typography
@@ -151,6 +151,35 @@ const BoardingPass = () => {
     });
   };
 
+  // Helper to get MUI color based on status text
+  const getStatusColor = (status) => {
+    if (!status) return "default";
+    const lowerStatus = status.toLowerCase();
+
+    if (
+      lowerStatus.includes("rescheduled") ||
+      lowerStatus.includes("canceled") ||
+      lowerStatus.includes("cancelled") ||
+      lowerStatus.includes("delayed")
+    ) {
+      return "error";
+    }
+    if (
+      lowerStatus.includes("confirmed") ||
+      lowerStatus.includes("on time") ||
+      lowerStatus.includes("scheduled")
+    ) {
+      return "success";
+    }
+    if (lowerStatus.includes("boarding")) {
+      return "warning";
+    }
+    if (lowerStatus.includes("in flight") || lowerStatus.includes("departed")) {
+      return "info";
+    }
+    return "default";
+  };
+
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
@@ -188,7 +217,7 @@ const BoardingPass = () => {
   const totalPrice = `${flight.currency || "$"}${flight.total_price || "2,482"}`;
   const gateDep = flight.gate_departure || "Gate 4";
   const gateArr = flight.gate_arrival || "Gate 2";
-  const status = flight.status || "Rescheduled";
+  const status = flight.status || "Missed";
   const airline = flight.airline_name || "Delta Air Lines";
   const airlineCode = flight.airline_code || "DL";
   const operated = flight.operated_by || "SkyWest DBA Delta Connection";
@@ -309,15 +338,14 @@ const BoardingPass = () => {
                 </Box>
               </Box>
               <Box sx={{ textAlign: "right" }}>
+                {/* Dynamic status chip using MUI color */}
                 <Chip
                   label={status}
                   size="small"
+                  color={getStatusColor(status)}
                   sx={{
-                    bgcolor: alpha("#10b981", 0.1),
-                    color: "#10b981",
                     fontWeight: 700,
                     fontSize: { xs: "0.55rem", sm: "0.7rem" },
-                    border: "1px solid rgba(16, 185, 129, 0.3)",
                     mb: 0.5,
                     height: { xs: 20, sm: 24 },
                   }}
