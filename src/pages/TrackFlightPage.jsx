@@ -23,7 +23,7 @@ import {
   Fade,
   useTheme,
   useMediaQuery,
-  Divider, // Added missing import
+  Divider,
 } from "@mui/material";
 import {
   Search as SearchIcon,
@@ -47,72 +47,16 @@ import {
   WbSunny,
   Opacity,
   Flight,
-  LocationOn,
   AccessTime,
   Info,
   ArrowBack,
 } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 
-// ==================== CONSTANTS & MOCK DATA ====================
+// ==================== MOCK DATA (fallback for other flights) ====================
 const MOCK_FLIGHTS = {
-  "DL80287608": {
-    id: "DL80287608",
-    airline: "Garuda Indonesia",
-    flightNumber: "DL80287608",
-    from: {
-      code: "CGK",
-      name: "Soekarno-Hatta International Airport",
-      city: "Jakarta",
-      country: "Indonesia",
-    },
-    to: {
-      code: "NRT",
-      name: "Narita International Airport",
-      city: "Tokyo",
-      country: "Japan",
-    },
-    aircraft: "Boeing 777-300ER",
-    departure: {
-      scheduled: "2024-03-20T08:00:00",
-      estimated: "2024-03-20T08:15:00",
-      actual: "2024-03-20T08:10:00",
-      terminal: "3",
-      gate: "C12",
-    },
-    arrival: {
-      scheduled: "2024-03-20T17:30:00",
-      estimated: "2024-03-20T17:45:00",
-      terminal: "1",
-      gate: "34",
-    },
-    duration: "7h 30m",
-    distance: "5782 km",
-    status: "IN_FLIGHT",
-    statusDetails: "On time - Currently over South China Sea",
-    progress: 45,
-    speed: 890,
-    altitude: 35000,
-    weather: {
-      departure: { condition: "Sunny", temperature: "32°C" },
-      arrival: { condition: "Partly Cloudy", temperature: "18°C" },
-      enroute: { condition: "Clear", temperature: "-45°C" },
-    },
-    timeline: [
-      { time: "06:00", event: "Check-in opens", status: "completed" },
-      { time: "07:00", event: "Boarding starts", status: "completed" },
-      { time: "07:45", event: "Gate closes", status: "completed" },
-      { time: "08:00", event: "Takeoff", status: "completed" },
-      { time: "12:30", event: "Over Singapore", status: "current" },
-      { time: "17:30", event: "Landing", status: "upcoming" },
-    ],
-    baggage: {
-      carousel: "5",
-      claimTime: "18:10",
-    },
-    lastUpdated: new Date().toISOString(),
-  },
   "SQ408": {
     id: "SQ408",
     airline: "Singapore Airlines",
@@ -146,6 +90,37 @@ const MOCK_FLIGHTS = {
       { time: "22:00", event: "Boarding starts", status: "upcoming" },
       { time: "23:45", event: "Gate closes", status: "upcoming" },
     ],
+    lastUpdated: new Date().toISOString(),
+  },
+  "GA1028": {
+    id: "GA1028",
+    airline: "Garuda Indonesia",
+    flightNumber: "GA1028",
+    from: {
+      code: "CGK",
+      city: "Jakarta",
+    },
+    to: {
+      code: "DPS",
+      city: "Denpasar",
+    },
+    aircraft: "Boeing 737-800",
+    departure: {
+      scheduled: "2024-03-20T09:00:00",
+      terminal: "2",
+      gate: "C5",
+    },
+    arrival: {
+      scheduled: "2024-03-20T11:30:00",
+      terminal: "D",
+      gate: "8",
+    },
+    duration: "1h 30m",
+    distance: "983 km",
+    status: "SCHEDULED",
+    statusDetails: "On time",
+    progress: 0,
+    timeline: [],
     lastUpdated: new Date().toISOString(),
   },
 };
@@ -184,17 +159,12 @@ const getStatusIcon = (status) => {
 };
 
 // ==================== COMPONENTS ====================
-
-// Timeline Component
 const FlightTimeline = ({ events }) => {
   const getEventIcon = (status) => {
     switch (status) {
-      case 'completed':
-        return <CheckCircle sx={{ color: '#4caf50', fontSize: 20 }} />;
-      case 'current':
-        return <Schedule sx={{ color: '#2196f3', fontSize: 20 }} />;
-      default:
-        return <RadioButtonUnchecked sx={{ color: '#9e9e9e', fontSize: 20 }} />;
+      case 'completed': return <CheckCircle sx={{ color: '#4caf50', fontSize: 20 }} />;
+      case 'current': return <Schedule sx={{ color: '#2196f3', fontSize: 20 }} />;
+      default: return <RadioButtonUnchecked sx={{ color: '#9e9e9e', fontSize: 20 }} />;
     }
   };
 
@@ -266,7 +236,6 @@ const FlightTimeline = ({ events }) => {
   );
 };
 
-// Map Visualization Component
 const FlightMapVisualization = ({ from, to, progress }) => {
   return (
     <Box sx={{ 
@@ -278,7 +247,6 @@ const FlightMapVisualization = ({ from, to, progress }) => {
       borderColor: 'divider',
       overflow: 'hidden',
     }}>
-      {/* Background Pattern */}
       <Box sx={{
         position: 'absolute',
         top: 0,
@@ -289,7 +257,6 @@ const FlightMapVisualization = ({ from, to, progress }) => {
                     radial-gradient(circle at 80% 70%, ${alpha('#4caf50', 0.1)} 0%, transparent 30%)`,
       }} />
 
-      {/* Flight Path */}
       <Box sx={{
         position: 'absolute',
         top: '40%',
@@ -301,7 +268,6 @@ const FlightMapVisualization = ({ from, to, progress }) => {
         borderRadius: '50%',
       }} />
 
-      {/* Progress Indicator */}
       <Box sx={{
         position: 'absolute',
         top: '50%',
@@ -342,7 +308,6 @@ const FlightMapVisualization = ({ from, to, progress }) => {
         </Typography>
       </Box>
 
-      {/* Departure Marker */}
       <Box sx={{
         position: 'absolute',
         left: '10%',
@@ -367,7 +332,6 @@ const FlightMapVisualization = ({ from, to, progress }) => {
         </Typography>
       </Box>
 
-      {/* Arrival Marker */}
       <Box sx={{
         position: 'absolute',
         right: '10%',
@@ -395,7 +359,6 @@ const FlightMapVisualization = ({ from, to, progress }) => {
   );
 };
 
-// QR Scanner Modal
 const QRScannerModal = ({ open, onClose, onScan }) => {
   const [scanning, setScanning] = useState(false);
 
@@ -487,8 +450,6 @@ const QRScannerModal = ({ open, onClose, onScan }) => {
 const TrackFlightPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  
   const navigate = useNavigate();
   const location = useLocation();
   const inputRef = useRef(null);
@@ -503,7 +464,6 @@ const TrackFlightPage = () => {
   const [notification, setNotification] = useState({ open: false, message: "", severity: "info" });
   const [shareDialog, setShareDialog] = useState(false);
 
-  // Check URL params on mount
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const flightParam = params.get('flight');
@@ -513,63 +473,74 @@ const TrackFlightPage = () => {
     }
   }, [location]);
 
-  // Auto-refresh
   useEffect(() => {
     let interval;
-    if (trackedFlight && autoRefresh) {
+    if (trackedFlight && autoRefresh && !trackedFlight.isBoardingPass) {
       interval = setInterval(updateFlightStatus, 30000);
     }
     return () => clearInterval(interval);
   }, [trackedFlight, autoRefresh]);
 
   const updateFlightStatus = () => {
-    if (!trackedFlight) return;
-    
+    if (!trackedFlight || trackedFlight.isBoardingPass) return;
     const updatedFlight = { ...trackedFlight };
-    
     if (updatedFlight.status === "IN_FLIGHT" && updatedFlight.progress < 100) {
       updatedFlight.progress = Math.min(100, updatedFlight.progress + 2);
       updatedFlight.lastUpdated = new Date().toISOString();
-      
       if (updatedFlight.progress === 100) {
         updatedFlight.status = "LANDED";
         showNotification(`Flight ${updatedFlight.flightNumber} has landed!`, "success");
       }
     }
-    
     setTrackedFlight(updatedFlight);
   };
 
   const handleTrack = async (flightNum = null) => {
     const input = (flightNum || flightNumber).trim().toUpperCase();
-
     if (!input) {
       setError("Please enter a flight number");
       inputRef.current?.focus();
       return;
     }
-
     setError("");
     setLoading(true);
 
-    setTimeout(() => {
+    try {
+      // 🔍 First check Supabase for a matching flight (by ticket_number OR flight_number)
+      console.log("Searching for:", input);
+      
+      const { data: flightData, error: supabaseError } = await supabase
+        .from("flights")
+        .select("id, ticket_number, flight_number")
+        .or(`ticket_number.ilike.${input},flight_number.ilike.${input}`)
+        .maybeSingle();
+
+      console.log("Supabase result:", flightData, supabaseError);
+
+      if (!supabaseError && flightData) {
+        showNotification(`Flight ${input} found! Redirecting to boarding pass...`, "success");
+        navigate(`/boarding-pass/${flightData.id}`);
+        setLoading(false);
+        return;
+      }
+
+      // Fallback to mock data
       if (MOCK_FLIGHTS[input]) {
-        // Navigate to boarding pass page for the specific flight number
-        // GA1028004 goes to boarding pass, other flights show tracking
-        if (input === "DL80287608") {
-          navigate("/boarding-pass");
-        } else {
-          const flightData = { ...MOCK_FLIGHTS[input] };
-          setTrackedFlight(flightData);
-          navigate(`/track?flight=${input}`, { replace: true });
-          showNotification(`Flight ${input} found successfully!`, "success");
-        }
+        const flightData = { ...MOCK_FLIGHTS[input], isBoardingPass: false };
+        setTrackedFlight(flightData);
+        navigate(`/track?flight=${input}`, { replace: true });
+        showNotification(`Flight ${input} found successfully!`, "success");
       } else {
         setError("Flight not found. Please check and try again.");
         showNotification("Flight not found", "error");
       }
+    } catch (err) {
+      console.error("Error checking Supabase:", err);
+      setError("Network error. Please try again.");
+      showNotification("Network error", "error");
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   const handleQRScan = (result) => {
@@ -591,27 +562,15 @@ const TrackFlightPage = () => {
     navigate("/track");
   };
 
+  // ==================== RENDER ====================
   return (
-    <Box sx={{ 
-      minHeight: '100vh',
-      bgcolor: '#f8fafc',
-      py: { xs: 2, sm: 3, md: 4 },
-    }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: '#f8fafc', py: { xs: 2, sm: 3, md: 4 } }}>
       <Container maxWidth="xl">
-        {/* Header */}
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          mb: { xs: 2, sm: 3 },
-          px: { xs: 1, sm: 0 }
-        }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: 2, sm: 3 }, px: { xs: 1, sm: 0 } }}>
           <IconButton onClick={() => navigate('/')} sx={{ mr: 2 }}>
             <ArrowBack />
           </IconButton>
-          <Typography 
-            variant={isMobile ? "h5" : "h4"} 
-            fontWeight="800"
-          >
+          <Typography variant={isMobile ? "h5" : "h4"} fontWeight="800">
             Flight Tracker
           </Typography>
         </Box>
@@ -619,17 +578,7 @@ const TrackFlightPage = () => {
         <Grid container spacing={3}>
           {/* Left Column - Search */}
           <Grid item xs={12} md={4} lg={3}>
-            <Paper 
-              elevation={0}
-              sx={{ 
-                p: { xs: 2, sm: 3 }, 
-                borderRadius: 3,
-                border: '1px solid',
-                borderColor: 'divider',
-                position: 'sticky',
-                top: 24,
-              }}
-            >
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, border: '1px solid', borderColor: 'divider', position: 'sticky', top: 24 }}>
               <Typography variant="h6" gutterBottom fontWeight="700" sx={{ mb: 3 }}>
                 Track Your Flight
               </Typography>
@@ -661,7 +610,7 @@ const TrackFlightPage = () => {
                     </InputAdornment>
                   )
                 }}
-                placeholder="e.g., GA1028 or SQ408"
+                placeholder="e.g., DL80287608 or SQ408"
                 sx={{ mb: 2 }}
                 error={!!error}
                 helperText={error}
@@ -675,17 +624,11 @@ const TrackFlightPage = () => {
                 onClick={() => handleTrack()}
                 disabled={loading}
                 startIcon={loading ? <CircularProgress size={20} /> : <SearchIcon />}
-                sx={{
-                  py: 1.5,
-                  borderRadius: 2,
-                  fontWeight: "700",
-                  mb: 2,
-                }}
+                sx={{ py: 1.5, borderRadius: 2, fontWeight: "700", mb: 2 }}
               >
                 {loading ? "Searching..." : "Track Flight"}
               </Button>
 
-              {/* Quick Actions for Tracked Flight */}
               {trackedFlight && (
                 <Box sx={{ mt: 3 }}>
                   <Divider sx={{ my: 2 }} />
@@ -694,46 +637,22 @@ const TrackFlightPage = () => {
                   </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<Notifications />}
-                        size="small"
-                        onClick={() => showNotification("Alert set for this flight!", "info")}
-                      >
+                      <Button fullWidth variant="outlined" startIcon={<Notifications />} size="small" onClick={() => showNotification("Alert set for this flight!", "info")}>
                         Alert
                       </Button>
                     </Grid>
                     <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<Share />}
-                        size="small"
-                        onClick={() => setShareDialog(true)}
-                      >
+                      <Button fullWidth variant="outlined" startIcon={<Share />} size="small" onClick={() => setShareDialog(true)}>
                         Share
                       </Button>
                     </Grid>
                     <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<Download />}
-                        size="small"
-                        onClick={() => showNotification("PDF downloaded!", "success")}
-                      >
+                      <Button fullWidth variant="outlined" startIcon={<Download />} size="small" onClick={() => showNotification("PDF downloaded!", "success")}>
                         PDF
                       </Button>
                     </Grid>
                     <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<Refresh />}
-                        size="small"
-                        onClick={updateFlightStatus}
-                      >
+                      <Button fullWidth variant="outlined" startIcon={<Refresh />} size="small" onClick={updateFlightStatus}>
                         Refresh
                       </Button>
                     </Grid>
@@ -753,31 +672,9 @@ const TrackFlightPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                 >
-                  <Paper 
-                    elevation={0}
-                    sx={{ 
-                      borderRadius: 3,
-                      border: "1px solid",
-                      borderColor: "divider",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {/* Flight Header */}
-                    <Box sx={{ 
-                      p: { xs: 2, sm: 3 }, 
-                      bgcolor: alpha('#1976d2', 0.02),
-                      borderBottom: '1px solid',
-                      borderColor: 'divider',
-                    }}>
-                      {/* Airline and Status */}
-                      <Box sx={{ 
-                        display: 'flex', 
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        justifyContent: 'space-between', 
-                        alignItems: { xs: 'flex-start', sm: 'center' }, 
-                        mb: 2,
-                        gap: 2,
-                      }}>
+                  <Paper elevation={0} sx={{ borderRadius: 3, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+                    <Box sx={{ p: { xs: 2, sm: 3 }, bgcolor: alpha('#1976d2', 0.02), borderBottom: '1px solid', borderColor: 'divider' }}>
+                      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, mb: 2, gap: 2 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                           <Avatar sx={{ bgcolor: 'primary.main', width: 48, height: 48 }}>
                             {trackedFlight.airline[0]}
@@ -791,7 +688,6 @@ const TrackFlightPage = () => {
                             </Typography>
                           </Box>
                         </Box>
-                        
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                           <Chip
                             icon={getStatusIcon(trackedFlight.status)}
@@ -807,14 +703,7 @@ const TrackFlightPage = () => {
                         </Box>
                       </Box>
 
-                      {/* Flight Route */}
-                      <Box sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap',
-                        gap: 2,
-                      }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
                         <Box sx={{ textAlign: 'center', flex: 1 }}>
                           <Typography variant="h3" fontWeight="800" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
                             {trackedFlight.from.code}
@@ -826,14 +715,12 @@ const TrackFlightPage = () => {
                             {formatTime(trackedFlight.departure.scheduled)}
                           </Typography>
                         </Box>
-                        
                         <Box sx={{ textAlign: 'center' }}>
                           <FlightTakeoff sx={{ transform: 'rotate(90deg)', color: 'primary.main', fontSize: 30 }} />
                           <Typography variant="caption" display="block" color="text.secondary">
                             {trackedFlight.duration}
                           </Typography>
                         </Box>
-                        
                         <Box sx={{ textAlign: 'center', flex: 1 }}>
                           <Typography variant="h3" fontWeight="800" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
                             {trackedFlight.to.code}
@@ -847,7 +734,6 @@ const TrackFlightPage = () => {
                         </Box>
                       </Box>
 
-                      {/* Status Message */}
                       {trackedFlight.statusDetails && (
                         <Alert severity="info" sx={{ mt: 2, borderRadius: 2 }}>
                           {trackedFlight.statusDetails}
@@ -855,407 +741,137 @@ const TrackFlightPage = () => {
                       )}
                     </Box>
 
-                    {/* View Toggle */}
-                    <Box sx={{ 
-                      p: 2, 
-                      borderBottom: '1px solid',
-                      borderColor: 'divider',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                      gap: 2,
-                    }}>
-                      <ToggleButtonGroup
-                        value={viewMode}
-                        exclusive
-                        onChange={(e, newMode) => newMode && setViewMode(newMode)}
-                        size={isMobile ? "small" : "medium"}
-                      >
+                    <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+                      <ToggleButtonGroup value={viewMode} exclusive onChange={(e, newMode) => newMode && setViewMode(newMode)} size={isMobile ? "small" : "medium"}>
                         <ToggleButton value="overview">Overview</ToggleButton>
-                        <ToggleButton value="timeline">
-                          <Timeline sx={{ mr: 1 }} />
-                          Timeline
-                        </ToggleButton>
-                        <ToggleButton value="map">
-                          <Map sx={{ mr: 1 }} />
-                          Map
-                        </ToggleButton>
+                        <ToggleButton value="timeline"><Timeline sx={{ mr: 1 }} />Timeline</ToggleButton>
+                        <ToggleButton value="map"><Map sx={{ mr: 1 }} />Map</ToggleButton>
                       </ToggleButtonGroup>
-
                       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <Chip
-                          label="Auto-refresh"
-                          color={autoRefresh ? "primary" : "default"}
-                          onClick={() => setAutoRefresh(!autoRefresh)}
-                          size="small"
-                        />
+                        <Chip label="Auto-refresh" color={autoRefresh ? "primary" : "default"} onClick={() => setAutoRefresh(!autoRefresh)} size="small" />
                       </Box>
                     </Box>
 
-                    {/* Content */}
                     <Box sx={{ p: { xs: 2, sm: 3 } }}>
                       {viewMode === "overview" && (
                         <Box>
-                          {/* Progress Bar */}
                           {trackedFlight.progress > 0 && (
                             <Box sx={{ mb: 4 }}>
                               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-                                <Typography variant="body2" color="text.secondary">
-                                  Flight Progress
-                                </Typography>
-                                <Typography variant="body2" fontWeight="600">
-                                  {trackedFlight.progress}%
-                                </Typography>
+                                <Typography variant="body2" color="text.secondary">Flight Progress</Typography>
+                                <Typography variant="body2" fontWeight="600">{trackedFlight.progress}%</Typography>
                               </Box>
-                              <LinearProgress 
-                                variant="determinate" 
-                                value={trackedFlight.progress} 
-                                sx={{ 
-                                  height: 8, 
-                                  borderRadius: 4,
-                                  bgcolor: alpha('#1976d2', 0.1),
-                                }}
-                              />
+                              <LinearProgress variant="determinate" value={trackedFlight.progress} sx={{ height: 8, borderRadius: 4, bgcolor: alpha('#1976d2', 0.1) }} />
                             </Box>
                           )}
-
-                          {/* Stats Grid */}
                           <Grid container spacing={2} sx={{ mb: 4 }}>
                             <Grid item xs={6} sm={3}>
                               <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
                                 <Speed sx={{ color: 'primary.main', mb: 1 }} />
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                  Speed
-                                </Typography>
-                                <Typography variant="h6" fontWeight="700">
-                                  {trackedFlight.speed || '0'} km/h
-                                </Typography>
+                                <Typography variant="caption" color="text.secondary" display="block">Speed</Typography>
+                                <Typography variant="h6" fontWeight="700">{trackedFlight.speed || '0'} km/h</Typography>
                               </Paper>
                             </Grid>
                             <Grid item xs={6} sm={3}>
                               <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
                                 <Height sx={{ color: 'primary.main', mb: 1 }} />
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                  Altitude
-                                </Typography>
-                                <Typography variant="h6" fontWeight="700">
-                                  {trackedFlight.altitude?.toLocaleString() || '0'} ft
-                                </Typography>
+                                <Typography variant="caption" color="text.secondary" display="block">Altitude</Typography>
+                                <Typography variant="h6" fontWeight="700">{trackedFlight.altitude?.toLocaleString() || '0'} ft</Typography>
                               </Paper>
                             </Grid>
                             <Grid item xs={6} sm={3}>
                               <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
                                 <Flight sx={{ color: 'primary.main', mb: 1 }} />
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                  Distance
-                                </Typography>
-                                <Typography variant="h6" fontWeight="700">
-                                  {trackedFlight.distance}
-                                </Typography>
+                                <Typography variant="caption" color="text.secondary" display="block">Distance</Typography>
+                                <Typography variant="h6" fontWeight="700">{trackedFlight.distance}</Typography>
                               </Paper>
                             </Grid>
                             <Grid item xs={6} sm={3}>
                               <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
                                 <AccessTime sx={{ color: 'primary.main', mb: 1 }} />
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                  Duration
-                                </Typography>
-                                <Typography variant="h6" fontWeight="700">
-                                  {trackedFlight.duration}
-                                </Typography>
+                                <Typography variant="caption" color="text.secondary" display="block">Duration</Typography>
+                                <Typography variant="h6" fontWeight="700">{trackedFlight.duration}</Typography>
                               </Paper>
                             </Grid>
                           </Grid>
-
-                          {/* Flight Details */}
                           <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
-                              <Typography variant="h6" gutterBottom fontWeight="600">
-                                Departure
-                              </Typography>
+                              <Typography variant="h6" gutterBottom fontWeight="600">Departure</Typography>
                               <Paper sx={{ p: 2, borderRadius: 2 }}>
                                 <Grid container spacing={2}>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Scheduled
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {formatTime(trackedFlight.departure.scheduled)}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Estimated
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {formatTime(trackedFlight.departure.estimated || trackedFlight.departure.scheduled)}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Terminal
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.departure.terminal}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Gate
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.departure.gate}
-                                    </Typography>
-                                  </Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Scheduled</Typography><Typography variant="body2" fontWeight="500">{formatTime(trackedFlight.departure.scheduled)}</Typography></Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Estimated</Typography><Typography variant="body2" fontWeight="500">{formatTime(trackedFlight.departure.estimated || trackedFlight.departure.scheduled)}</Typography></Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Terminal</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.departure.terminal}</Typography></Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Gate</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.departure.gate}</Typography></Grid>
                                 </Grid>
                               </Paper>
                             </Grid>
-
                             <Grid item xs={12} md={6}>
-                              <Typography variant="h6" gutterBottom fontWeight="600">
-                                Arrival
-                              </Typography>
+                              <Typography variant="h6" gutterBottom fontWeight="600">Arrival</Typography>
                               <Paper sx={{ p: 2, borderRadius: 2 }}>
                                 <Grid container spacing={2}>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Scheduled
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {formatTime(trackedFlight.arrival.scheduled)}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Estimated
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {formatTime(trackedFlight.arrival.estimated || trackedFlight.arrival.scheduled)}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Terminal
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.arrival.terminal}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      Gate
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.arrival.gate}
-                                    </Typography>
-                                  </Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Scheduled</Typography><Typography variant="body2" fontWeight="500">{formatTime(trackedFlight.arrival.scheduled)}</Typography></Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Estimated</Typography><Typography variant="body2" fontWeight="500">{formatTime(trackedFlight.arrival.estimated || trackedFlight.arrival.scheduled)}</Typography></Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Terminal</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.arrival.terminal}</Typography></Grid>
+                                  <Grid item xs={6}><Typography variant="caption" color="text.secondary">Gate</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.arrival.gate}</Typography></Grid>
                                   {trackedFlight.baggage && (
-                                    <Grid item xs={12}>
-                                      <Typography variant="caption" color="text.secondary">
-                                        Baggage Claim
-                                      </Typography>
-                                      <Typography variant="body2" fontWeight="500">
-                                        Carousel {trackedFlight.baggage.carousel} • {trackedFlight.baggage.claimTime}
-                                      </Typography>
-                                    </Grid>
+                                    <Grid item xs={12}><Typography variant="caption" color="text.secondary">Baggage Claim</Typography><Typography variant="body2" fontWeight="500">Carousel {trackedFlight.baggage.carousel} • {trackedFlight.baggage.claimTime}</Typography></Grid>
                                   )}
                                 </Grid>
                               </Paper>
                             </Grid>
                           </Grid>
-
-                          {/* Weather */}
                           {trackedFlight.weather && (
                             <Box sx={{ mt: 3 }}>
-                              <Typography variant="h6" gutterBottom fontWeight="600">
-                                Weather
-                              </Typography>
+                              <Typography variant="h6" gutterBottom fontWeight="600">Weather</Typography>
                               <Grid container spacing={2}>
-                                <Grid item xs={4}>
-                                  <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
-                                    <WbSunny sx={{ color: '#f57c00', mb: 1 }} />
-                                    <Typography variant="caption" color="text.secondary" display="block">
-                                      Departure
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.weather.departure.condition}
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="700">
-                                      {trackedFlight.weather.departure.temperature}
-                                    </Typography>
-                                  </Paper>
-                                </Grid>
-                                <Grid item xs={4}>
-                                  <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
-                                    <Cloud sx={{ color: '#78909c', mb: 1 }} />
-                                    <Typography variant="caption" color="text.secondary" display="block">
-                                      Enroute
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.weather.enroute.condition}
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="700">
-                                      {trackedFlight.weather.enroute.temperature}
-                                    </Typography>
-                                  </Paper>
-                                </Grid>
-                                <Grid item xs={4}>
-                                  <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>
-                                    <Opacity sx={{ color: '#2196f3', mb: 1 }} />
-                                    <Typography variant="caption" color="text.secondary" display="block">
-                                      Arrival
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="500">
-                                      {trackedFlight.weather.arrival.condition}
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight="700">
-                                      {trackedFlight.weather.arrival.temperature}
-                                    </Typography>
-                                  </Paper>
-                                </Grid>
+                                <Grid item xs={4}><Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}><WbSunny sx={{ color: '#f57c00', mb: 1 }} /><Typography variant="caption" color="text.secondary" display="block">Departure</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.weather.departure.condition}</Typography><Typography variant="body2" fontWeight="700">{trackedFlight.weather.departure.temperature}</Typography></Paper></Grid>
+                                <Grid item xs={4}><Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}><Cloud sx={{ color: '#78909c', mb: 1 }} /><Typography variant="caption" color="text.secondary" display="block">Enroute</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.weather.enroute.condition}</Typography><Typography variant="body2" fontWeight="700">{trackedFlight.weather.enroute.temperature}</Typography></Paper></Grid>
+                                <Grid item xs={4}><Paper sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}><Opacity sx={{ color: '#2196f3', mb: 1 }} /><Typography variant="caption" color="text.secondary" display="block">Arrival</Typography><Typography variant="body2" fontWeight="500">{trackedFlight.weather.arrival.condition}</Typography><Typography variant="body2" fontWeight="700">{trackedFlight.weather.arrival.temperature}</Typography></Paper></Grid>
                               </Grid>
                             </Box>
                           )}
                         </Box>
                       )}
-
                       {viewMode === "timeline" && trackedFlight.timeline && (
-                        <Box>
-                          <Typography variant="h6" gutterBottom fontWeight="600">
-                            Flight Timeline
-                          </Typography>
-                          <FlightTimeline events={trackedFlight.timeline} />
-                        </Box>
+                        <Box><Typography variant="h6" gutterBottom fontWeight="600">Flight Timeline</Typography><FlightTimeline events={trackedFlight.timeline} /></Box>
                       )}
-
                       {viewMode === "map" && (
-                        <Box>
-                          <Typography variant="h6" gutterBottom fontWeight="600" sx={{ mb: 2 }}>
-                            Flight Path
-                          </Typography>
-                          <FlightMapVisualization 
-                            from={trackedFlight.from}
-                            to={trackedFlight.to}
-                            progress={trackedFlight.progress || 0}
-                          />
-                        </Box>
+                        <Box><Typography variant="h6" gutterBottom fontWeight="600" sx={{ mb: 2 }}>Flight Path</Typography><FlightMapVisualization from={trackedFlight.from} to={trackedFlight.to} progress={trackedFlight.progress || 0} /></Box>
                       )}
                     </Box>
-
-                    {/* Footer */}
-                    <Box sx={{ 
-                      p: 2, 
-                      borderTop: '1px solid',
-                      borderColor: 'divider',
-                      bgcolor: alpha('#1976d2', 0.02),
-                    }}>
-                      <Typography variant="caption" color="text.secondary">
-                        Last updated: {new Date(trackedFlight.lastUpdated).toLocaleTimeString()}
-                      </Typography>
+                    <Box sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider', bgcolor: alpha('#1976d2', 0.02) }}>
+                      <Typography variant="caption" color="text.secondary">Last updated: {new Date(trackedFlight.lastUpdated).toLocaleTimeString()}</Typography>
                     </Box>
                   </Paper>
                 </motion.div>
               </AnimatePresence>
             ) : (
-              // Empty State
-              <Paper 
-                sx={{ 
-                  p: { xs: 4, sm: 6 }, 
-                  textAlign: "center", 
-                  borderRadius: 3,
-                  border: "2px dashed",
-                  borderColor: "divider",
-                  minHeight: { xs: 400, md: 500 },
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                >
+              <Paper sx={{ p: { xs: 4, sm: 6 }, textAlign: "center", borderRadius: 3, border: "2px dashed", borderColor: "divider", minHeight: { xs: 400, md: 500 }, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 20 }}>
                   <AirplanemodeActive sx={{ fontSize: { xs: 60, md: 80 }, color: "action.disabled", mb: 3 }} />
                 </motion.div>
-                <Typography variant="h5" color="text.secondary" gutterBottom fontWeight="600">
-                  No Flight Tracked
-                </Typography>
-                <Typography variant="body1" color="text.secondary" paragraph sx={{ maxWidth: 500 }}>
-                  Enter a flight number above to track real-time status, get live updates, and monitor your journey.
-                </Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<SearchIcon />}
-                  onClick={() => inputRef.current?.focus()}
-                  sx={{ mt: 2 }}
-                >
-                  Search Flight
-                </Button>
+                <Typography variant="h5" color="text.secondary" gutterBottom fontWeight="600">No Flight Tracked</Typography>
+                <Typography variant="body1" color="text.secondary" paragraph sx={{ maxWidth: 500 }}>Enter a flight number above to track real-time status, get live updates, and monitor your journey.</Typography>
+                <Button variant="contained" startIcon={<SearchIcon />} onClick={() => inputRef.current?.focus()} sx={{ mt: 2 }}>Search Flight</Button>
               </Paper>
             )}
           </Grid>
         </Grid>
 
-        {/* Modals */}
-        <QRScannerModal
-          open={showQRScanner}
-          onClose={() => setShowQRScanner(false)}
-          onScan={handleQRScan}
-        />
-
+        <QRScannerModal open={showQRScanner} onClose={() => setShowQRScanner(false)} onScan={handleQRScan} />
         <Modal open={shareDialog} onClose={() => setShareDialog(false)}>
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: { xs: '90%', sm: 400 },
-            outline: 'none',
-          }}>
+          <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: { xs: '90%', sm: 400 }, outline: 'none' }}>
             <Paper sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" gutterBottom fontWeight="600">
-                Share Flight
-              </Typography>
-              <TextField
-                fullWidth
-                value={window.location.href}
-                variant="outlined"
-                size="small"
-                sx={{ mt: 2, mb: 2 }}
-                InputProps={{ readOnly: true }}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  showNotification("Link copied to clipboard!", "success");
-                  setShareDialog(false);
-                }}
-              >
-                Copy Link
-              </Button>
+              <Typography variant="h6" gutterBottom fontWeight="600">Share Flight</Typography>
+              <TextField fullWidth value={window.location.href} variant="outlined" size="small" sx={{ mt: 2, mb: 2 }} InputProps={{ readOnly: true }} />
+              <Button fullWidth variant="contained" onClick={() => { navigator.clipboard.writeText(window.location.href); showNotification("Link copied to clipboard!", "success"); setShareDialog(false); }}>Copy Link</Button>
             </Paper>
           </Box>
         </Modal>
 
-        {/* Notifications */}
-        <Snackbar
-          open={notification.open}
-          autoHideDuration={4000}
-          onClose={() => setNotification({ ...notification, open: false })}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        >
-          <Alert 
-            onClose={() => setNotification({ ...notification, open: false })} 
-            severity={notification.severity}
-            sx={{ borderRadius: 2 }}
-          >
-            {notification.message}
-          </Alert>
+        <Snackbar open={notification.open} autoHideDuration={4000} onClose={() => setNotification({ ...notification, open: false })} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+          <Alert onClose={() => setNotification({ ...notification, open: false })} severity={notification.severity} sx={{ borderRadius: 2 }}>{notification.message}</Alert>
         </Snackbar>
       </Container>
     </Box>

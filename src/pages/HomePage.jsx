@@ -60,6 +60,11 @@ const fadeInUp = keyframes`
   to { transform: translateY(0); opacity: 1; }
 `;
 
+const bounceScroll = keyframes`
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(30px); opacity: 0; }
+`;
+
 const carouselImages = [
   "https://images.unsplash.com/photo-1503424886307-b090341d25d1?auto=format&fit=crop&w=2000&q=80",
   "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&w=2000&q=80",
@@ -607,10 +612,7 @@ const HomePage = () => {
                   width: "100%",
                   height: "30%",
                   bgcolor: "#FFD700",
-                  animation: `${keyframes`
-                    0% { transform: translateY(0); opacity: 1; }
-                    100% { transform: translateY(30px); opacity: 0; }
-                  `} 2s infinite`,
+                  animation: `${bounceScroll} 2s infinite`,
                 },
               }}
             />
